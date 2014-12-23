@@ -1,3 +1,4 @@
+/*global require, module*/
 /*jslint vars: true*/
 (function () {'use strict';
 
@@ -27,6 +28,11 @@ function getJSON (jsonURL, cb) {
     }
 }
 
-window.getJSON = getJSON;
+if (typeof module === 'undefined') {
+    module.exports = getJSON;
+}
+else {
+    window.getJSON = getJSON;
+}
 
 }());
