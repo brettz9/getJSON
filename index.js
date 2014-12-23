@@ -28,7 +28,7 @@ function getJSON (jsonURL, cb) {
     }
 }
 
-if (typeof module === 'undefined') {
+if (typeof module !== 'undefined') {
     module.exports = getJSON;
 }
 else {
