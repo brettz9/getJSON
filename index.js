@@ -3,7 +3,7 @@
 
 function getJSON (jsonURL, cb) {
     try {
-        var r = new XMLHttpRequest();
+        var r = typeof require === 'undefined' ? new XMLHttpRequest() : new require('xmlhttprequest').XMLHttpRequest;
 
         r.open('GET', jsonURL, true);
         //r.responseType = 'json';
