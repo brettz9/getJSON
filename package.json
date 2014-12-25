@@ -11,7 +11,7 @@
     "json"
   ],
   "dependencies": {
-    "xmlhttprequest": "1.x"
+    "local-xmlhttprequest": "1.x"
   },
   "license": "MIT",
   "bugs": {
