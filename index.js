@@ -2,8 +2,19 @@
 /*jslint vars: true*/
 (function () {'use strict';
 
-function getJSON (jsonURL, cb) {
+function getJSON (jsonURL, cb, errBack) {
+    if (Array.isArray(jsonURL)) {
+        return Promise.all(jsonURL.map(getJSON)).then(function (arr) {
+            cb.apply(null, arr);
+        }).catch(function (err) {
+            errBack(err, jsonURL);
+        });
+    }
+    if (typeof cb !== 'function' && typeof errBack !== 'function') { // Do typeof checks to allow for easier array promise usage of getJSON (as above)
+        return new Promise(getJSON.bind(null, jsonURL));
+    }
     try {
+        // Todo: use fetch API for greater elegance
         var r = typeof require === 'undefined' ? new XMLHttpRequest() : new (require('local-xmlhttprequest').XMLHttpRequest);
 
         r.open('GET', jsonURL, true);
@@ -24,6 +35,9 @@ function getJSON (jsonURL, cb) {
         r.send();
     }
     catch (e) {
+        if (errBack) {
+            return errBack(e, jsonURL);
+        }
         throw e + ' (' + jsonURL + ')';
     }
 }
