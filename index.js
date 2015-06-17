@@ -1,5 +1,7 @@
-/*global require, module*/
 /*jslint vars: true*/
+
+var require, module;
+
 (function () {'use strict';
 
 function getJSON (jsonURL, cb, errBack) {
@@ -15,7 +17,7 @@ function getJSON (jsonURL, cb, errBack) {
     }
     try {
         // Todo: use fetch API for greater elegance
-        var r = typeof require === 'undefined' ? new XMLHttpRequest() : new (require('local-xmlhttprequest').XMLHttpRequest);
+        var r = require === undefined ? new XMLHttpRequest() : new (require('local-xmlhttprequest').XMLHttpRequest)();
 
         r.open('GET', jsonURL, true);
         //r.responseType = 'json';
@@ -42,7 +44,7 @@ function getJSON (jsonURL, cb, errBack) {
     }
 }
 
-if (typeof module !== 'undefined') {
+if (module !== undefined) {
     module.exports = getJSON;
 }
 else {
