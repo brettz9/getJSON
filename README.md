@@ -39,3 +39,7 @@ npm install simple-get-json
 # Todo
 - Support named parameters ala jQuery
 - Support rest of jQuery API
+
+# Notes
+
+See also [postJSON](https://github.com/brettz9/postJSON).
