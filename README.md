@@ -19,7 +19,9 @@ getJSON([url1, ur2], function (obj1, obj2) {
 });
 ```
 
-If no callback or error-back is provided, a promise will be returned.
+If no callback or error-back is provided (or when an array of URLs is
+supplied), a promise will be returned. If an array is provided along with
+a callback, that callback will be executed before the promise is resolved.
 
 
 # Install
