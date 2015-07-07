@@ -5,11 +5,17 @@ var require, module;
 (function () {'use strict';
 
 function getJSON (jsonURL, cb, errBack) {
+    function handleError (e) {
+        if (errBack) {
+            return errBack(e, jsonURL);
+        }
+        throw e + ' (' + jsonURL + ')';
+    }
     if (Array.isArray(jsonURL)) {
         return Promise.all(jsonURL.map(getJSON)).then(function (arr) {
             cb.apply(null, arr);
         }).catch(function (err) {
-            errBack(err, jsonURL);
+            handleError(err);
         });
     }
     if (typeof cb !== 'function' && typeof errBack !== 'function') { // Do typeof checks to allow for easier array promise usage of getJSON (as above)
@@ -37,10 +43,7 @@ function getJSON (jsonURL, cb, errBack) {
         r.send();
     }
     catch (e) {
-        if (errBack) {
-            return errBack(e, jsonURL);
-        }
-        throw e + ' (' + jsonURL + ')';
+        handleError(e);
     }
 }
 

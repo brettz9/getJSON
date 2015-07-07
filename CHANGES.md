@@ -1,3 +1,6 @@
+# 1.0.1
+- Throw errors properly when jsonURL is an array and errBack is not present
+
 # 1.0.0
 - Added support for array of resources as first argument
 - Returns a `Promise` when the second and third arguments are not functions (or are absent)
