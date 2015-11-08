@@ -13,7 +13,10 @@ function getJSON (jsonURL, cb, errBack) {
     }
     if (Array.isArray(jsonURL)) {
         return Promise.all(jsonURL.map(getJSON)).then(function (arr) {
-            cb.apply(null, arr);
+            if (cb) {
+                cb.apply(null, arr);
+            }
+            return arr;
         }).catch(function (err) {
             handleError(err);
         });
@@ -32,7 +35,7 @@ function getJSON (jsonURL, cb, errBack) {
             if (r.status === 200) {
                 //var json = r.json;
                 var response = r.responseText;
-                
+
                 var json = JSON.parse(response);
                 cb(json);
                 return;
