@@ -26,13 +26,25 @@ a callback, that callback will be executed before the promise is resolved.
 You can thus use Promises as follows:
 
 ```js
-getJSON([url1, ur2]).then(function (objs) {
-    // Do something with "objs" array
+getJSON([url1, ur2]).then(function (objsArr) {
+    // Do something with "objsArr" array
 }, function (err) {
     // Handle any errors here
 });
 ```
 
+You may use the file `index-es2017.js` to use the ES2017 `await` keyword for Promise results,
+as well as take advantage of ES6 Module import:
+
+```js
+
+try {
+    const [urlObj1, urlObj2] = await getJSON([url1, ur2]);
+} catch (err) {
+    // Handle errors here
+}
+
+```
 
 # Install
 

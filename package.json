@@ -1,6 +1,6 @@
 {
   "name": "simple-get-json",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/brettz9/getJSON.git"
@@ -12,6 +12,17 @@
   ],
   "dependencies": {
     "local-xmlhttprequest": "1.x"
+  },
+  "devDependencies": {
+      "eslint": "4.12.0",
+      "eslint-config-standard": "10.2.1",
+      "eslint-plugin-compat": "2.1.0",
+      "eslint-plugin-import": "2.8.0",
+      "eslint-plugin-node": "5.2.1",
+      "eslint-plugin-promise": "3.6.0",
+      "eslint-plugin-standard": "3.0.1",
+      "node-static": "0.7.10",
+      "opn": "5.1.0"
   },
   "license": "MIT",
   "bugs": {

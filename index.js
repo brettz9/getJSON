@@ -1,15 +1,17 @@
-/*jslint vars: true*/
-
+/* eslint-disable prefer-const */
+/* eslint-disable no-var */
 var require, module;
 
-(function () {'use strict';
+(function () {
+'use strict';
 
 function getJSON (jsonURL, cb, errBack) {
     function handleError (e) {
+        e.message += ' (' + jsonURL + ')';
         if (errBack) {
             return errBack(e, jsonURL);
         }
-        throw e + ' (' + jsonURL + ')';
+        throw e;
     }
     if (Array.isArray(jsonURL)) {
         return Promise.all(jsonURL.map(getJSON)).then(function (arr) {
@@ -21,7 +23,8 @@ function getJSON (jsonURL, cb, errBack) {
             handleError(err);
         });
     }
-    if (typeof cb !== 'function' && typeof errBack !== 'function') { // Do typeof checks to allow for easier array promise usage of getJSON (as above)
+    // Do typeof checks to allow for easier array promise usage of getJSON (as above)
+    if (typeof cb !== 'function' && typeof errBack !== 'function') {
         return new Promise(getJSON.bind(null, jsonURL));
     }
     try {
@@ -29,11 +32,11 @@ function getJSON (jsonURL, cb, errBack) {
         var r = require === undefined ? new XMLHttpRequest() : new (require('local-xmlhttprequest').XMLHttpRequest)();
 
         r.open('GET', jsonURL, true);
-        //r.responseType = 'json';
+        // r.responseType = 'json';
         r.onreadystatechange = function () {
-            if (r.readyState !== 4) {return;}
+            if (r.readyState !== 4) { return; }
             if (r.status === 200) {
-                //var json = r.json;
+                // var json = r.json;
                 var response = r.responseText;
 
                 var json = JSON.parse(response);
@@ -41,20 +44,20 @@ function getJSON (jsonURL, cb, errBack) {
                 return;
             }
             // Request failed
-            throw "Failed to fetch URL: " + jsonURL + 'state: ' + r.readyState + '; status: ' + r.status;
+            throw new Error(
+                'Failed to fetch URL: ' + jsonURL + 'state: ' +
+                r.readyState + '; status: ' + r.status
+            );
         };
         r.send();
-    }
-    catch (e) {
+    } catch (e) {
         handleError(e);
     }
 }
 
 if (module !== undefined) {
     module.exports = getJSON;
-}
-else {
+} else {
     window.getJSON = getJSON;
 }
-
 }());

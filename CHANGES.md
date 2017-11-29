@@ -1,3 +1,9 @@
+# 2.0.0
+
+- Breaking change: Return error objects instead of strings in both files
+- Breaking change: Add URL to error message passed to errBack as well as to Promise catch
+- Enhancement: Within new `index-es2017.js` file, export as ES6 module, refactoring to leverage ES2017 `await`
+
 # 1.1.0
 
 -   Allow omission of callback when passing an array
@@ -10,12 +16,9 @@
 # 1.0.0
 
 -   Added support for array of resources as first argument
-
 -   Returns a `Promise` when the second and third
     arguments are not functions (or are absent)
-
 -   Allow `errBack` for third argument
-
 -   Requires `Array.isArray`, `Function.prototype.bind`,
     and `Promise` polyfills if using on older environments
 
