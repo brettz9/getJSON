@@ -1,3 +1,7 @@
+# 2.1.0
+
+- Use [Rollup](https://github.com/rollup/rollup)-friendly `module` tool.
+
 # 2.0.0
 
 - Breaking change: Return error objects instead of strings in both files
