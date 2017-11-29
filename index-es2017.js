@@ -1,3 +1,7 @@
+/* globals require, global, __dirname */
+if (typeof require !== 'undefined') {
+    global.fetch = require(require('path').join(__dirname, './node-local-fetch.js'));
+}
 export default async function getJSON (jsonURL, cb, errBack) {
     try {
         if (Array.isArray(jsonURL)) {

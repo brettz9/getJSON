@@ -1,3 +1,10 @@
+# 3.0.0
+
+- Breaking change: Assume `fetch` support or polyfill in browser
+- Refactoring: Build `index.js` (for Node or browser) from source
+    (using Rollup with rollup.config.js, applying to tests for restoring
+    Node testing support)
+
 # 2.1.0
 
 - Use [Rollup](https://github.com/rollup/rollup)-friendly `module` tool.

@@ -1,7 +1,11 @@
 const write = (...msgs) => {
-    document.body.append(
-        ...msgs, ...Array.from({length: 2}, () => document.createElement('br'))
-    );
+    if (typeof document !== 'undefined') {
+        document.body.append(
+            ...msgs, ...Array.from({length: 2}, () => document.createElement('br'))
+        );
+    } else {
+        console.log(...msgs);
+    }
 };
 const assert = {
     equals (expected, actual, msg) {

@@ -1,63 +1,41 @@
-/* eslint-disable prefer-const */
-/* eslint-disable no-var */
-var require, module;
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.getJSON = factory());
+}(this, (function () { 'use strict';
 
-(function () {
-'use strict';
+var __dirname = '/Users/brett/getJSON';
 
-function getJSON (jsonURL, cb, errBack) {
-    function handleError (e) {
-        e.message += ' (' + jsonURL + ')';
+var global$1 = typeof global !== "undefined" ? global :
+            typeof self !== "undefined" ? self :
+            typeof window !== "undefined" ? window : {};
+
+function __async(g){return new Promise(function(s,j){function c(a,x){try{var r=g[x?"throw":"next"](a);}catch(e){j(e);return}r.done?s(r.value):Promise.resolve(r.value).then(c,d);}function d(e){c(e,1);}c();})}
+
+/* globals require, global, __dirname */
+if (typeof require !== 'undefined') {
+    global$1.fetch = require(require('path').join(__dirname, './node-local-fetch.js'));
+}
+function getJSON (jsonURL, cb, errBack) {return __async(function*(){
+    try {
+        if (Array.isArray(jsonURL)) {
+            const arrResult = yield Promise.all(jsonURL.map((url) => getJSON(url)));
+            if (cb) {
+                cb.apply(null, arrResult);
+            }
+            return arrResult;
+        }
+        const result = yield fetch(jsonURL).then((r) => r.json());
+        return typeof cb === 'function' ? cb(result) : result;
+    } catch (e) {
+        e.message += ` (File: ${jsonURL})`;
         if (errBack) {
             return errBack(e, jsonURL);
         }
         throw e;
     }
-    if (Array.isArray(jsonURL)) {
-        return Promise.all(jsonURL.map(getJSON)).then(function (arr) {
-            if (cb) {
-                cb.apply(null, arr);
-            }
-            return arr;
-        }).catch(function (err) {
-            handleError(err);
-        });
-    }
-    // Do typeof checks to allow for easier array promise usage of getJSON (as above)
-    if (typeof cb !== 'function' && typeof errBack !== 'function') {
-        return new Promise(getJSON.bind(null, jsonURL));
-    }
-    try {
-        // Todo: use fetch API for greater elegance
-        var r = require === undefined ? new XMLHttpRequest() : new (require('local-xmlhttprequest').XMLHttpRequest)();
+}())}
 
-        r.open('GET', jsonURL, true);
-        // r.responseType = 'json';
-        r.onreadystatechange = function () {
-            if (r.readyState !== 4) { return; }
-            if (r.status === 200) {
-                // var json = r.json;
-                var response = r.responseText;
+return getJSON;
 
-                var json = JSON.parse(response);
-                cb(json);
-                return;
-            }
-            // Request failed
-            throw new Error(
-                'Failed to fetch URL: ' + jsonURL + 'state: ' +
-                r.readyState + '; status: ' + r.status
-            );
-        };
-        r.send();
-    } catch (e) {
-        handleError(e);
-    }
-}
-
-if (module !== undefined) {
-    module.exports = getJSON;
-} else {
-    window.getJSON = getJSON;
-}
-}());
+})));
