@@ -31,6 +31,6 @@
   "homepage": "https://github.com/brettz9/getJSON",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm start tests/index.html"
   }
 }
