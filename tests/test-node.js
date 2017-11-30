@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('local-xmlhttprequest')) :
-	typeof define === 'function' && define.amd ? define(['local-xmlhttprequest'], factory) :
-	(factory(global.localXmlhttprequest));
-}(this, (function (localXmlhttprequest) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(factory());
+}(this, (function () { 'use strict';
 
 function __async(g){return new Promise(function(s,j){function c(a,x){try{var r=g[x?"throw":"next"](a);}catch(e){j(e);return}r.done?s(r.value):Promise.resolve(r.value).then(c,d);}function d(e){c(e,1);}c();})}
 
@@ -59,11 +59,12 @@ var global$1 = typeof global !== "undefined" ? global :
             typeof self !== "undefined" ? self :
             typeof window !== "undefined" ? window : {};
 
-/* globals global */
+/* globals global, require */
 if (typeof module !== 'undefined') {
     global$1.fetch = (jsonURL) => {
         return new Promise((resolve, reject) => {
-            const r = new localXmlhttprequest.XMLHttpRequest();
+            const {XMLHttpRequest} = require('local-xmlhttprequest');
+            const r = new XMLHttpRequest();
             r.open('GET', jsonURL, true);
             // r.responseType = 'json';
             r.onreadystatechange = function () {

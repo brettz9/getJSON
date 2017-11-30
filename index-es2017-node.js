@@ -1,9 +1,9 @@
-/* globals global */
-import {XMLHttpRequest} from 'local-xmlhttprequest';
+/* globals global, require */
 import getJSON from './index-es2017.js';
 if (typeof module !== 'undefined') {
     global.fetch = (jsonURL) => {
         return new Promise((resolve, reject) => {
+            const {XMLHttpRequest} = require('local-xmlhttprequest'); // Don't change to an import as won't resolve for browser testing
             const r = new XMLHttpRequest();
             r.open('GET', jsonURL, true);
             // r.responseType = 'json';

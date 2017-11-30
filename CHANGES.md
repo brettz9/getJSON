@@ -1,3 +1,8 @@
+# 3.0.2
+
+- Build: Fix for Node
+- npm: Add ESLint script
+
 # 3.0.1
 
 - Build: Properly apply Babel
