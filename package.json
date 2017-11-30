@@ -1,16 +1,18 @@
 {
   "name": "simple-get-json",
   "version": "3.0.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/brettz9/getJSON.git"
-  },
+  "main": "index.js",
+  "module": "index-es2017.js",
   "author": "Brett Zamir",
   "contributors": [],
+  "license": "MIT",
   "description": "getJSON function similar to that of jQuery's for Node or the browser",
-  "keywords": [
-    "json"
-  ],
+  "scripts": {
+    "test": "npm run browser-build && node ./tests/test-node.js",
+    "browser-build": "rollup -c rollup.config.test.js",
+    "browser-test": "npm run build && npm start tests/index.html",
+    "build": "rollup -c"
+  },
   "engines": {
       "node": ">=0.4.0"
   },
@@ -31,17 +33,15 @@
     "rollup-plugin-async": "^1.2.0",
     "rollup-plugin-node-globals": "^1.1.0"
   },
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brettz9/getJSON.git"
+  },
   "bugs": {
     "url": "https://github.com/brettz9/getJSON/issues"
   },
   "homepage": "https://github.com/brettz9/getJSON",
-  "main": "index.js",
-  "module": "index-es2017.js",
-  "scripts": {
-    "test": "npm run browser-build && node ./tests/test-node.js",
-    "browser-build": "rollup -c rollup.config.test.js",
-    "browser-test": "npm run build && npm start tests/index.html",
-    "build": "rollup -c"
-  }
+  "keywords": [
+    "json"
+  ]
 }
