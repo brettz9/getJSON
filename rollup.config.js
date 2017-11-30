@@ -1,4 +1,3 @@
-import nodeGlobals from 'rollup-plugin-node-globals';
 import babel from 'rollup-plugin-babel';
 import async from 'rollup-plugin-async';
 
@@ -10,7 +9,7 @@ export default [{
         name: 'getJSON'
     },
     plugins: [
-        async(), babel(), nodeGlobals()
+        async(), babel()
     ]
 }, {
     input: 'index-es2017.js',
@@ -20,6 +19,6 @@ export default [{
         name: 'getJSON'
     },
     plugins: [
-        async(), babel(), nodeGlobals()
+        async(), babel()
     ]
 }];

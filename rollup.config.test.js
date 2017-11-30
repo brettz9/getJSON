@@ -1,5 +1,4 @@
 import async from 'rollup-plugin-async';
-import nodeGlobals from 'rollup-plugin-node-globals';
 
 export default {
     input: 'tests/test.js',
@@ -9,6 +8,6 @@ export default {
         name: 'testJSON'
     },
     plugins: [
-        async(), nodeGlobals()
+        async()
     ]
 };

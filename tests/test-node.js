@@ -55,15 +55,11 @@ function getJSON$1 (jsonURL, cb, errBack) {return __async(function*(){
     }
 }())}
 
-var global$1 = typeof global !== "undefined" ? global :
-            typeof self !== "undefined" ? self :
-            typeof window !== "undefined" ? window : {};
-
 /* globals global, require */
 if (typeof module !== 'undefined') {
-    global$1.fetch = (jsonURL) => {
+    global.fetch = (jsonURL) => {
         return new Promise((resolve, reject) => {
-            const {XMLHttpRequest} = require('local-xmlhttprequest');
+            const {XMLHttpRequest} = require('local-xmlhttprequest'); // Don't change to an import as won't resolve for browser testing
             const r = new XMLHttpRequest();
             r.open('GET', jsonURL, true);
             // r.responseType = 'json';
