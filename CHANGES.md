@@ -1,3 +1,7 @@
+# 3.0.3
+
+- Build: Fix for Node
+
 # 3.0.2
 
 - Build: Fix for Node

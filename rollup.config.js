@@ -12,11 +12,11 @@ export default [{
         async(), babel()
     ]
 }, {
-    input: 'index-es2017.js',
+    input: 'index-es2017-node.js',
     output: {
         file: 'index-node.js',
         format: 'umd',
-        name: 'getJSON'
+        name: 'getJSONNode'
     },
     plugins: [
         async(), babel()

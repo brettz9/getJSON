@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	(global.getJSON = factory());
+	(global.getJSONNode = factory());
 }(this, (function () { 'use strict';
 
 function __async(g) {
@@ -18,7 +18,7 @@ function __async(g) {
   });
 }
 
-function getJSON(jsonURL, cb, errBack) {
+function getJSON$1(jsonURL, cb, errBack) {
     return __async( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var arrResult, result;
         return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -34,7 +34,7 @@ function getJSON(jsonURL, cb, errBack) {
 
                         _context.next = 4;
                         return Promise.all(jsonURL.map(function (url) {
-                            return getJSON(url);
+                            return getJSON$1(url);
                         }));
 
                     case 4:
@@ -80,6 +80,38 @@ function getJSON(jsonURL, cb, errBack) {
     })());
 }
 
-return getJSON;
+/* globals global, require */
+if (typeof module !== 'undefined') {
+    global.fetch = function (jsonURL) {
+        return new Promise(function (resolve, reject) {
+            var _require = require('local-xmlhttprequest'),
+                XMLHttpRequest = _require.XMLHttpRequest; // Don't change to an import as won't resolve for browser testing
+
+
+            var r = new XMLHttpRequest();
+            r.open('GET', jsonURL, true);
+            // r.responseType = 'json';
+            r.onreadystatechange = function () {
+                if (r.readyState !== 4) {
+                    return;
+                }
+                if (r.status === 200) {
+                    // var json = r.json;
+                    var response = r.responseText;
+                    resolve({
+                        json: function json() {
+                            return JSON.parse(response);
+                        }
+                    });
+                    return;
+                }
+                reject(new SyntaxError('Failed to fetch URL: ' + jsonURL + 'state: ' + r.readyState + '; status: ' + r.status));
+            };
+            r.send();
+        });
+    };
+}
+
+return getJSON$1;
 
 })));
