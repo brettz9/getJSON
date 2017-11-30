@@ -1,17 +1,19 @@
 {
   "name": "simple-get-json",
   "version": "3.0.1",
-  "main": "index.js",
+  "main": "index-node.js",
+  "browser": "index.js",
   "module": "index-es2017.js",
   "author": "Brett Zamir",
   "contributors": [],
   "license": "MIT",
   "description": "getJSON function similar to that of jQuery's for Node or the browser",
   "scripts": {
+    "eslint": "eslint --ignore-pattern index.js --ignore-pattern index-node.js *.js && eslint --ignore-pattern tests/test-node.js tests/",
     "test": "npm run build && npm run test-build && node ./tests/test-node.js",
-    "test-build": "rollup -c rollup.config.test.js",
+    "test-build": "npm run eslint && rollup -c rollup.config.test.js",
     "browser-test": "npm run build && npm start tests/index.html",
-    "build": "rollup -c"
+    "build": "npm run eslint && rollup -c"
   },
   "engines": {
     "node": ">=0.4.0"

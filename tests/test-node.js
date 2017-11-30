@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(factory());
-}(this, (function () { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('local-xmlhttprequest')) :
+	typeof define === 'function' && define.amd ? define(['local-xmlhttprequest'], factory) :
+	(factory(global.localXmlhttprequest));
+}(this, (function (localXmlhttprequest) { 'use strict';
 
 function __async(g){return new Promise(function(s,j){function c(a,x){try{var r=g[x?"throw":"next"](a);}catch(e){j(e);return}r.done?s(r.value):Promise.resolve(r.value).then(c,d);}function d(e){c(e,1);}c();})}
 
@@ -35,20 +35,10 @@ const assert = {
     }
 };
 
-var __dirname = '/Users/brett/getJSON';
-
-var global$1 = typeof global !== "undefined" ? global :
-            typeof self !== "undefined" ? self :
-            typeof window !== "undefined" ? window : {};
-
-/* globals require, global, __dirname */
-if (typeof require !== 'undefined') {
-    global$1.fetch = require(require('path').join(__dirname, './node-local-fetch.js'));
-}
-function getJSON (jsonURL, cb, errBack) {return __async(function*(){
+function getJSON$1 (jsonURL, cb, errBack) {return __async(function*(){
     try {
         if (Array.isArray(jsonURL)) {
-            const arrResult = yield Promise.all(jsonURL.map((url) => getJSON(url)));
+            const arrResult = yield Promise.all(jsonURL.map((url) => getJSON$1(url)));
             if (cb) {
                 cb.apply(null, arrResult);
             }
@@ -65,37 +55,70 @@ function getJSON (jsonURL, cb, errBack) {return __async(function*(){
     }
 }())}
 
+var global$1 = typeof global !== "undefined" ? global :
+            typeof self !== "undefined" ? self :
+            typeof window !== "undefined" ? window : {};
+
+/* globals global */
+if (typeof module !== 'undefined') {
+    global$1.fetch = (jsonURL) => {
+        return new Promise((resolve, reject) => {
+            const r = new localXmlhttprequest.XMLHttpRequest();
+            r.open('GET', jsonURL, true);
+            // r.responseType = 'json';
+            r.onreadystatechange = function () {
+                if (r.readyState !== 4) { return; }
+                if (r.status === 200) {
+                    // var json = r.json;
+                    const response = r.responseText;
+                    resolve({
+                        json: () => JSON.parse(response)
+                    });
+                    return;
+                }
+                reject(new SyntaxError(
+                    'Failed to fetch URL: ' + jsonURL + 'state: ' +
+                    r.readyState + '; status: ' + r.status
+                ));
+            };
+            r.send();
+        });
+    };
+}
+
 /* eslint-disable handle-callback-err */
-getJSON('test.json').then((result) => {
+const getJSON$$1 = typeof module === 'undefined' ? getJSON$1 : getJSON$1;
+
+getJSON$$1('test.json').then((result) => {
     assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (normal promise)');
 }).catch((err) => {
     assert.true(false, `Shouldn't get here`);
 });
 
 (() => __async(function*(){
-const result = yield getJSON('test.json');
+const result = yield getJSON$$1('test.json');
 assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (await)');
 
-yield getJSON('test.json', (result) => {
+yield getJSON$$1('test.json', (result) => {
     assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (callback)');
 });
 
-yield getJSON('test-nonexisting.json', () => {
+yield getJSON$$1('test-nonexisting.json', () => {
     assert.true(false, `Shouldn't reach here`);
 }, (err) => {
     assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error (errback)');
     assert.true(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error (errback)');
 });
 
-const resultArrOneURL = yield getJSON(['test.json']);
+const resultArrOneURL = yield getJSON$$1(['test.json']);
 assert.equals(5, resultArrOneURL[0].key, 'Retrieve JSON result value - single item array URL');
 
-const resultArrMultipleURLs = yield getJSON(['test.json', 'test2.json']);
+const resultArrMultipleURLs = yield getJSON$$1(['test.json', 'test2.json']);
 assert.equals(5, resultArrMultipleURLs[0].key, 'Retrieve JSON result value - multiple item array URL 1');
 assert.equals('aString', resultArrMultipleURLs[1].aKey, 'Retrieve JSON result value - multiple item array URL 2');
 
 try {
-    yield getJSON('test-nonexisting.json');
+    yield getJSON$$1('test-nonexisting.json');
     assert.true(false, `Shouldn't reach here`);
 } catch (err) {
     assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error');
@@ -103,7 +126,7 @@ try {
 }
 
 try {
-    yield getJSON('test-bad.json');
+    yield getJSON$$1('test-bad.json');
     assert.true(false, `Shouldn't reach here`);
 } catch (err) {
     assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON error');
@@ -111,7 +134,7 @@ try {
 }
 
 try {
-    yield getJSON(['test.json', 'test-bad.json']);
+    yield getJSON$$1(['test.json', 'test-bad.json']);
     assert.true(false, `Shouldn't reach here`);
 } catch (err) {
     assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON within array of URLs error');

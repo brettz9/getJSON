@@ -1,6 +1,10 @@
 /* eslint-disable handle-callback-err */
 import {assert} from './test-utils.js';
-import getJSON from '../index-es2017.js';
+
+import getJSONBrowser from '../index-es2017.js';
+import getJSONNode from '../index-es2017-node.js';
+
+const getJSON = typeof module === 'undefined' ? getJSONBrowser : getJSONNode;
 
 getJSON('test.json').then((result) => {
     assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (normal promise)');
