@@ -1,3 +1,7 @@
+# 3.0.1
+
+- Build: Properly apply Babel
+
 # 3.0.0
 
 - Breaking change: Assume `fetch` support or polyfill in browser
