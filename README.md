@@ -49,12 +49,6 @@ try {
 # Install
 
 ```
-bower install get-json
-```
-
-or
-
-```
 npm install simple-get-json
 ```
 
