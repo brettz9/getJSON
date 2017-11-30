@@ -58,6 +58,26 @@ or
 npm install simple-get-json
 ```
 
+# Setup
+
+```html
+<script src="node_modules/simple-get-json/index.js"></script>
+```
+
+```js
+getJSON(...);
+```
+
+or:
+
+```js
+// Works in Browser only
+import getJSON from './node_modules/simple-get-json/index-es2017.js';
+
+// Or for Polyglot Node and Browser
+import getJSON from './node_modules/simple-get-json/index-es2017-node.js';
+```
+
 # Todo
 - Support named parameters ala jQuery
 - Support rest of jQuery API
