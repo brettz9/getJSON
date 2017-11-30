@@ -8,8 +8,8 @@
   "license": "MIT",
   "description": "getJSON function similar to that of jQuery's for Node or the browser",
   "scripts": {
-    "test": "npm run browser-build && node ./tests/test-node.js",
-    "browser-build": "rollup -c rollup.config.test.js",
+    "test": "npm run build && npm run test-build && node ./tests/test-node.js",
+    "test-build": "rollup -c rollup.config.test.js",
     "browser-test": "npm run build && npm start tests/index.html",
     "build": "rollup -c"
   },
