@@ -56,7 +56,7 @@ function getJSON$1 (jsonURL, cb, errBack) {return __async(function*(){
 }())}
 
 /* globals global, require */
-if (typeof module !== 'undefined') {
+if (typeof fetch === 'undefined') {
     global.fetch = (jsonURL) => {
         return new Promise((resolve, reject) => {
             const {XMLHttpRequest} = require('local-xmlhttprequest'); // Don't change to an import as won't resolve for browser testing

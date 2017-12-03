@@ -1,15 +1,15 @@
 {
   "name": "simple-get-json",
   "version": "3.0.3",
-  "main": "index-node.js",
+  "main": "index-polyglot.js",
   "browser": "index.js",
-  "module": "index-es2017.js",
+  "module": "index-es2017-polyglot.js",
   "author": "Brett Zamir",
   "contributors": [],
   "license": "MIT",
   "description": "getJSON function similar to that of jQuery's for Node or the browser",
   "scripts": {
-    "eslint": "eslint --ignore-pattern index.js --ignore-pattern index-node.js *.js && eslint --ignore-pattern tests/test-node.js tests/",
+    "eslint": "eslint --ignore-pattern index.js --ignore-pattern index-polyglot.js *.js && eslint --ignore-pattern tests/test-node.js tests/",
     "test": "npm run build && npm run test-build && node ./tests/test-node.js",
     "test-build": "npm run eslint && rollup -c rollup.config.test.js",
     "browser-test": "npm run build && npm start tests/index.html",

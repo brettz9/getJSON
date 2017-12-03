@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	(global.getJSONNode = factory());
+	(global.getJSONPolyglot = factory());
 }(this, (function () { 'use strict';
 
 function __async(g) {
@@ -81,7 +81,7 @@ function getJSON$1(jsonURL, cb, errBack) {
 }
 
 /* globals global, require */
-if (typeof module !== 'undefined') {
+if (typeof fetch === 'undefined') {
     global.fetch = function (jsonURL) {
         return new Promise(function (resolve, reject) {
             var _require = require('local-xmlhttprequest'),

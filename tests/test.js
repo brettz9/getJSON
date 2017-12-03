@@ -2,9 +2,9 @@
 import {assert} from './test-utils.js';
 
 import getJSONBrowser from '../index-es2017.js';
-import getJSONNode from '../index-es2017-node.js';
+import getJSONPolyglot from '../index-es2017-polyglot.js';
 
-const getJSON = typeof module === 'undefined' ? getJSONBrowser : getJSONNode;
+const getJSON = typeof module === 'undefined' ? getJSONBrowser : getJSONPolyglot;
 
 getJSON('test.json').then((result) => {
     assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (normal promise)');

@@ -12,11 +12,11 @@ export default [{
         async(), babel()
     ]
 }, {
-    input: 'index-es2017-node.js',
+    input: 'index-es2017-polyglot.js',
     output: {
-        file: 'index-node.js',
+        file: 'index-polyglot.js',
         format: 'umd',
-        name: 'getJSONNode'
+        name: 'getJSONPolyglot'
     },
     plugins: [
         async(), babel()
