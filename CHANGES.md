@@ -1,3 +1,11 @@
+# 3.1.0
+
+- Build: Rename Node file to polyglot as is UMD
+- Enhancement (npm): Point to polyglot file from `module`
+    property (workable in Node as well as browser)
+- Enhancement: Check for an undefined `fetch` rather than a
+    defined `module` (should be safer in more environments)
+
 # 3.0.3
 
 - Build: Fix for Node
