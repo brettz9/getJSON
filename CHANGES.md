@@ -1,3 +1,11 @@
+# 3.2.0
+
+- Build: Add yarn
+- npm: Use `babel-preset-env` instead of `babel-env` (former
+    was also causing problems in Travis environment (and
+    rebuilding `.babelrc`))
+- npm: Update dev deps
+
 # 3.1.0
 
 - Build: Rename Node file to polyglot as is UMD
