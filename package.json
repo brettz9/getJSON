@@ -9,7 +9,7 @@
   "license": "MIT",
   "description": "getJSON function similar to that of jQuery's for Node or the browser",
   "scripts": {
-    "eslint": "eslint --ignore-pattern index.js --ignore-pattern index-polyglot.js *.js && eslint --ignore-pattern tests/test-node.js tests/",
+    "eslint": "eslint .",
     "test": "npm run build && npm run test-build && node ./tests/test-node.js",
     "test-build": "npm run eslint && rollup -c rollup.config.test.js",
     "browser-test": "npm run build && npm start tests/index.html",
