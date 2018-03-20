@@ -1,3 +1,8 @@
+# 3.2.3
+
+- npm: Switch babel-polyfill to dependency to ensure present for inheriting
+    projects
+
 # 3.2.2
 
 - npm: Add `babel-polyfill`

@@ -1,6 +1,6 @@
 {
   "name": "simple-get-json",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "main": "index-polyglot.js",
   "browser": "index.js",
   "module": "index-es2017-polyglot.js",
@@ -19,12 +19,12 @@
     "node": ">=0.4.0"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "local-xmlhttprequest": "1.5"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "eslint": "4.19.0",
     "eslint-config-standard": "11.0.0",
