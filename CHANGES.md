@@ -1,3 +1,8 @@
+# 3.2.2
+
+- npm: Add `babel-polyfill`
+- npm: Update devDeps and update builds
+
 # 3.2.1
 
 - Fix `.npmignore`
