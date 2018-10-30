@@ -1,8 +1,8 @@
 /* eslint-disable handle-callback-err */
 import {assert} from './test-utils.js';
 
-import getJSONBrowser from '../index-es2017.js';
-import getJSONPolyglot from '../index-es2017-polyglot.js';
+import getJSONBrowser from '../src/index.js';
+import getJSONPolyglot from '../src/index-polyglot.js';
 
 const getJSON = typeof module === 'undefined' ? getJSONBrowser : getJSONPolyglot;
 

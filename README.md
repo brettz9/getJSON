@@ -33,7 +33,7 @@ getJSON([url1, ur2]).then(function (objsArr) {
 });
 ```
 
-You may use the file `index-es2017.js` to use the ES2017 `await` keyword for Promise results,
+You may use the file `index-es.js` to use the ES2017 `await` keyword for Promise results,
 as well as take advantage of ES6 Module import:
 
 ```js
@@ -55,7 +55,8 @@ npm install simple-get-json
 # Setup
 
 ```html
-<script src="node_modules/simple-get-json/index.js"></script>
+<script src="node_modules/@babel/polyfill/dist/polyfill.js"></script>
+<script src="node_modules/simple-get-json/dist/index.js"></script>
 ```
 
 ```js
@@ -66,10 +67,10 @@ or:
 
 ```js
 // Works in Browser only
-import getJSON from './node_modules/simple-get-json/index-es2017.js';
+import getJSON from './node_modules/simple-get-json/dist/index-es.js';
 
 // Or for Polyglot Node and Browser
-import getJSON from './node_modules/simple-get-json/index-es2017-node.js';
+import getJSON from './node_modules/simple-get-json/dist/index-polyglot-es.js';
 ```
 
 # Todo

@@ -4,8 +4,6 @@
     (factory());
 }(this, (function () { 'use strict';
 
-    function __async(g){return new Promise(function(s,j){function c(a,x){try{var r=g[x?"throw":"next"](a);}catch(e){j(e);return}r.done?s(r.value):Promise.resolve(r.value).then(c,d);}function d(e){c(e,1);}c();})}
-
     const write = (...msgs) => {
         if (typeof document !== 'undefined') {
             document.body.append(
@@ -35,16 +33,16 @@
         }
     };
 
-    function getJSON (jsonURL, cb, errBack) {return __async(function*(){
+    async function getJSON (jsonURL, cb, errBack) {
         try {
             if (Array.isArray(jsonURL)) {
-                const arrResult = yield Promise.all(jsonURL.map((url) => getJSON(url)));
+                const arrResult = await Promise.all(jsonURL.map((url) => getJSON(url)));
                 if (cb) {
                     cb.apply(null, arrResult);
                 }
                 return arrResult;
             }
-            const result = yield fetch(jsonURL).then((r) => r.json());
+            const result = await fetch(jsonURL).then((r) => r.json());
             return typeof cb === 'function' ? cb(result) : result;
         } catch (e) {
             e.message += ` (File: ${jsonURL})`;
@@ -53,13 +51,15 @@
             }
             throw e;
         }
-    }())}
+    }
 
-    /* globals global, require */
+    /* eslint-env node */
     if (typeof fetch === 'undefined') {
         global.fetch = (jsonURL) => {
             return new Promise((resolve, reject) => {
-                const {XMLHttpRequest} = require('local-xmlhttprequest'); // Don't change to an import as won't resolve for browser testing
+                const XMLHttpRequest = require('local-xmlhttprequest')({
+                    basePath: __dirname
+                }); // Don't change to an import as won't resolve for browser testing
                 const r = new XMLHttpRequest();
                 r.open('GET', jsonURL, true);
                 // r.responseType = 'json';
@@ -83,6 +83,8 @@
         };
     }
 
+    /* eslint-disable handle-callback-err */
+
     const getJSON$1 = typeof module === 'undefined' ? getJSON : getJSON;
 
     getJSON$1('test.json').then((result) => {
@@ -91,30 +93,30 @@
         assert.true(false, `Shouldn't get here`);
     });
 
-    (() => __async(function*(){
-    const result = yield getJSON$1('test.json');
+    (async () => {
+    const result = await getJSON$1('test.json');
     assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (await)');
 
-    yield getJSON$1('test.json', (result) => {
+    await getJSON$1('test.json', (result) => {
         assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (callback)');
     });
 
-    yield getJSON$1('test-nonexisting.json', () => {
+    await getJSON$1('test-nonexisting.json', () => {
         assert.true(false, `Shouldn't reach here`);
     }, (err) => {
         assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error (errback)');
         assert.true(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error (errback)');
     });
 
-    const resultArrOneURL = yield getJSON$1(['test.json']);
+    const resultArrOneURL = await getJSON$1(['test.json']);
     assert.equals(5, resultArrOneURL[0].key, 'Retrieve JSON result value - single item array URL');
 
-    const resultArrMultipleURLs = yield getJSON$1(['test.json', 'test2.json']);
+    const resultArrMultipleURLs = await getJSON$1(['test.json', 'test2.json']);
     assert.equals(5, resultArrMultipleURLs[0].key, 'Retrieve JSON result value - multiple item array URL 1');
     assert.equals('aString', resultArrMultipleURLs[1].aKey, 'Retrieve JSON result value - multiple item array URL 2');
 
     try {
-        yield getJSON$1('test-nonexisting.json');
+        await getJSON$1('test-nonexisting.json');
         assert.true(false, `Shouldn't reach here`);
     } catch (err) {
         assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error');
@@ -122,7 +124,7 @@
     }
 
     try {
-        yield getJSON$1('test-bad.json');
+        await getJSON$1('test-bad.json');
         assert.true(false, `Shouldn't reach here`);
     } catch (err) {
         assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON error');
@@ -130,12 +132,12 @@
     }
 
     try {
-        yield getJSON$1(['test.json', 'test-bad.json']);
+        await getJSON$1(['test.json', 'test-bad.json']);
         assert.true(false, `Shouldn't reach here`);
     } catch (err) {
         assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON within array of URLs error');
         assert.true(err instanceof SyntaxError, 'Badly formed JSON within array of URLs gives a syntax error');
     }
-    }()))();
+    })();
 
 })));

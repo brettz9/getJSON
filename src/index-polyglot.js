@@ -1,9 +1,12 @@
+/* eslint-env node */
 /* globals global, require */
-import getJSON from './index-es2017.js';
+import getJSON from './index.js';
 if (typeof fetch === 'undefined') {
     global.fetch = (jsonURL) => {
         return new Promise((resolve, reject) => {
-            const {XMLHttpRequest} = require('local-xmlhttprequest'); // Don't change to an import as won't resolve for browser testing
+            const XMLHttpRequest = require('local-xmlhttprequest')({
+                basePath: __dirname
+            }); // Don't change to an import as won't resolve for browser testing
             const r = new XMLHttpRequest();
             r.open('GET', jsonURL, true);
             // r.responseType = 'json';

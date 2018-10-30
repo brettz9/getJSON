@@ -1,24 +1,29 @@
 import babel from 'rollup-plugin-babel';
-import async from 'rollup-plugin-async';
 
-export default [{
-    input: 'index-es2017.js',
-    output: {
-        file: 'index.js',
-        format: 'umd',
-        name: 'getJSON'
-    },
-    plugins: [
-        async(), babel()
-    ]
-}, {
-    input: 'index-es2017-polyglot.js',
-    output: {
-        file: 'index-polyglot.js',
-        format: 'umd',
-        name: 'getJSONPolyglot'
-    },
-    plugins: [
-        async(), babel()
-    ]
-}];
+function getDist ({format}) {
+    return [{
+        input: 'src/index.js',
+        output: {
+            file: `dist/index${format === 'es' ? '-es' : ''}.js`,
+            format,
+            name: 'getJSON'
+        },
+        plugins: [
+            babel()
+        ]
+    }, {
+        input: 'src/index-polyglot.js',
+        output: {
+            file: `dist/index-polyglot${format === 'es' ? '-es' : ''}.js`,
+            format,
+            name: 'getJSONPolyglot'
+        },
+        plugins: [
+            babel()
+        ]
+    }];
+}
+export default [
+    ...getDist({format: 'umd'}),
+    ...getDist({format: 'es'})
+];
