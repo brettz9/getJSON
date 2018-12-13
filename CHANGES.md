@@ -1,5 +1,12 @@
 # simple-get-json
 
+## 4.1.0
+
+- Build: Ensure has CommonJS build without need for
+    polyfill/regenerator-runtime
+- Linting (Markdown): Fix `.remarkrc` format
+- npm: Update devDeps
+
 ## 4.0.0
 
 - Breaking change: Add ES distributed build and move distribution files to

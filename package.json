@@ -1,7 +1,7 @@
 {
   "name": "simple-get-json",
-  "version": "4.0.0",
-  "main": "dist/index-polyglot.js",
+  "version": "4.1.0",
+  "main": "dist/index-cjs.js",
   "browser": "dist/index.js",
   "module": "dist/index-polyglot-es.js",
   "author": "Brett Zamir",
@@ -9,10 +9,12 @@
   "license": "MIT",
   "description": "getJSON function similar to that of jQuery's for Node or the browser",
   "scripts": {
+    "prepublishOnly": "yarn",
     "eslint": "eslint .",
+    "start": "opn http://127.0.0.1:8089/tests/index.html && static -p 8089",
     "test": "npm run rollup && npm run test-build && node ./tests/test-node.js",
     "test-build": "npm run eslint && rollup -c rollup.config.test.js",
-    "browser-test": "npm run rollup && npm start tests/index.html",
+    "browser-test": "npm run rollup && npm start",
     "rollup": "npm run eslint && rollup -c"
   },
   "engines": {
@@ -23,20 +25,20 @@
     "local-xmlhttprequest": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "eslint": "5.8.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "eslint": "5.10.0",
     "eslint-config-standard": "12.0.0",
-    "eslint-plugin-compat": "2.6.2",
+    "eslint-plugin-compat": "2.6.3",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-node": "8.0.0",
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-standard": "4.0.0",
     "node-static": "0.7.11",
-    "opn": "5.4.0",
-    "rollup": "0.66.6",
+    "opn-cli": "^4.0.0",
+    "rollup": "0.67.4",
     "rollup-plugin-async": "^1.2.0",
-    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-babel": "^4.1.0",
     "rollup-plugin-node-globals": "^1.4.0"
   },
   "repository": {

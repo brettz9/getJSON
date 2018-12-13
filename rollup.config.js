@@ -25,5 +25,23 @@ function getDist ({format}) {
 }
 export default [
     ...getDist({format: 'umd'}),
-    ...getDist({format: 'es'})
+    ...getDist({format: 'es'}),
+    {
+        input: 'src/index-polyglot.js',
+        output: {
+            file: `dist/index-cjs.js`,
+            format: 'cjs'
+        },
+        plugins: [
+            babel({
+                presets: [
+                    ['@babel/env', {
+                        targets: {
+                            node: true
+                        }
+                    }]
+                ]
+            })
+        ]
+    }
 ];
