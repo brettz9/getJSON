@@ -3,43 +3,23 @@
   "version": "4.1.0",
   "main": "dist/index-cjs.js",
   "browser": "dist/index.js",
-  "module": "dist/index-polyglot-es.js",
+  "module": "dist/index-es.js",
   "author": "Brett Zamir",
   "contributors": [],
   "license": "MIT",
   "description": "getJSON function similar to that of jQuery's for Node or the browser",
   "scripts": {
-    "prepublishOnly": "yarn",
-    "eslint": "eslint .",
-    "start": "opn http://127.0.0.1:8089/tests/index.html && static -p 8089",
-    "test": "npm run rollup && npm run test-build && node ./tests/test-node.js",
-    "test-build": "npm run eslint && rollup -c rollup.config.test.js",
+    "eslint": "eslint --ext=js,md .",
+    "start": "open-cli http://127.0.0.1:8089/tests/index.html && static -p 8089",
+    "rollup": "npm run eslint && rollup -c",
     "browser-test": "npm run rollup && npm start",
-    "rollup": "npm run eslint && rollup -c"
+    "test": "npm run rollup && node -r esm tests/node-env.js"
   },
+  "browserslist": [
+    "cover 100%"
+  ],
   "engines": {
     "node": ">=0.4.0"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "local-xmlhttprequest": "^2.0.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "eslint": "5.10.0",
-    "eslint-config-standard": "12.0.0",
-    "eslint-plugin-compat": "2.6.3",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-node": "8.0.0",
-    "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-standard": "4.0.0",
-    "node-static": "0.7.11",
-    "opn-cli": "^4.0.0",
-    "rollup": "0.67.4",
-    "rollup-plugin-async": "^1.2.0",
-    "rollup-plugin-babel": "^4.1.0",
-    "rollup-plugin-node-globals": "^1.4.0"
   },
   "repository": {
     "type": "git",
@@ -51,5 +31,38 @@
   "homepage": "https://github.com/brettz9/getJSON",
   "keywords": [
     "json"
-  ]
+  ],
+  "dependencies": {
+    "core-js-bundle": "^3.1.3",
+    "node-fetch": "^2.6.0",
+    "regenerator-runtime": "^0.13.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.4.5",
+    "@mysticatea/eslint-plugin": "^10.0.3",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-ash-nazg": "^7.0.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-compat": "^3.1.1",
+    "eslint-plugin-eslint-comments": "^3.1.1",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsdoc": "^8.0.1",
+    "eslint-plugin-markdown": "^1.0.0",
+    "eslint-plugin-no-use-extend-native": "^0.4.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-unicorn": "^9.1.0",
+    "esm": "^3.2.25",
+    "node-static": "0.7.11",
+    "open-cli": "^5.0.0",
+    "rollup": "1.15.1",
+    "rollup-plugin-async": "^1.2.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "typescript": "^3.5.1"
+  }
 }

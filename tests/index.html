@@ -3,8 +3,14 @@
     <head>
         <meta charset="utf-8">
         <title>getJSON demo</title>
+        <script src="../node_modules/core-js-bundle/minified.js"></script>
+        <script src="../node_modules/regenerator-runtime/runtime.js"></script>
     </head>
     <body>
+        <script>
+        import getJSON from '../src/index.js';
+        window.getJSON = getJSON;
+        </script>
         <script type="module" src="test.js"></script>
     </body>
 </html>

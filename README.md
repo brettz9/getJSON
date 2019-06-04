@@ -4,7 +4,7 @@ getJSON function similar to that of jQuery's.
 
 ```js
 getJSON(url, function (data) {
-    // Do something with "data"
+    doSomethingWithResult(data);
 });
 ```
 
@@ -15,7 +15,7 @@ Also accepts an array of URLs (waiting for all to load):
 
 ```js
 getJSON([url1, ur2], function (obj1, obj2) {
-    // Do something with "obj1" and "obj2"
+    doSomethingWithResults(obj1, obj2);
 });
 ```
 
@@ -27,9 +27,10 @@ You can thus use Promises as follows:
 
 ```js
 getJSON([url1, ur2]).then(function (objsArr) {
-    // Do something with "objsArr" array
-}, function (err) {
-    // Handle any errors here
+    doSomethingWithResult(objsArr);
+    return optionallyKeepPromiseGoingWithAnotherPromise;
+}).catch((err) => {
+  console.error(err);
 });
 ```
 
@@ -37,13 +38,14 @@ You may use the file `index-es.js` to use the ES2017 `await` keyword for Promise
 as well as take advantage of ES6 Module import:
 
 ```js
-
+(async () => {
 try {
-    const [urlObj1, urlObj2] = await getJSON([url1, ur2]);
+  const [urlObj1, urlObj2] = await getJSON([url1, ur2]);
+  doSomethingWithResults(urlObj1, urlObj2);
 } catch (err) {
     // Handle errors here
 }
-
+})();
 ```
 
 # Install
@@ -55,25 +57,34 @@ npm install simple-get-json
 # Setup
 
 ```html
-<script src="node_modules/@babel/polyfill/dist/polyfill.js"></script>
+<script src="node_modules/core-js-bundle/minified.js"></script>
+<script src="node_modules/regenerator-runtime/runtime.js"></script>
 <script src="node_modules/simple-get-json/dist/index.js"></script>
 ```
 
 ```js
-getJSON(...);
+getJSON(...args);
 ```
 
 or:
 
 ```js
-// Works in Browser only
+// Works in Browser or Node
+import './node_modules/core-js-bundle/minified.js';
+import './node_modules/regenerator-runtime/runtime.js';
 import getJSON from './node_modules/simple-get-json/dist/index-es.js';
+```
 
-// Or for Polyglot Node and Browser
-import getJSON from './node_modules/simple-get-json/dist/index-polyglot-es.js';
+or for Bundlers:
+
+```js
+import 'core-js-bundle';
+import 'regenerator-runtime/runtime.js';
+import getJSON from 'simple-get-json';
 ```
 
 # Todo
+
 - Support named parameters ala jQuery
 - Support rest of jQuery API
 
