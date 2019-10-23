@@ -6,10 +6,11 @@ import getJSONPolyglot from '../src/index-polyglot.js';
 
 const getJSON = typeof module === 'undefined' ? getJSONBrowser : getJSONPolyglot;
 
+// eslint-disable-next-line promise/always-return
 getJSON('test.json').then((result) => {
-    assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (normal promise)');
+  assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (normal promise)');
 }).catch((err) => {
-    assert.true(false, `Shouldn't get here`);
+  assert.true(false, `Shouldn't get here`);
 });
 
 (async () => {
@@ -17,14 +18,15 @@ const result = await getJSON('test.json');
 assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (await)');
 
 await getJSON('test.json', (result) => {
-    assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (callback)');
+  assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (callback)');
 });
 
 await getJSON('test-nonexisting.json', () => {
-    assert.true(false, `Shouldn't reach here`);
+  assert.true(false, `Shouldn't reach here`);
 }, (err) => {
-    assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error (errback)');
-    assert.true(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error (errback)');
+  assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error (errback)');
+  // eslint-disable-next-line no-restricted-syntax
+  assert.true(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error (errback)');
 });
 
 const resultArrOneURL = await getJSON(['test.json']);
@@ -35,26 +37,29 @@ assert.equals(5, resultArrMultipleURLs[0].key, 'Retrieve JSON result value - mul
 assert.equals('aString', resultArrMultipleURLs[1].aKey, 'Retrieve JSON result value - multiple item array URL 2');
 
 try {
-    await getJSON('test-nonexisting.json');
-    assert.true(false, `Shouldn't reach here`);
+  await getJSON('test-nonexisting.json');
+  assert.true(false, `Shouldn't reach here`);
 } catch (err) {
-    assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error');
-    assert.true(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error');
+  assert.includes(' (File: test-nonexisting.json)', err.message, 'Caught nonexisting file error');
+  // eslint-disable-next-line no-restricted-syntax
+  assert.true(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error');
 }
 
 try {
-    await getJSON('test-bad.json');
-    assert.true(false, `Shouldn't reach here`);
+  await getJSON('test-bad.json');
+  assert.true(false, `Shouldn't reach here`);
 } catch (err) {
-    assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON error');
-    assert.true(err instanceof SyntaxError, 'Badly formed JSON gives a syntax error');
+  assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON error');
+  // eslint-disable-next-line no-restricted-syntax
+  assert.true(err instanceof SyntaxError, 'Badly formed JSON gives a syntax error');
 }
 
 try {
-    await getJSON(['test.json', 'test-bad.json']);
-    assert.true(false, `Shouldn't reach here`);
+  await getJSON(['test.json', 'test-bad.json']);
+  assert.true(false, `Shouldn't reach here`);
 } catch (err) {
-    assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON within array of URLs error');
-    assert.true(err instanceof SyntaxError, 'Badly formed JSON within array of URLs gives a syntax error');
+  assert.includes(' (File: test-bad.json)', err.message, 'Caught badly formed JSON within array of URLs error');
+  // eslint-disable-next-line no-restricted-syntax
+  assert.true(err instanceof SyntaxError, 'Badly formed JSON within array of URLs gives a syntax error');
 }
 })();

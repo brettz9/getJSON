@@ -6,7 +6,8 @@ async function getJSON(jsonURL, cb, errBack) {
       const arrResult = await Promise.all(jsonURL.map(url => getJSON(url)));
 
       if (cb) {
-        cb.apply(null, arrResult);
+        // eslint-disable-next-line callback-return, standard/no-callback-literal
+        cb(...arrResult);
       }
 
       return arrResult;
@@ -30,6 +31,7 @@ async function getJSON(jsonURL, cb, errBack) {
 if (typeof fetch === 'undefined') {
   global.fetch = jsonURL => {
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line global-require
       const XMLHttpRequest = require('local-xmlhttprequest')({
         basePath: __dirname
       }); // Don't change to an import as won't resolve for browser testing

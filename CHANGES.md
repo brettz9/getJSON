@@ -1,5 +1,12 @@
 # simple-get-json
 
+## 5.0.0
+
+- Linting: Switch to `eslint-config-ash-nazg`; apply to HTML/Markdown JS
+- Build: Drop `@babel/polyfill` dep.
+- npm: Change deprecated `opn-cli`->`open-cli`
+- npm: Update devDeps
+
 ## 4.1.0
 
 - Build: Ensure has CommonJS build without need for

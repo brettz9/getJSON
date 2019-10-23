@@ -1,8 +1,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.getJSONPolyglot = factory());
-}(this, (function () { 'use strict';
+  (global = global || self, global.getJSONPolyglot = factory());
+}(this, function () { 'use strict';
 
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     try {
@@ -40,6 +40,26 @@
     };
   }
 
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+      return arr2;
+    }
+  }
+
+  function _iterableToArray(iter) {
+    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+  }
+
   function getJSON(_x, _x2, _x3) {
     return _getJSON.apply(this, arguments);
   }
@@ -69,7 +89,8 @@
               arrResult = _context.sent;
 
               if (cb) {
-                cb.apply(null, arrResult);
+                // eslint-disable-next-line callback-return, standard/no-callback-literal
+                cb.apply(void 0, _toConsumableArray(arrResult));
               }
 
               return _context.abrupt("return", arrResult);
@@ -104,7 +125,7 @@
               return _context.stop();
           }
         }
-      }, _callee, this, [[0, 13]]);
+      }, _callee, null, [[0, 13]]);
     }));
     return _getJSON.apply(this, arguments);
   }
@@ -114,6 +135,7 @@
   if (typeof fetch === 'undefined') {
     global.fetch = function (jsonURL) {
       return new Promise(function (resolve, reject) {
+        // eslint-disable-next-line global-require
         var XMLHttpRequest = require('local-xmlhttprequest')({
           basePath: __dirname
         }); // Don't change to an import as won't resolve for browser testing
@@ -148,4 +170,4 @@
 
   return getJSON;
 
-})));
+}));
