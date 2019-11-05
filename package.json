@@ -12,7 +12,6 @@
     "cover 100%"
   ],
   "scripts": {
-    "prepublishOnly": "yarn",
     "eslint": "eslint --ext=js,md,html .",
     "start": "open-cli http://127.0.0.1:8089/tests/index.html && static -p 8089",
     "test": "npm run rollup && npm run test-build && node ./tests/test-node.js",
