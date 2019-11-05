@@ -1,6 +1,6 @@
 {
   "name": "simple-get-json",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "main": "dist/index-cjs.js",
   "browser": "dist/index.js",
   "module": "dist/index-polyglot-es.js",
