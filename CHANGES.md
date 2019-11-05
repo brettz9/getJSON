@@ -1,5 +1,9 @@
 # simple-get-json
 
+## 5.0.1
+
+- npm: Update devDeps
+
 ## 5.0.0
 
 - Linting: Switch to `eslint-config-ash-nazg`; apply to HTML/Markdown JS

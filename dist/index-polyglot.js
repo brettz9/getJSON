@@ -2,7 +2,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, global.getJSONPolyglot = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     try {
@@ -170,4 +170,4 @@
 
   return getJSON;
 
-}));
+})));
