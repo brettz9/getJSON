@@ -1,5 +1,10 @@
 # simple-get-json
 
+## 6.0.0
+
+- npm: Update devDeps
+- yarn: Remove `yarn.lock`
+
 ## 5.0.1
 
 - npm: Update devDeps
