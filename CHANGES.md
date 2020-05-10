@@ -2,8 +2,12 @@
 
 ## ?
 
+- Breaking change: Indicate `engines` as 0.12.0 minimum (requires
+    `Promise`)
+- Linting: As per latest ash-nazg/ESLint 7; apply sauron-node
 - npm: Update `rollup-plugin-babel` to `@rollup/plugin-babel`
   and make explicit `babelHelpers` as `bundled`
+- npm: Update devDeps
 
 ## 6.0.0
 
