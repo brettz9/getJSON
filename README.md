@@ -30,6 +30,7 @@ getJSON([url1, url2]).then(function (objsArr) {
   // Do something with "objsArr" array
 }, function (err) {
   // Handle any errors here
+  console.log('err', err);
 });
 ```
 

@@ -41,33 +41,65 @@
   }
 
   function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
 
   function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-      return arr2;
-    }
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
   function _iterableToArray(iter) {
-    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
   }
 
   function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance");
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
+  /* eslint-disable node/no-unsupported-features/es-syntax */
+
+  /**
+  * @callback SimpleJSONCallback
+  * @param {JSON} json
+  * @returns {void}
+  */
+
+  /**
+  * @callback SimpleJSONErrback
+  * @param {Error} err
+  * @param {string|string[]} jsonURL
+  * @returns {void}
+  */
+
+  /**
+   * @param {string|string[]} jsonURL
+   * @param {SimpleJSONCallback} cb
+   * @param {SimpleJSONErrback} errBack
+   * @returns {Promise<JSON>}
+   */
   function getJSON(_x, _x2, _x3) {
     return _getJSON.apply(this, arguments);
   }
 
   function _getJSON() {
-    _getJSON = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee(jsonURL, cb, errBack) {
+    _getJSON = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(jsonURL, cb, errBack) {
       var arrResult, result;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -89,7 +121,7 @@
               arrResult = _context.sent;
 
               if (cb) {
-                // eslint-disable-next-line callback-return, standard/no-callback-literal
+                // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
                 cb.apply(void 0, _toConsumableArray(arrResult));
               }
 
@@ -130,12 +162,13 @@
     return _getJSON.apply(this, arguments);
   }
 
-  /* eslint-env node */
+  /* eslint-disable node/no-unsupported-features/es-syntax */
 
   if (typeof fetch === 'undefined') {
     global.fetch = function (jsonURL) {
+      // eslint-disable-next-line promise/avoid-new
       return new Promise(function (resolve, reject) {
-        // eslint-disable-next-line global-require
+        // eslint-disable-next-line node/global-require, no-shadow
         var XMLHttpRequest = require('local-xmlhttprequest')({
           basePath: __dirname
         }); // Don't change to an import as won't resolve for browser testing

@@ -1,4 +1,4 @@
-/* eslint-disable handle-callback-err */
+/* eslint-disable node/no-unsupported-features/es-syntax */
 import {assert} from './test-utils.js';
 
 import getJSONBrowser from '../src/index.js';
@@ -9,16 +9,20 @@ const getJSON = typeof module === 'undefined' ? getJSONBrowser : getJSONPolyglot
 // eslint-disable-next-line promise/always-return
 getJSON('test.json').then((result) => {
   assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (normal promise)');
+  // eslint-disable-next-line promise/prefer-await-to-callbacks
 }).catch((err) => {
+  // eslint-disable-next-line no-console
+  console.log(err);
   assert.true(false, `Shouldn't get here`);
+  return true;
 });
 
 (async () => {
 const result = await getJSON('test.json');
 assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (await)');
 
-await getJSON('test.json', (result) => {
-  assert.equals(5, result.key, 'Retrieve JSON result value - single string URL (callback)');
+await getJSON('test.json', (reslt) => {
+  assert.equals(5, reslt.key, 'Retrieve JSON result value - single string URL (callback)');
 });
 
 await getJSON('test-nonexisting.json', () => {

@@ -1,5 +1,10 @@
 # simple-get-json
 
+## ?
+
+- npm: Update `rollup-plugin-babel` to `@rollup/plugin-babel`
+  and make explicit `babelHelpers` as `bundled`
+
 ## 6.0.0
 
 - npm: Update devDeps

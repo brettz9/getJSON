@@ -1,11 +1,11 @@
-/* eslint-env node */
-/* globals global, require */
+/* eslint-disable node/no-unsupported-features/es-syntax */
 import getJSON from './index.js';
 
 if (typeof fetch === 'undefined') {
   global.fetch = (jsonURL) => {
+    // eslint-disable-next-line promise/avoid-new
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line global-require
+      // eslint-disable-next-line node/global-require, no-shadow
       const XMLHttpRequest = require('local-xmlhttprequest')({
         basePath: __dirname
       }); // Don't change to an import as won't resolve for browser testing

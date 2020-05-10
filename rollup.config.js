@@ -1,5 +1,15 @@
-import babel from 'rollup-plugin-babel';
+/* eslint-disable node/no-unsupported-features/es-syntax */
+import babel from '@rollup/plugin-babel';
 
+/**
+ * @external RollupConfig
+ */
+
+/**
+ * @param {PlainObject} cfg
+ * @param {"es"|"umd"} cfg.format
+ * @returns {external:RollupConfig[]}
+ */
 function getDist ({format}) {
   return [{
     input: 'src/index.js',
@@ -9,7 +19,9 @@ function getDist ({format}) {
       name: 'getJSON'
     },
     plugins: [
-      babel()
+      babel({
+        babelHelpers: 'bundled'
+      })
     ]
   }, {
     input: 'src/index-polyglot.js',
@@ -19,7 +31,9 @@ function getDist ({format}) {
       name: 'getJSONPolyglot'
     },
     plugins: [
-      babel()
+      babel({
+        babelHelpers: 'bundled'
+      })
     ]
   }];
 }
@@ -36,6 +50,7 @@ export default [
     },
     plugins: [
       babel({
+        babelHelpers: 'bundled',
         presets: [
           ['@babel/env', {
             targets: {
