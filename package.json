@@ -1,6 +1,6 @@
 {
   "name": "simple-get-json",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "main": "dist/index-node.cjs",
   "exports": {
     "import": "dist/index-node.mjs",

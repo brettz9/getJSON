@@ -37,9 +37,15 @@ function getNodeDist ({format}) {
     input: 'src/index-node.mjs',
     external: ['path', 'node-fetch'],
     output: {
+      globals: {
+        // Not for use
+        'node-fetch': 'nodeFetch',
+        path: 'path'
+      },
       sourcemap: true,
       file: `dist/index-node.${format === 'cjs' ? 'c' : 'm'}js`,
-      format: 'cjs'
+      name: 'getJSON',
+      format: 'umd'
     },
     plugins: [
       babel({

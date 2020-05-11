@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 7.0.2
+
+- Fix: For polyglot capability, export as UMD
+
 ## 7.0.1
 
 - Fix: At least make no-op so Node file can be polyglot
