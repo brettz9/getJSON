@@ -174,6 +174,8 @@ function buildGetJSON({
       r.open('GET', jsonURL, true); // r.responseType = 'json';
 
       r.onreadystatechange = function () {
+        // Not sure how to simulate
+        // istanbul ignore if
         if (r.readyState !== 4) {
           return;
         }
@@ -194,9 +196,17 @@ function buildGetJSON({
     });
   };
 
-  return buildGetJSONWithFetch({
+  const ret = buildGetJSONWithFetch({
     fetch: _fetch
   });
+  ret._fetch = _fetch;
+  ret.hasURLBasePath = Boolean(baseURL);
+  ret.basePath = basePath;
+  return ret;
 }
 
+const getJSON = buildGetJSON();
+
 exports.buildGetJSON = buildGetJSON;
+exports.getJSON = getJSON;
+//# sourceMappingURL=index-node.cjs.map

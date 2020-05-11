@@ -5,6 +5,47 @@ const getJSON = buildGetJSON({
   baseURL: import.meta.url
 });
 
+if (typeof process !== 'undefined') {
+  describe('buildGetJSON', function () {
+    it('hasURLBasePath property (true)', function () {
+      assert.ok(getJSON.hasURLBasePath);
+    });
+    it('hasURLBasePath property (false)', function () {
+      const getJSN = buildGetJSON({
+        cwd: '/explicit/cwd'
+      });
+      assert.notOk(getJSN.hasURLBasePath);
+    });
+    it('hasURLBasePath property (false) with default', function () {
+      let getJSN = buildGetJSON();
+      assert.notOk(getJSN.hasURLBasePath);
+
+      getJSN = buildGetJSON({});
+      assert.notOk(getJSN.hasURLBasePath);
+    });
+  });
+  describe('_fetch', function () {
+    it('_fetch property', function () {
+      const getJSN = buildGetJSON({
+        cwd: '/explicit/cwd'
+      });
+      assert.isFunction(getJSN._fetch);
+    });
+
+    it('_fetch property (global)', function () {
+      global.fetch = () => {
+        //
+      };
+      const getJSN = buildGetJSON({
+        cwd: '/explicit/cwd'
+      });
+      assert.isFunction(getJSN._fetch);
+      assert.equal(getJSN._fetch, global.fetch);
+      delete global.fetch;
+    });
+  });
+}
+
 describe('getJSON', function (done) {
   it('Retrieve JSON result value - single string file (normal promise)', function () {
     // eslint-disable-next-line promise/always-return, promise/prefer-await-to-then
@@ -55,6 +96,12 @@ describe('getJSON', function (done) {
     const resultArrMultipleFiles = await getJSON(['test.json', 'test2.json']);
     assert.equal(5, resultArrMultipleFiles[0].key, 'Retrieve JSON result value - multiple item array file 1');
     assert.equal('aString', resultArrMultipleFiles[1].aKey, 'Retrieve JSON result value - multiple item array file 2');
+  });
+  it('Retrieve JSON result value - multiple items (with callback)', function () {
+    return getJSON(['test.json', 'test2.json'], (...resultArrMultipleFiles) => {
+      assert.equal(5, resultArrMultipleFiles[0].key, 'Retrieve JSON result value - multiple item array file 1');
+      assert.equal('aString', resultArrMultipleFiles[1].aKey, 'Retrieve JSON result value - multiple item array file 2');
+    });
   });
   it('Caught nonexisting file error', async function () {
     try {

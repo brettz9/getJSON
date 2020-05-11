@@ -14,6 +14,7 @@ function getBrowserDist ({format}) {
   return [{
     input: 'src/index.js',
     output: {
+      sourcemap: true,
       file: `dist/index${format === 'es' ? '-es' : ''}.js`,
       format,
       name: 'getJSON'
@@ -36,6 +37,7 @@ function getNodeDist ({format}) {
     input: 'src/index-node.mjs',
     external: ['path', 'node-fetch'],
     output: {
+      sourcemap: true,
       file: `dist/index-node.${format === 'cjs' ? 'c' : 'm'}js`,
       format: 'cjs'
     },

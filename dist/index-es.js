@@ -158,3 +158,4 @@ var buildGetJSON = function buildGetJSON() {
 };
 
 export { buildGetJSON, getJSON };
+//# sourceMappingURL=index-es.js.map
