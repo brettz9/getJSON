@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 7.0.1
+
+- Fix: At least make no-op so Node file can be polyglot
+
 ## 7.0.0
 
 - Breaking change: Make as named rather than default export

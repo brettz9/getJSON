@@ -13,7 +13,7 @@ function buildGetJSON ({
   baseURL,
   cwd: basePath = baseURL
     ? getDirectoryForURL(baseURL)
-    : process.cwd()
+    : typeof fetch === 'undefined' && process.cwd()
 } = {}) {
   const _fetch = typeof fetch !== 'undefined'
     ? fetch
