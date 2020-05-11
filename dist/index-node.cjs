@@ -60,9 +60,8 @@ function _catch(body, recover) {
 
 function buildGetJSONWithFetch({
   // eslint-disable-next-line no-shadow
-  fetch = (_window = window) === null || _window === void 0 ? void 0 : _window.fetch
+  fetch = window.fetch
 } = {}) {
-
   /**
   * @callback SimpleJSONCallback
   * @param {JSON} json
@@ -85,7 +84,9 @@ function buildGetJSONWithFetch({
       return _catch(function () {
         return _invoke(function () {
           if (Array.isArray(jsonURL)) {
-            return _await(Promise.all(jsonURL.map(url => getJSON(url))), function (arrResult) {
+            return _await(Promise.all(jsonURL.map(url => {
+              return getJSON(url);
+            })), function (arrResult) {
               if (cb) {
                 // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
                 cb(...arrResult);
@@ -96,9 +97,11 @@ function buildGetJSONWithFetch({
             });
           }
         }, function (_result) {
-          return _exit ? _result : _await(fetch(jsonURL).then(r => r.json()), function (result) {
-            // eslint-disable-next-line promise/prefer-await-to-callbacks
-            return typeof cb === 'function' ? cb(result) : result;
+          return _exit ? _result : _await(fetch(jsonURL), function (resp) {
+            return _await(resp.json(), function (result) {
+              // eslint-disable-next-line promise/prefer-await-to-callbacks
+              return typeof cb === 'function' ? cb(result) : result;
+            });
           });
         });
       }, function (e) {

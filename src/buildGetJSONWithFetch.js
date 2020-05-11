@@ -15,7 +15,7 @@
  */
 function buildGetJSONWithFetch ({
   // eslint-disable-next-line no-shadow
-  fetch = window?.fetch
+  fetch = window.fetch
 } = {}) {
   /**
   * @callback SimpleJSONCallback
@@ -36,14 +36,17 @@ function buildGetJSONWithFetch ({
   return async function getJSON (jsonURL, cb, errBack) {
     try {
       if (Array.isArray(jsonURL)) {
-        const arrResult = await Promise.all(jsonURL.map((url) => getJSON(url)));
+        const arrResult = await Promise.all(jsonURL.map((url) => {
+          return getJSON(url);
+        }));
         if (cb) {
           // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
           cb(...arrResult);
         }
         return arrResult;
       }
-      const result = await fetch(jsonURL).then((r) => r.json());
+      const resp = await fetch(jsonURL);
+      const result = await resp.json();
       // eslint-disable-next-line promise/prefer-await-to-callbacks
       return typeof cb === 'function' ? cb(result) : result;
     } catch (e) {

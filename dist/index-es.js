@@ -83,11 +83,9 @@ function _catch(body, recover) {
 }
 
 function buildGetJSONWithFetch() {
-  var _window;
-
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref$fetch = _ref.fetch,
-      fetch = _ref$fetch === void 0 ? (_window = window) === null || _window === void 0 ? void 0 : _window.fetch : _ref$fetch;
+      fetch = _ref$fetch === void 0 ? window.fetch : _ref$fetch;
 
   /**
   * @callback SimpleJSONCallback
@@ -124,11 +122,11 @@ function buildGetJSONWithFetch() {
             });
           }
         }, function (_result) {
-          return _exit2 ? _result : _await(fetch(jsonURL).then(function (r) {
-            return r.json();
-          }), function (result) {
-            // eslint-disable-next-line promise/prefer-await-to-callbacks
-            return typeof cb === 'function' ? cb(result) : result;
+          return _exit2 ? _result : _await(fetch(jsonURL), function (resp) {
+            return _await(resp.json(), function (result) {
+              // eslint-disable-next-line promise/prefer-await-to-callbacks
+              return typeof cb === 'function' ? cb(result) : result;
+            });
           });
         });
       }, function (e) {

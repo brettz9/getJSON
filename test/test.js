@@ -1,5 +1,7 @@
 /* globals buildGetJSON */
-/* eslint-disable node/no-unsupported-features/es-syntax, import/unambiguous */
+/* eslint-disable node/no-unsupported-features/es-syntax */
+
+import {buildGetJSONWithFetch} from '../src/buildGetJSONWithFetch.js';
 
 const getJSON = buildGetJSON({
   baseURL: import.meta.url
@@ -8,7 +10,10 @@ const getJSON = buildGetJSON({
 if (typeof process !== 'undefined') {
   describe('buildGetJSON', function () {
     it('hasURLBasePath property (true)', function () {
-      assert.ok(getJSON.hasURLBasePath);
+      const getJSN = buildGetJSON({
+        baseURL: 'http://example.com'
+      });
+      assert.ok(getJSN.hasURLBasePath);
     });
     it('hasURLBasePath property (false)', function () {
       const getJSN = buildGetJSON({
@@ -42,6 +47,19 @@ if (typeof process !== 'undefined') {
       assert.isFunction(getJSN._fetch);
       assert.equal(getJSN._fetch, global.fetch);
       delete global.fetch;
+    });
+  });
+  describe('buildGetJSONWithFetch', function () {
+    it('throws with no arguments and no `window.fetch`', function () {
+      assert.throws(() => {
+        buildGetJSONWithFetch();
+      });
+    });
+
+    it('throws with empty object argument and no `window.fetch`', function () {
+      assert.throws(() => {
+        buildGetJSONWithFetch({});
+      });
     });
   });
 }

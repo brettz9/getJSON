@@ -18,7 +18,7 @@
     "eslint": "eslint --ext=js,md,html .",
     "start": "static -p 8089",
     "test": "npm run eslint && npm run rollup && npm run mocha",
-    "mocha": "rm -Rf node_modules/.cache && nyc mocha --require chai/register-assert -require @babel/register --require ./test/bootstrap/node.js",
+    "mocha": "rm -Rf node_modules/.cache && nyc mocha --require ./test/bootstrap/register.js --require chai/register-assert --require ./test/bootstrap/node.js",
     "browser-test": "npm run eslint && npm run rollup && open-cli http://127.0.0.1:8089/test/index.html && npm start",
     "rollup": "rollup -c"
   },
@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@babel/preset-env": "^7.9.6",
     "@babel/register": "^7.9.0",
     "@mysticatea/eslint-plugin": "^13.0.0",
