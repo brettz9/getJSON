@@ -1,39 +1,3 @@
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -70,90 +34,127 @@ function _nonIterableSpread() {
 /* eslint-disable node/no-unsupported-features/es-syntax */
 
 /**
-* @callback SimpleJSONCallback
-* @param {JSON} json
-* @returns {void}
-*/
-
-/**
-* @callback SimpleJSONErrback
-* @param {Error} err
-* @param {string|string[]} jsonURL
-* @returns {void}
-*/
-
-/**
+ * @callback getJSONCallback
  * @param {string|string[]} jsonURL
  * @param {SimpleJSONCallback} cb
  * @param {SimpleJSONErrback} errBack
  * @returns {Promise<JSON>}
  */
-function getJSON(_x, _x2, _x3) {
-  return _getJSON.apply(this, arguments);
+
+/**
+ * @param {PlainObject} cfg
+ * @param {fetch} cfg.fetch
+ * @returns {getJSONCallback}
+ */
+function _await(value, then, direct) {
+  if (direct) {
+    return then ? then(value) : value;
+  }
+
+  if (!value || !value.then) {
+    value = Promise.resolve(value);
+  }
+
+  return then ? value.then(then) : value;
 }
 
-function _getJSON() {
-  _getJSON = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(jsonURL, cb, errBack) {
-    var arrResult, result;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
+function _invoke(body, then) {
+  var result = body();
 
-            if (!Array.isArray(jsonURL)) {
-              _context.next = 7;
-              break;
-            }
+  if (result && result.then) {
+    return result.then(then);
+  }
 
-            _context.next = 4;
-            return Promise.all(jsonURL.map(function (url) {
+  return then(result);
+}
+
+function _catch(body, recover) {
+  try {
+    var result = body();
+  } catch (e) {
+    return recover(e);
+  }
+
+  if (result && result.then) {
+    return result.then(void 0, recover);
+  }
+
+  return result;
+}
+
+function buildGetJSONWithFetch() {
+  var _window;
+
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$fetch = _ref.fetch,
+      fetch = _ref$fetch === void 0 ? (_window = window) === null || _window === void 0 ? void 0 : _window.fetch : _ref$fetch;
+
+  /**
+  * @callback SimpleJSONCallback
+  * @param {JSON} json
+  * @returns {void}
+  */
+
+  /**
+  * @callback SimpleJSONErrback
+  * @param {Error} err
+  * @param {string|string[]} jsonURL
+  * @returns {void}
+  */
+
+  /**
+  * @type {getJSONCallback}
+  */
+  return function getJSON(jsonURL, cb, errBack) {
+    try {
+      var _exit2 = false;
+      return _catch(function () {
+        return _invoke(function () {
+          if (Array.isArray(jsonURL)) {
+            return _await(Promise.all(jsonURL.map(function (url) {
               return getJSON(url);
-            }));
+            })), function (arrResult) {
+              if (cb) {
+                // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
+                cb.apply(void 0, _toConsumableArray(arrResult));
+              }
 
-          case 4:
-            arrResult = _context.sent;
-
-            if (cb) {
-              // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
-              cb.apply(void 0, _toConsumableArray(arrResult));
-            }
-
-            return _context.abrupt("return", arrResult);
-
-          case 7:
-            _context.next = 9;
-            return fetch(jsonURL).then(function (r) {
-              return r.json();
+              _exit2 = true;
+              return arrResult;
             });
+          }
+        }, function (_result) {
+          return _exit2 ? _result : _await(fetch(jsonURL).then(function (r) {
+            return r.json();
+          }), function (result) {
+            // eslint-disable-next-line promise/prefer-await-to-callbacks
+            return typeof cb === 'function' ? cb(result) : result;
+          });
+        });
+      }, function (e) {
+        e.message += " (File: ".concat(jsonURL, ")");
 
-          case 9:
-            result = _context.sent;
-            return _context.abrupt("return", typeof cb === 'function' ? cb(result) : result);
-
-          case 13:
-            _context.prev = 13;
-            _context.t0 = _context["catch"](0);
-            _context.t0.message += " (File: ".concat(jsonURL, ")");
-
-            if (!errBack) {
-              _context.next = 18;
-              break;
-            }
-
-            return _context.abrupt("return", errBack(_context.t0, jsonURL));
-
-          case 18:
-            throw _context.t0;
-
-          case 19:
-          case "end":
-            return _context.stop();
+        if (errBack) {
+          return errBack(e, jsonURL);
         }
-      }
-    }, _callee, null, [[0, 13]]);
-  }));
-  return _getJSON.apply(this, arguments);
+
+        throw e;
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
 }
 
-export default getJSON;
+/* eslint-disable node/no-unsupported-features/es-syntax */
+var getJSON = buildGetJSONWithFetch();
+/**
+ * For polymorphism with Node.
+ * @returns {getJSON}
+ */
+
+var buildGetJSON = function buildGetJSON() {
+  return getJSON;
+};
+
+export { buildGetJSON, getJSON };

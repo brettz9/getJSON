@@ -49,13 +49,15 @@ try {
 })();
 ```
 
-# Install
+## Install
 
 ```
 npm install simple-get-json regenerator-runtime
 ```
 
-# Setup
+## Setup
+
+### Browser
 
 ```html
 <script src="node_modules/core-js-bundle/minified.js"></script>
@@ -67,24 +69,70 @@ npm install simple-get-json regenerator-runtime
 getJSON(...args);
 ```
 
-or:
+or for ESM:
+
+1. Direct use:
 
 ```js
-// Works in Browser only
-import getJSON from './node_modules/simple-get-json/dist/index-es.js';
+import {getJSON} from './node_modules/simple-get-json/dist/index-es.js';
 ```
+
+2. With a bundler:
 
 ```js
-// Or for Polyglot Node and Browser
-import getJSON from './node_modules/simple-get-json/dist/index-polyglot-es.js';
+import {getJSON} from 'simple-get-json';
 ```
 
-# Todo
+
+### Node (CJS)
+
+```js
+const {getJSON} = require('simple-get-json');
+```
+
+See below for `buildGetJSON` usage.
+
+### Node (ESM)
+
+In ESM Node, you can:
+
+1. Directly import the module (for use relative to the current working
+    directory):
+
+```js
+import {getJSON} from 'simple-get-json';
+```
+
+2. Build a version of `getJSON` which works relative to the current file
+    (or some other URL):
+
+```js
+import {buildGetJSON} from 'simple-get-json';
+
+const getJSON = buildGetJSON({
+  baseURL: import.meta.url
+});
+```
+
+OR:
+
+3. Build a version of `getJSON` which works relative to a specific file
+    directory:
+
+```js
+import {buildGetJSON} from 'simple-get-json/dist/index-node-es.js';
+
+const getJSON = buildGetJSON({
+  cwd: '/some/current/working/directory'
+});
+```
+
+## Todo
 
 - Support named parameters ala jQuery
 - Support rest of jQuery API
 - Make local loading optional
 
-# See also
+## See also
 
 - [postJSON](https://github.com/brettz9/postJSON)

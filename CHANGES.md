@@ -1,10 +1,28 @@
-# simple-get-json
+# CHANGES for simple-get-json
 
-## ?
+## 7.0.0
 
+- Breaking change: Make as named rather than default export
+- Breaking change: Remove polyglot file (in favor of browser or Node being
+  auto-selected appropriately)
+- Breaking change: Point to different `dist` paths for `main`;
+  remove `browser` in favor of `exports.browser`; add `exports` with CJS
+  and MJS files
 - Breaking change: Indicate `engines` as 0.12.0 minimum (requires
     `Promise`)
+- Breaking change (Node): Fix bug with base directory, making it now
+  by default resolve relative to `process.cwd`; Node version now also
+  adds ability to read URLs
+- Build: Use "json" extension with RC file
+- Enhancement: Add `buildGetJSON` export for baking in base path or base URL
+  (e.g., for use with `import.meta.url`)
+- Enhancement: Add `getDirectoryForURL` module (used by `index-node`)
 - Linting: As per latest ash-nazg/ESLint 7; apply sauron-node
+- Testing: Switch to default Mocha `test` directory; build tests with
+  `@babel/register`
+- Testing: Switch to Mocha + Chai + Babel + nyc
+- npm: Avoid opening file in start script
+- npm: Avoid linting with rollup script
 - npm: Update `rollup-plugin-babel` to `@rollup/plugin-babel`
   and make explicit `babelHelpers` as `bundled`
 - npm: Update devDeps

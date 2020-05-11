@@ -10,7 +10,7 @@ import babel from '@rollup/plugin-babel';
  * @param {"es"|"umd"} cfg.format
  * @returns {external:RollupConfig[]}
  */
-function getDist ({format}) {
+function getBrowserDist ({format}) {
   return [{
     input: 'src/index.js',
     output: {
@@ -23,29 +23,20 @@ function getDist ({format}) {
         babelHelpers: 'bundled'
       })
     ]
-  }, {
-    input: 'src/index-polyglot.js',
-    output: {
-      file: `dist/index-polyglot${format === 'es' ? '-es' : ''}.js`,
-      format,
-      name: 'getJSONPolyglot'
-    },
-    plugins: [
-      babel({
-        babelHelpers: 'bundled'
-      })
-    ]
   }];
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default [
-  ...getDist({format: 'umd'}),
-  ...getDist({format: 'es'}),
-  {
-    input: 'src/index-polyglot.js',
+/**
+ * @param {PlainObject} cfg
+ * @param {"es"|"umd"} cfg.format
+ * @returns {external:RollupConfig[]}
+ */
+function getNodeDist ({format}) {
+  return [{
+    input: 'src/index-node.mjs',
+    external: ['path', 'node-fetch'],
     output: {
-      file: `dist/index-cjs.js`,
+      file: `dist/index-node.${format === 'cjs' ? 'c' : 'm'}js`,
       format: 'cjs'
     },
     plugins: [
@@ -60,5 +51,13 @@ export default [
         ]
       })
     ]
-  }
+  }];
+}
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default [
+  ...getBrowserDist({format: 'umd'}),
+  ...getBrowserDist({format: 'es'}),
+  ...getNodeDist({format: 'cjs'}),
+  ...getNodeDist({format: 'es'})
 ];

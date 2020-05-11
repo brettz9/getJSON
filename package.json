@@ -1,9 +1,12 @@
 {
   "name": "simple-get-json",
-  "version": "6.0.0",
-  "main": "dist/index-cjs.js",
-  "browser": "dist/index.js",
-  "module": "dist/index-polyglot-es.js",
+  "version": "7.0.0",
+  "main": "dist/index-node.cjs",
+  "exports": {
+    "import": "dist/index-node.mjs",
+    "require": "dist/index-node.cjs",
+    "browser": "dist/index.js"
+  },
   "author": "Brett Zamir",
   "contributors": [],
   "license": "MIT",
@@ -13,23 +16,30 @@
   ],
   "scripts": {
     "eslint": "eslint --ext=js,md,html .",
-    "start": "open-cli http://127.0.0.1:8089/tests/index.html && static -p 8089",
-    "test": "npm run rollup && npm run test-build && node ./tests/test-node.js",
-    "test-build": "npm run eslint && rollup -c rollup.config.test.js",
-    "browser-test": "npm run rollup && npm start",
-    "rollup": "npm run eslint && rollup -c"
+    "start": "static -p 8089",
+    "test": "npm run eslint && npm run rollup && npm run mocha",
+    "mocha": "rm -Rf node_modules/.cache && nyc mocha --require chai/register-assert -require @babel/register --require ./test/bootstrap/node.js",
+    "browser-test": "npm run eslint && npm run rollup && open-cli http://127.0.0.1:8089/test/index.html && npm start",
+    "rollup": "rollup -c"
   },
   "engines": {
     "node": ">=0.12.0"
   },
   "dependencies": {
-    "local-xmlhttprequest": "^2.0.0"
+    "local-xmlhttprequest": "^2.0.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@babel/preset-env": "^7.9.6",
+    "@babel/register": "^7.9.0",
     "@mysticatea/eslint-plugin": "^13.0.0",
     "@rollup/plugin-babel": "^5.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
+    "babel-plugin-transform-import-meta": "^1.0.1",
+    "chai": "^4.2.0",
     "eslint": "^7.0.0",
     "eslint-config-ash-nazg": "^22.0.0",
     "eslint-config-standard": "^14.1.1",
@@ -47,7 +57,9 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^19.0.1",
+    "mocha": "^7.1.2",
     "node-static": "0.7.11",
+    "nyc": "^15.0.1",
     "open-cli": "^6.0.1",
     "rollup": "2.9.0",
     "rollup-plugin-async": "^1.2.0",

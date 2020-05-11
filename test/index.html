@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>getJSON demo</title>
+        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
+        <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+        <script src="../node_modules/mocha/mocha.js"></script>
+        <script src="../node_modules/chai/chai.js"></script>
+    </head>
+    <body>
+        <div style="border: 2px solid black;" id="results"></div>
+
+        <div id="mocha"></div>
+
+        <script type="module">
+        /* globals mocha, chai */
+        import {buildGetJSON} from '../src/index.js';
+
+        mocha.setup('bdd');
+        window.assert = chai.assert;
+        window.buildGetJSON = buildGetJSON;
+        mocha.globals(['buildGetJSON']);
+        </script>
+
+        <script type="module" src="test.js"></script>
+
+        <script type="module">
+        /* globals mocha */
+        mocha.run();
+        </script>
+    </body>
+</html>
