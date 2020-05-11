@@ -131,7 +131,7 @@ const getJSON = buildGetJSON({
 
 - Support named parameters ala jQuery
 - Support rest of jQuery API
-- Make local loading optional
+- Make local or URL loading optional for Node
 
 ## See also
 
