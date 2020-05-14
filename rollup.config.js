@@ -18,7 +18,7 @@ function getBrowserDist ({format}) {
     input: 'src/index.js',
     output: {
       sourcemap: true,
-      file: `dist/index${format === 'es' ? '-es' : ''}.js`,
+      file: `dist/index${format === 'esm' ? '-es' : ''}.js`,
       format,
       name: 'getJSON'
     },
@@ -86,7 +86,7 @@ function getNodeDist ({format}) {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   ...getBrowserDist({format: 'umd'}),
-  ...getBrowserDist({format: 'es'}),
+  ...getBrowserDist({format: 'esm'}),
   ...getNodeDist({format: 'umd'}),
-  ...getNodeDist({format: 'es'})
+  ...getNodeDist({format: 'esm'})
 ];
