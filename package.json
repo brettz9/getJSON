@@ -76,6 +76,7 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^19.0.1",
+    "filesize-badger": "^0.3.3",
     "license-badger": "^0.17.0",
     "mocha": "^7.1.2",
     "mocha-badge-generator": "^0.8.0",
@@ -83,6 +84,7 @@
     "open-cli": "^6.0.1",
     "rollup": "2.9.1",
     "rollup-plugin-async": "^1.2.0",
+    "rollup-plugin-filesize": "^9.0.0",
     "rollup-plugin-node-globals": "^1.4.0",
     "typescript": "^3.8.3"
   },

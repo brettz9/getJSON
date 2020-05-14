@@ -1,6 +1,9 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
 import babel from '@rollup/plugin-babel';
 
+import fileSize from 'rollup-plugin-filesize';
+import {rollupPluginFilesizeBadger} from 'filesize-badger';
+
 /**
  * @external RollupConfig
  */
@@ -20,6 +23,12 @@ function getBrowserDist ({format}) {
       name: 'getJSON'
     },
     plugins: [
+      fileSize({
+        showBeforeSizes: 'release',
+        reporter: ['boxen', rollupPluginFilesizeBadger({
+          outputPath: `badges/filesize-browser-${format}.svg`
+        })]
+      }),
       babel({
         babelHelpers: 'bundled'
       })
@@ -57,6 +66,9 @@ function getNodeDist ({format}) {
     external: ['path', 'node-fetch', 'local-xmlhttprequest'],
     output,
     plugins: [
+      fileSize({
+        showBeforeSizes: 'release'
+      }),
       babel({
         babelHelpers: 'bundled',
         presets: [

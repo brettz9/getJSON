@@ -3,7 +3,7 @@
 [![devDependencies](https://img.shields.io/david/dev/brettz9/getJSON.svg)](https://david-dm.org/brettz9/getJSON?type=dev)
 
 [![eslint badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-badge.svg?sanitize=true)](badges/eslint-badge.svg)
-[![eslint 3rd party badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-thirdparty.svg?sanitize=true)](badges/eslint-thirdparty.svg)
+[![eslint 3rd party badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-thirdparty.svg?sanitize=true)](badges/eslint-third-party.svg)
 
 [![testing badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/tests-badge.svg?sanitize=true)](badges/tests-badge.svg)
 [![coverage badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/coverage-badge.svg?sanitize=true)](badges/coverage-badge.svg)
@@ -12,7 +12,8 @@
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/brettz9/getJSON.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/brettz9/getJSON/alerts)
 [![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/brettz9/getJSON.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/brettz9/getJSON/context:javascript)
 
-[![Filesize badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/filesize-badge.svg?sanitize=true)](badges/filesize-badge.svg)
+[![Filesize badge (UMD)](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/filesize-browser-umd.svg?sanitize=true)](badges/filesize-browser-umd.svg)
+[![Filesize badge (ESM)](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/filesize-browser-esm.svg?sanitize=true)](badges/filesize-browser-esm.svg)
 <!--[![License](https://img.shields.io/npm/l/getJSON.svg)](LICENSE-MIT.txt)-->
 [![Licenses badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/licenses-badge.svg?sanitize=true)](badges/licenses-badge.svg)
 
