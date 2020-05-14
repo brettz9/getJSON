@@ -25,40 +25,12 @@
 
 getJSON function similar to that of jQuery's.
 
-```js
-getJSON(url, function (data) {
-  // Do something with "data"
-});
-```
-
-An optional third argument can be provided as an error-back (which will
-be supplied the error message and originally supplied URL).
-
-Also accepts an array of URLs (waiting for all to load):
-
-```js
-getJSON([url1, url2], function (obj1, obj2) {
-  // Do something with "obj1" and "obj2"
-});
-```
-
 If no callback or error-back is provided (or when an array of URLs is
 supplied), a promise will be returned. If an array is provided along with
 a callback, that callback will be executed before the promise is resolved.
 
-You can thus use Promises as follows:
-
-```js
-getJSON([url1, url2]).then(function (objsArr) {
-  // Do something with "objsArr" array
-}, function (err) {
-  // Handle any errors here
-  console.log('err', err);
-});
-```
-
-You may use the file `index-es.js` to use the ES2017 `await` keyword for Promise results,
-as well as take advantage of ES6 Module import:
+You may use the file `index-es.js` to use the ES2017 `await` keyword for
+Promise results, as well as take advantage of ES6 Module import:
 
 ```js
 (async () => {
@@ -71,6 +43,37 @@ try {
 
 })();
 ```
+
+`simple-get-json` also accepts an array of URLs (waiting for all to load):
+
+```js
+(async () => {
+const [obj1, obj2] = await getJSON([url1, url2]);
+// Do something with "obj1" and "obj2"
+})();
+```
+
+Alternatively, you can use regular `then` Promises:
+
+```js
+getJSON([url1, url2]).then(function (objsArr) {
+  // Do something with "objsArr" array
+}, function (err) {
+  // Handle any errors here
+  console.log('err', err);
+});
+```
+
+Or use the old callback style.
+
+```js
+getJSON(url, function (data) {
+  // Do something with "data"
+});
+```
+
+An optional third argument can be provided as an error-back (which will
+be supplied the error message and originally supplied URL).
 
 ## Install
 

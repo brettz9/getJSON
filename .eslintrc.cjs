@@ -82,7 +82,7 @@ module.exports = {
         'promise/always-return': 0,
         'handle-callback-err': 0,
         'no-unused-vars': ['error', {
-          varsIgnorePattern: 'getJSON|urlObj\\d',
+          varsIgnorePattern: 'getJSON|obj1|obj2|urlObj\\d',
           argsIgnorePattern: 'data|obj\\d|objsArr|err',
           caughtErrorsIgnorePattern: 'err'
         }]
