@@ -18,12 +18,26 @@
     "cover 100%"
   ],
   "scripts": {
+    "license-badge": "license-badger --corrections --uncategorizedLicenseTemplate \"\\${license} (\\${name} (\\${version}))\" --filteredTypes=nonempty --textTemplate \"License types\n(project, deps, and bundled devDeps)\" --packageJson --production badges/licenses-badge.svg",
+    "license-badge-dev": "license-badger --corrections --filteredTypes=nonempty --textTemplate \"License types\n(all devDeps)\" --allDevelopment badges/licenses-badge-dev.svg",
+    "license-badges": "npm run license-badge && npm run license-badge-dev",
+    "prepublishOnly": "npm run license-badges",
+    "eslint-badge": "eslint-formatter-badger --outputPath badges/eslint-badge.svg --file .",
+    "eslint-third-party-badge": "eslint-formatter-badger --mainTemplate=\"ESLint 3rd party light audit (\\${ruleMapCount} rules in \\${numFiles} files)\" --filteredTypes intrusive,vulnerability --ruleMap .eslintRuleTypeMap.json --outputPath badges/eslint-third-party.svg --noEslintInlineConfig --noUseEslintIgnore --noUseEslintrc --eslintConfigPath .eslintrc-3rdparty.cjs `es-file-traverse --file ./src/index.js --file ./src/index-polyglot.js --node`",
+    "eslint-badges": "npm run eslint-badge && npm run eslint-third-party-badge",
+    "coverage-badge": "coveradge badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
     "start": "static -p 8089",
-    "test": "npm run eslint && npm run rollup && npm run mocha",
-    "mocha": "rm -Rf node_modules/.cache && c8 mocha --experimental-modules --require ./test/bootstrap/node.cjs",
+    "test": "npm run eslint && npm run rollup && npm run mocha && npm run coverage-badge",
+    "mocha": "rm -Rf node_modules/.cache && c8 mocha --experimental-modules",
     "browser-test": "npm run eslint && npm run rollup && open-cli http://127.0.0.1:8089/test/index.html && npm start",
     "rollup": "rollup -c"
+  },
+  "c8": {
+    "reporter": [
+      "json-summary",
+      "text"
+    ]
   },
   "engines": {
     "node": ">=0.12.0"
@@ -43,6 +57,8 @@
     "babel-plugin-transform-import-meta": "^1.0.1",
     "c8": "^7.1.2",
     "chai": "^4.2.0",
+    "coveradge": "^0.6.0",
+    "cypress-multi-reporters": "^1.4.0",
     "eslint": "^7.0.0",
     "eslint-config-ash-nazg": "^22.0.0",
     "eslint-config-standard": "^14.1.1",
@@ -60,7 +76,9 @@
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^19.0.1",
+    "license-badger": "^0.17.0",
     "mocha": "^7.1.2",
+    "mocha-badge-generator": "^0.8.0",
     "node-static": "0.7.11",
     "open-cli": "^6.0.1",
     "rollup": "2.9.1",

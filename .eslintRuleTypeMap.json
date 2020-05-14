@@ -1,0 +1,4 @@
+{
+  "no-global-assign": "intrusive",
+  "no-eval": "vulnerability"
+}

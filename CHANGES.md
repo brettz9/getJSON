@@ -8,6 +8,8 @@
 supported by Rollup)
 - Enhancement: Add `browser` to `package.json`
 - Fix: ESM Rollup format wasn't being specified properly
+- Docs: Add badges
+- Linting: Check hidden files
 - Testing: Move to c8 for native Node coverage
 
 ## 7.0.2

@@ -1,3 +1,25 @@
+[![npm](https://img.shields.io/npm/v/simple-get-json.svg)](https://www.npmjs.com/package/simple-get-json)
+[![Dependencies](https://img.shields.io/david/brettz9/getJSON.svg)](https://david-dm.org/brettz9/getJSON)
+[![devDependencies](https://img.shields.io/david/dev/brettz9/getJSON.svg)](https://david-dm.org/brettz9/getJSON?type=dev)
+
+[![eslint badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-badge.svg?sanitize=true)](badges/eslint-badge.svg)
+[![eslint 3rd party badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-thirdparty.svg?sanitize=true)](badges/eslint-thirdparty.svg)
+
+[![testing badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/tests-badge.svg?sanitize=true)](badges/tests-badge.svg)
+[![coverage badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/coverage-badge.svg?sanitize=true)](badges/coverage-badge.svg)
+
+[![Known Vulnerabilities](https://snyk.io/test/github/brettz9/getJSON/badge.svg)](https://snyk.io/test/github/brettz9/getJSON)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/brettz9/getJSON.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/brettz9/getJSON/alerts)
+[![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/brettz9/getJSON.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/brettz9/getJSON/context:javascript)
+
+[![Filesize badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/filesize-badge.svg?sanitize=true)](badges/filesize-badge.svg)
+<!--[![License](https://img.shields.io/npm/l/getJSON.svg)](LICENSE-MIT.txt)-->
+[![Licenses badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/licenses-badge.svg?sanitize=true)](badges/licenses-badge.svg)
+
+(see also [licenses for dev. deps.](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/licenses-badge-dev.svg?sanitize=true))
+
+[![issuehunt-to-marktext](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/brettz9/getJSON)
+
 # getJSON
 
 getJSON function similar to that of jQuery's.
