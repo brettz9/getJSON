@@ -3,7 +3,7 @@
 [![devDependencies](https://img.shields.io/david/dev/brettz9/getJSON.svg)](https://david-dm.org/brettz9/getJSON?type=dev)
 
 [![eslint badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-badge.svg?sanitize=true)](badges/eslint-badge.svg)
-[![eslint 3rd party badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-thirdparty.svg?sanitize=true)](badges/eslint-third-party.svg)
+[![eslint 3rd party badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/eslint-third-party.svg?sanitize=true)](badges/eslint-third-party.svg)
 
 [![testing badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/tests-badge.svg?sanitize=true)](badges/tests-badge.svg)
 [![coverage badge](https://raw.githubusercontent.com/brettz9/getJSON/master/badges/coverage-badge.svg?sanitize=true)](badges/coverage-badge.svg)
