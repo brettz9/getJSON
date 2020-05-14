@@ -1,8 +1,15 @@
-/* globals buildGetJSON */
+/* globals assert, buildGetJSON */
 /* eslint-disable node/no-unsupported-features/es-syntax */
 
+import {buildGetJSON as buildGetJSONNode} from '../src/index-polyglot.js';
 import {buildGetJSONWithFetch} from '../src/buildGetJSONWithFetch.js';
 
+// Todo: When Mocha may support `--require` with native ESM, put this
+//  in bootstrap file instead; see
+//  https://github.com/mochajs/mocha/issues/4281
+if (typeof buildGetJSON === 'undefined') {
+  global.buildGetJSON = buildGetJSONNode;
+}
 const getJSON = buildGetJSON({
   baseURL: import.meta.url
 });
@@ -21,9 +28,11 @@ if (typeof process !== 'undefined') {
       });
       assert.notOk(getJSN.hasURLBasePath);
     });
-    it('hasURLBasePath property (false) with default', function () {
+    it('hasURLBasePath property (false) with default', async function () {
       let getJSN = buildGetJSON();
       assert.notOk(getJSN.hasURLBasePath);
+      const result = await getJSN('test/test.json');
+      assert.equal(5, result.key);
 
       getJSN = buildGetJSON({});
       assert.notOk(getJSN.hasURLBasePath);

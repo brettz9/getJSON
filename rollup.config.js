@@ -33,20 +33,29 @@ function getBrowserDist ({format}) {
  * @returns {external:RollupConfig[]}
  */
 function getNodeDist ({format}) {
+  const output = {
+    format,
+    sourcemap: true,
+    name: 'getJSON',
+    // Use cjs extension, as we're using for Node too
+    file: `dist/index-polyglot.${format === 'umd' ? 'c' : 'm'}js`
+  };
+  if (format === 'umd') {
+    // Despite the Rollup warning about possibly needing path builtins,
+    //  we don't actually need to increase the package size by including
+    //  it, as the browser build is not supposed to use `baseURL` (which
+    //  prompts `cwd` to default to `getDirectoryForURL` instead of ignoring
+    //  the value when a global `fetch` is defined as in the browser)
+    output.globals = {
+      // Not for actual use
+      'node-fetch': 'nodeFetch',
+      path: 'path'
+    };
+  }
   return [{
-    input: 'src/index-node.mjs',
-    external: ['path', 'node-fetch'],
-    output: {
-      globals: {
-        // Not for use
-        'node-fetch': 'nodeFetch',
-        path: 'path'
-      },
-      sourcemap: true,
-      file: `dist/index-node.${format === 'cjs' ? 'c' : 'm'}js`,
-      name: 'getJSON',
-      format: 'umd'
-    },
+    input: 'src/index-polyglot.js',
+    external: ['path', 'node-fetch', 'local-xmlhttprequest'],
+    output,
     plugins: [
       babel({
         babelHelpers: 'bundled',
@@ -66,6 +75,6 @@ function getNodeDist ({format}) {
 export default [
   ...getBrowserDist({format: 'umd'}),
   ...getBrowserDist({format: 'es'}),
-  ...getNodeDist({format: 'cjs'}),
+  ...getNodeDist({format: 'umd'}),
   ...getNodeDist({format: 'es'})
 ];

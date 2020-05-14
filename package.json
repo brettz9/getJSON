@@ -1,10 +1,13 @@
 {
   "name": "simple-get-json",
-  "version": "7.0.2",
-  "main": "dist/index-node.cjs",
+  "version": "8.0.0",
+  "main": "dist/index-polyglot.cjs",
+  "module": "dist/index-es.js",
+  "browser": "dist/index.js",
+  "type": "module",
   "exports": {
-    "import": "dist/index-node.mjs",
-    "require": "dist/index-node.cjs",
+    "import": "dist/index-polyglot.mjs",
+    "require": "dist/index-polyglot.cjs",
     "browser": "dist/index.js"
   },
   "author": "Brett Zamir",
@@ -18,7 +21,7 @@
     "eslint": "eslint --ext=js,md,html .",
     "start": "static -p 8089",
     "test": "npm run eslint && npm run rollup && npm run mocha",
-    "mocha": "rm -Rf node_modules/.cache && nyc mocha --require ./test/bootstrap/register.js --require chai/register-assert --require ./test/bootstrap/node.js",
+    "mocha": "rm -Rf node_modules/.cache && c8 mocha --experimental-modules --require ./test/bootstrap/node.cjs",
     "browser-test": "npm run eslint && npm run rollup && open-cli http://127.0.0.1:8089/test/index.html && npm start",
     "rollup": "rollup -c"
   },
@@ -38,6 +41,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "babel-plugin-transform-import-meta": "^1.0.1",
+    "c8": "^7.1.2",
     "chai": "^4.2.0",
     "eslint": "^7.0.0",
     "eslint-config-ash-nazg": "^22.0.0",
@@ -58,7 +62,6 @@
     "eslint-plugin-unicorn": "^19.0.1",
     "mocha": "^7.1.2",
     "node-static": "0.7.11",
-    "nyc": "^15.0.1",
     "open-cli": "^6.0.1",
     "rollup": "2.9.1",
     "rollup-plugin-async": "^1.2.0",

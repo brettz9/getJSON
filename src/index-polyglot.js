@@ -1,8 +1,8 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
-import nodeFetch from 'node-fetch';
 import {buildGetJSONWithFetch} from './buildGetJSONWithFetch.js';
-import {getDirectoryForURL} from './getDirectoryForURL.js';
+import {getDirectoryForURL, setDirname} from './getDirectoryForURL.js';
 
+let nodeFetch;
 /**
  * @param {PlainObject} cfg
  * @param {string} cfg.baseURL
@@ -11,31 +11,41 @@ import {getDirectoryForURL} from './getDirectoryForURL.js';
  */
 function buildGetJSON ({
   baseURL,
-  cwd: basePath = baseURL
-    ? getDirectoryForURL(baseURL)
-    : typeof fetch === 'undefined' && process.cwd()
+  cwd: basePath
 } = {}) {
   const _fetch = typeof fetch !== 'undefined'
     ? fetch
-    : (jsonURL) => {
+    : async (jsonURL) => {
       if ((/^https?:/u).test(jsonURL)) {
-        return nodeFetch(jsonURL);
+        if (!nodeFetch) {
+          nodeFetch = await import('node-fetch');
+        }
+        return nodeFetch.default(jsonURL);
       }
+
+      if (!basePath) {
+        await setDirname();
+        basePath = baseURL
+          ? getDirectoryForURL(baseURL)
+          : typeof fetch === 'undefined' && process.cwd();
+      }
+
       // Filed https://github.com/bergos/file-fetch/issues/12 to see
       //  about getting relative basePaths in `file-fetch` and using
       //  that better-tested package instead
+      const localXMLHttpRequest = await import('local-xmlhttprequest');
+      // eslint-disable-next-line no-shadow
+      const XMLHttpRequest = localXMLHttpRequest.default({
+        basePath
+      }); // Don't change to an import as won't resolve for browser testing
       // eslint-disable-next-line promise/avoid-new
       return new Promise((resolve, reject) => {
-        // eslint-disable-next-line node/global-require, no-shadow
-        const XMLHttpRequest = require('local-xmlhttprequest')({
-          basePath
-        }); // Don't change to an import as won't resolve for browser testing
         const r = new XMLHttpRequest();
         r.open('GET', jsonURL, true);
         // r.responseType = 'json';
         r.onreadystatechange = function () {
-          // Not sure how to simulate
-          // istanbul ignore if
+          // Not sure how to simulate `if`
+          /* c8 ignore next */
           if (r.readyState !== 4) { return; }
           if (r.status === 200) {
             // var json = r.json;
@@ -51,6 +61,8 @@ function buildGetJSON ({
           ));
         };
         r.send();
+      // https://github.com/bcoe/c8/issues/135
+      /* c8 ignore next */
       });
     };
 

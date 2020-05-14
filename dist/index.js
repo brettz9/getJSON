@@ -130,8 +130,10 @@
           }, function (_result) {
             return _exit2 ? _result : _await(fetch(jsonURL), function (resp) {
               return _await(resp.json(), function (result) {
-                // eslint-disable-next-line promise/prefer-await-to-callbacks
-                return typeof cb === 'function' ? cb(result) : result;
+                return typeof cb === 'function' // eslint-disable-next-line promise/prefer-await-to-callbacks
+                ? cb(result) : result; // https://github.com/bcoe/c8/issues/135
+
+                /* c8 ignore next */
               });
             });
           });
@@ -142,7 +144,9 @@
             return errBack(e, jsonURL);
           }
 
-          throw e;
+          throw e; // https://github.com/bcoe/c8/issues/135
+
+          /* c8 ignore next */
         });
       } catch (e) {
         return Promise.reject(e);

@@ -1,5 +1,15 @@
 # CHANGES for simple-get-json
 
+## 8.0.0
+
+- Breaking change: Make as proper native Node ESM module
+- Breaking change: Add back `module` to `package.json`
+- Breaking change: Rename again as polyglot (even if not
+supported by Rollup)
+- Enhancement: Add `browser` to `package.json`
+- Fix: ESM Rollup format wasn't being specified properly
+- Testing: Move to c8 for native Node coverage
+
 ## 7.0.2
 
 - Fix: For polyglot capability, export as UMD

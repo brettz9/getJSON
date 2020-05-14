@@ -47,14 +47,20 @@ function buildGetJSONWithFetch ({
       }
       const resp = await fetch(jsonURL);
       const result = await resp.json();
-      // eslint-disable-next-line promise/prefer-await-to-callbacks
-      return typeof cb === 'function' ? cb(result) : result;
+      return typeof cb === 'function'
+        // eslint-disable-next-line promise/prefer-await-to-callbacks
+        ? cb(result)
+        : result;
+    // https://github.com/bcoe/c8/issues/135
+    /* c8 ignore next */
     } catch (e) {
       e.message += ` (File: ${jsonURL})`;
       if (errBack) {
         return errBack(e, jsonURL);
       }
       throw e;
+    // https://github.com/bcoe/c8/issues/135
+    /* c8 ignore next */
     }
   };
 }

@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   extends: ['ash-nazg/sauron-node'],
   parserOptions: {
@@ -15,7 +16,8 @@ module.exports = {
       'fetch',
       'JSON',
       'Promise',
-      'Promise.all'
+      'Promise.all',
+      'window'
     ]
   },
   env: {
@@ -27,13 +29,10 @@ module.exports = {
       files: 'test/**',
       env: {
         mocha: true
-      },
-      globals: {
-        assert: true
       }
     },
     {
-      files: 'src/index-node.mjs',
+      files: 'src/index-polyglot.js',
       globals: {
         require: true,
         __dirname: true
@@ -43,7 +42,7 @@ module.exports = {
       }
     },
     {
-      files: '.eslintrc.js',
+      files: ['.eslintrc.cjs', 'test/bootstrap/node.cjs'],
       extends: ['plugin:node/recommended-script'],
       rules: {
         'import/no-commonjs': 0

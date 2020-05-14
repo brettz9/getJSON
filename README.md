@@ -120,7 +120,7 @@ OR:
     directory:
 
 ```js
-import {buildGetJSON} from 'simple-get-json/dist/index-node-es.js';
+import {buildGetJSON} from 'simple-get-json';
 
 const getJSON = buildGetJSON({
   cwd: '/some/current/working/directory'
