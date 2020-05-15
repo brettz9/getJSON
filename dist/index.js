@@ -91,7 +91,7 @@
   function buildGetJSONWithFetch() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
         _ref$fetch = _ref.fetch,
-        fetch = _ref$fetch === void 0 ? window.fetch : _ref$fetch;
+        fetch = _ref$fetch === void 0 ? typeof window !== 'undefined' ? window.fetch : self.fetch : _ref$fetch;
 
     /**
     * @callback SimpleJSONCallback

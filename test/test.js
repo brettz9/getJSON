@@ -59,13 +59,24 @@ if (typeof process !== 'undefined') {
     });
   });
   describe('buildGetJSONWithFetch', function () {
-    it('throws with no arguments and no `window.fetch`', function () {
+    it('_fetch property (window)', function () {
+      global.window = {
+        fetch () {
+          //
+        }
+      };
+      assert.doesNotThrow(() => {
+        buildGetJSONWithFetch();
+      });
+      delete global.window;
+    });
+    it('throws with no arguments and no `self.fetch`', function () {
       assert.throws(() => {
         buildGetJSONWithFetch();
       });
     });
 
-    it('throws with empty object argument and no `window.fetch`', function () {
+    it('throws with empty object argument and no `self.fetch`', function () {
       assert.throws(() => {
         buildGetJSONWithFetch({});
       });

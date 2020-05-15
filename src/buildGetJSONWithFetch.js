@@ -15,7 +15,7 @@
  */
 function buildGetJSONWithFetch ({
   // eslint-disable-next-line no-shadow
-  fetch = window.fetch
+  fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**
   * @callback SimpleJSONCallback
