@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 8.0.1
+
+- Build: Ensure transforming `import` for CJS
+
 ## 8.0.0
 
 - Breaking change: Make as proper native Node ESM module

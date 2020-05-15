@@ -4,6 +4,58 @@
   (global = global || self, factory(global.getJSON = {}));
 }(this, (function (exports) { 'use strict';
 
+  function _getRequireWildcardCache() {
+    if (typeof WeakMap !== "function") return null;
+    var cache = new WeakMap();
+
+    _getRequireWildcardCache = function () {
+      return cache;
+    };
+
+    return cache;
+  }
+
+  function _interopRequireWildcard(obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    }
+
+    if (obj === null || typeof obj !== "object" && typeof obj !== "function") {
+      return {
+        default: obj
+      };
+    }
+
+    var cache = _getRequireWildcardCache();
+
+    if (cache && cache.has(obj)) {
+      return cache.get(obj);
+    }
+
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+
+        if (desc && (desc.get || desc.set)) {
+          Object.defineProperty(newObj, key, desc);
+        } else {
+          newObj[key] = obj[key];
+        }
+      }
+    }
+
+    newObj.default = obj;
+
+    if (cache) {
+      cache.set(obj, newObj);
+    }
+
+    return newObj;
+  }
+
   /* eslint-disable node/no-unsupported-features/es-syntax */
 
   /**
@@ -173,7 +225,7 @@
   const setDirname = _async(function () {
     return _invokeIgnored(function () {
       if (!dirname) {
-        return _await$1(import('path'), function (_import) {
+        return _await$1(Promise.resolve().then(() => _interopRequireWildcard(require('path'))), function (_import) {
           ({
             dirname
           } = _import);
@@ -205,8 +257,6 @@
     // "file://" +
     return fixWindowsPath(dirname(new URL(url).pathname));
   }
-
-  /* eslint-disable node/no-unsupported-features/es-syntax */
 
   function _await$2(value, then, direct) {
     if (direct) {
@@ -275,7 +325,7 @@
         if (/^https?:/u.test(jsonURL)) {
           return _invoke$1(function () {
             if (!nodeFetch) {
-              return _await$2(import('node-fetch'), function (_import) {
+              return _await$2(Promise.resolve().then(() => _interopRequireWildcard(require('node-fetch'))), function (_import) {
                 nodeFetch = _import;
               });
             }
@@ -295,7 +345,7 @@
           // Filed https://github.com/bergos/file-fetch/issues/12 to see
           //  about getting relative basePaths in `file-fetch` and using
           //  that better-tested package instead
-          return _await$2(import('local-xmlhttprequest'), function (localXMLHttpRequest) {
+          return _await$2(Promise.resolve().then(() => _interopRequireWildcard(require('local-xmlhttprequest'))), function (localXMLHttpRequest) {
             // eslint-disable-next-line no-shadow
             const XMLHttpRequest = localXMLHttpRequest.default({
               basePath

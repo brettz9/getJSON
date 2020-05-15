@@ -1,6 +1,6 @@
 {
   "name": "simple-get-json",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "main": "dist/index-polyglot.cjs",
   "module": "dist/index-es.js",
   "browser": "dist/index.js",
@@ -53,6 +53,7 @@
     "@mysticatea/eslint-plugin": "^13.0.0",
     "@rollup/plugin-babel": "^5.0.0",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "babel-plugin-transform-import-meta": "^1.0.1",
     "c8": "^7.1.2",
