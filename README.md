@@ -78,7 +78,7 @@ be supplied the error message and originally supplied URL).
 ## Install
 
 ```
-npm install simple-get-json regenerator-runtime
+npm install simple-get-json
 ```
 
 ## Setup
@@ -86,8 +86,10 @@ npm install simple-get-json regenerator-runtime
 ### Browser
 
 ```html
+<!--
+For older browser support
 <script src="node_modules/core-js-bundle/minified.js"></script>
-<script src="node_modules/regenerator-runtime/runtime.js"></script>
+-->
 <script src="node_modules/simple-get-json/dist/index.js"></script>
 ```
 
