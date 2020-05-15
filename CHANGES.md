@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 8.0.2
+
+- Fix: Resume with default export for UMD browser build
+
 ## 8.0.1
 
 - Build: Ensure transforming `import` for CJS

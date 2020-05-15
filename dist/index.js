@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.getJSON = {}));
-}(this, (function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = global || self, global.getJSON = factory());
+}(this, (function () { 'use strict';
 
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
@@ -156,19 +156,8 @@
 
   /* eslint-disable node/no-unsupported-features/es-syntax */
   var getJSON = buildGetJSONWithFetch();
-  /**
-   * For polymorphism with Node.
-   * @returns {getJSON}
-   */
 
-  var buildGetJSON = function buildGetJSON() {
-    return getJSON;
-  };
-
-  exports.buildGetJSON = buildGetJSON;
-  exports.getJSON = getJSON;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return getJSON;
 
 })));
 //# sourceMappingURL=index.js.map

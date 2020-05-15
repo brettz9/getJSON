@@ -15,7 +15,7 @@ import {rollupPluginFilesizeBadger} from 'filesize-badger';
  */
 function getBrowserDist ({format}) {
   return [{
-    input: 'src/index.js',
+    input: `src/index${format === 'esm' ? '-es' : ''}.js`,
     output: {
       sourcemap: true,
       file: `dist/index${format === 'esm' ? '-es' : ''}.js`,

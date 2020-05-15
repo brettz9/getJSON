@@ -3,4 +3,12 @@ import {buildGetJSONWithFetch} from './buildGetJSONWithFetch.js';
 
 const getJSON = buildGetJSONWithFetch();
 
-export default getJSON;
+/**
+ * For polymorphism with Node.
+ * @returns {getJSON}
+ */
+const buildGetJSON = () => {
+  return getJSON;
+};
+
+export {getJSON, buildGetJSON};
