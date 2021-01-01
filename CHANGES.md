@@ -1,5 +1,10 @@
 # CHANGES for simple-get-json
 
+## ?
+
+- npm: Bump `node-fetch`
+- Testing: Switch to stable version of `mocha-multi-reporters`
+
 ## 8.0.3
 
 - Fix: Worker compatibility
