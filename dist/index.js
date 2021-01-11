@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.getJSON = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.getJSON = factory());
 }(this, (function () { 'use strict';
 
   function _toConsumableArray(arr) {
@@ -119,7 +119,7 @@
                 return getJSON(url);
               })), function (arrResult) {
                 if (cb) {
-                  // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
+                  // eslint-disable-next-line node/callback-return, node/no-callback-literal, promise/prefer-await-to-callbacks
                   cb.apply(void 0, _toConsumableArray(arrResult));
                 }
 
@@ -148,6 +148,7 @@
 
           /* c8 ignore next */
         });
+        /* c8 ignore next */
       } catch (e) {
         return Promise.reject(e);
       }

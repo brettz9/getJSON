@@ -1,9 +1,11 @@
 # CHANGES for simple-get-json
 
-## ?
+## 8.1.0
 
 - npm: Bump `node-fetch`
+- Linting (ESLint): As per latest ash-nazg
 - Testing: Switch to stable version of `mocha-multi-reporters`
+- npm: Update devDeps; add missing `eslint-formatter-badger` devDep.
 
 ## 8.0.3
 
@@ -22,7 +24,7 @@
 - Breaking change: Make as proper native Node ESM module
 - Breaking change: Add back `module` to `package.json`
 - Breaking change: Rename again as polyglot (even if not
-supported by Rollup)
+  supported by Rollup)
 - Enhancement: Add `browser` to `package.json`
 - Fix: ESM Rollup format wasn't being specified properly
 - Docs: Add badges

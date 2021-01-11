@@ -64,6 +64,7 @@ function buildGetJSON ({
       // https://github.com/bcoe/c8/issues/135
       /* c8 ignore next */
       });
+    /* c8 ignore next */
     };
 
   const ret = buildGetJSONWithFetch({

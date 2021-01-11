@@ -131,7 +131,7 @@ function buildGetJSONWithFetch({
               return getJSON(url);
             })), function (arrResult) {
               if (cb) {
-                // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
+                // eslint-disable-next-line node/callback-return, node/no-callback-literal, promise/prefer-await-to-callbacks
                 cb(...arrResult);
               }
 
@@ -160,6 +160,7 @@ function buildGetJSONWithFetch({
 
         /* c8 ignore next */
       });
+      /* c8 ignore next */
     } catch (e) {
       return Promise.reject(e);
     }
@@ -374,6 +375,7 @@ function buildGetJSON({
 
             /* c8 ignore next */
           });
+          /* c8 ignore next */
         });
       });
     });

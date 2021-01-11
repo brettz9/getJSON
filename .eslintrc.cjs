@@ -91,6 +91,7 @@ module.exports = {
   ],
   rules: {
     // Disable for now
-    'max-len': 0
+    'max-len': 0,
+    'eslint-comments/require-description': 0
   }
 };

@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.getJSON = {}));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.getJSON = {}));
 }(this, (function (exports) { 'use strict';
 
   function _getRequireWildcardCache() {
@@ -137,7 +137,7 @@
                 return getJSON(url);
               })), function (arrResult) {
                 if (cb) {
-                  // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
+                  // eslint-disable-next-line node/callback-return, node/no-callback-literal, promise/prefer-await-to-callbacks
                   cb(...arrResult);
                 }
 
@@ -166,6 +166,7 @@
 
           /* c8 ignore next */
         });
+        /* c8 ignore next */
       } catch (e) {
         return Promise.reject(e);
       }
@@ -380,6 +381,7 @@
 
               /* c8 ignore next */
             });
+            /* c8 ignore next */
           });
         });
       });

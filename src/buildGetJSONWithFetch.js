@@ -40,7 +40,7 @@ function buildGetJSONWithFetch ({
           return getJSON(url);
         }));
         if (cb) {
-          // eslint-disable-next-line node/callback-return, standard/no-callback-literal, promise/prefer-await-to-callbacks
+          // eslint-disable-next-line node/callback-return, node/no-callback-literal, promise/prefer-await-to-callbacks
           cb(...arrResult);
         }
         return arrResult;
@@ -62,6 +62,7 @@ function buildGetJSONWithFetch ({
     // https://github.com/bcoe/c8/issues/135
     /* c8 ignore next */
     }
+  /* c8 ignore next */
   };
 }
 
