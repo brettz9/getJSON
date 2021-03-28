@@ -71,7 +71,7 @@
    * @param {fetch} cfg.fetch
    * @returns {getJSONCallback}
    */
-  function _await(value, then, direct) {
+  function _await$2(value, then, direct) {
     if (direct) {
       return then ? then(value) : value;
     }
@@ -83,7 +83,7 @@
     return then ? value.then(then) : value;
   }
 
-  function _invoke(body, then) {
+  function _invoke$1(body, then) {
     var result = body();
 
     if (result && result.then) {
@@ -131,9 +131,9 @@
       try {
         let _exit = false;
         return _catch(function () {
-          return _invoke(function () {
+          return _invoke$1(function () {
             if (Array.isArray(jsonURL)) {
-              return _await(Promise.all(jsonURL.map(url => {
+              return _await$2(Promise.all(jsonURL.map(url => {
                 return getJSON(url);
               })), function (arrResult) {
                 if (cb) {
@@ -146,8 +146,8 @@
               });
             }
           }, function (_result) {
-            return _exit ? _result : _await(fetch(jsonURL), function (resp) {
-              return _await(resp.json(), function (result) {
+            return _exit ? _result : _await$2(fetch(jsonURL), function (resp) {
+              return _await$2(resp.json(), function (result) {
                 return typeof cb === 'function' // eslint-disable-next-line promise/prefer-await-to-callbacks
                 ? cb(result) : result; // https://github.com/bcoe/c8/issues/135
 
@@ -209,7 +209,7 @@
     }
   }
 
-  function _async(f) {
+  function _async$1(f) {
     return function () {
       for (var args = [], i = 0; i < arguments.length; i++) {
         args[i] = arguments[i];
@@ -223,7 +223,7 @@
     };
   }
 
-  const setDirname = _async(function () {
+  const setDirname = _async$1(function () {
     return _invokeIgnored(function () {
       if (!dirname) {
         return _await$1(Promise.resolve().then(() => _interopRequireWildcard(require('path'))), function (_import) {
@@ -259,7 +259,7 @@
     return fixWindowsPath(dirname(new URL(url).pathname));
   }
 
-  function _await$2(value, then, direct) {
+  function _await(value, then, direct) {
     if (direct) {
       return then ? then(value) : value;
     }
@@ -279,7 +279,7 @@
    * @returns {getJSONCallback}
    */
 
-  function _invoke$1(body, then) {
+  function _invoke(body, then) {
     var result = body();
 
     if (result && result.then) {
@@ -302,7 +302,7 @@
     }
   }
 
-  function _async$1(f) {
+  function _async(f) {
     return function () {
       for (var args = [], i = 0; i < arguments.length; i++) {
         args[i] = arguments[i];
@@ -320,13 +320,13 @@
     baseURL,
     cwd: basePath
   } = {}) {
-    const _fetch = typeof fetch !== 'undefined' ? fetch : _async$1(function (jsonURL) {
+    const _fetch = typeof fetch !== 'undefined' ? fetch : _async(function (jsonURL) {
       let _exit = false;
-      return _invoke$1(function () {
+      return _invoke(function () {
         if (/^https?:/u.test(jsonURL)) {
-          return _invoke$1(function () {
+          return _invoke(function () {
             if (!nodeFetch) {
-              return _await$2(Promise.resolve().then(() => _interopRequireWildcard(require('node-fetch'))), function (_import) {
+              return _await(Promise.resolve().then(() => _interopRequireWildcard(require('node-fetch'))), function (_import) {
                 nodeFetch = _import;
               });
             }
@@ -336,7 +336,7 @@
           });
         }
       }, function (_result) {
-        return _exit ? _result : _invoke$1(function () {
+        return _exit ? _result : _invoke(function () {
           if (!basePath) {
             return _call(setDirname, function () {
               basePath = baseURL ? getDirectoryForURL(baseURL) : typeof fetch === 'undefined' && process.cwd();
@@ -346,7 +346,7 @@
           // Filed https://github.com/bergos/file-fetch/issues/12 to see
           //  about getting relative basePaths in `file-fetch` and using
           //  that better-tested package instead
-          return _await$2(Promise.resolve().then(() => _interopRequireWildcard(require('local-xmlhttprequest'))), function (localXMLHttpRequest) {
+          return _await(Promise.resolve().then(() => _interopRequireWildcard(require('local-xmlhttprequest'))), function (localXMLHttpRequest) {
             // eslint-disable-next-line no-shadow
             const XMLHttpRequest = localXMLHttpRequest.default({
               basePath

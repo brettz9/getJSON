@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = {
-  extends: ['ash-nazg/sauron-node'],
+  extends: ['ash-nazg/sauron-node-overrides'],
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: '2017'
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   settings: {
     polyfills: [
       'Array.from',
@@ -25,12 +25,6 @@ module.exports = {
     browser: true
   },
   overrides: [
-    {
-      files: 'test/**',
-      env: {
-        mocha: true
-      }
-    },
     {
       files: 'src/index-polyglot.js',
       globals: {
@@ -55,7 +49,7 @@ module.exports = {
       }
     },
     {
-      files: ['*.md'],
+      files: ['*.md/*.js'],
       globals: {
         require: true,
         getJSON: true,

@@ -3,6 +3,9 @@
 ## ?
 
 - Dev security: Switch to server (`http-server`) without reported vulnerabilities
+- Linting: Per latest ash-nazg
+- npm: Update devDeps. including switching to latest ash-nazg peerDeps
+- npm: Switch to pnpm
 
 ## 8.1.1
 

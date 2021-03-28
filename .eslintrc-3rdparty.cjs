@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   rules: {
     // Intrusive
     'no-global-assign': ['error'],
