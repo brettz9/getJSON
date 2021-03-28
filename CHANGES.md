@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## ?
+
+- Dev security: Switch to server (`http-server`) without reported vulnerabilities
+
 ## 8.1.1
 
 - Fix: For `exports` use proper relative path
