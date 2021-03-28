@@ -1,14 +1,14 @@
 {
   "name": "simple-get-json",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "main": "dist/index-polyglot.cjs",
   "module": "dist/index-es.js",
   "browser": "dist/index.js",
   "type": "module",
   "exports": {
-    "import": "dist/index-polyglot.mjs",
-    "require": "dist/index-polyglot.cjs",
-    "browser": "dist/index.js"
+    "import": "./dist/index-polyglot.mjs",
+    "require": "./dist/index-polyglot.cjs",
+    "browser": "./dist/index.js"
   },
   "author": "Brett Zamir",
   "contributors": [],

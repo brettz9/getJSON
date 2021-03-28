@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 8.1.1
+
+- Fix: For `exports` use proper relative path
+
 ## 8.1.0
 
 - npm: Bump `node-fetch`
