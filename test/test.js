@@ -89,7 +89,7 @@ describe('getJSON', function (done) {
     // eslint-disable-next-line promise/always-return, promise/prefer-await-to-then
     return getJSON('test.json').then((result) => {
       assert.equal(5, result.key);
-      // eslint-disable-next-line promise/prefer-await-to-callbacks
+      // eslint-disable-next-line promise/prefer-await-to-callbacks, promise/prefer-await-to-then
     }).catch((err) => {
       // eslint-disable-next-line no-console
       console.log(err);

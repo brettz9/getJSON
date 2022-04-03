@@ -7,7 +7,7 @@ function _arrayWithoutHoles(arr) {
 }
 
 function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
 }
 
 function _unsupportedIterableToArray(o, minLen) {
@@ -106,7 +106,7 @@ function buildGetJSONWithFetch() {
   return function getJSON(jsonURL, cb, errBack) {
     try {
       var _exit2 = false;
-      return _catch(function () {
+      return _await(_catch(function () {
         return _invoke(function () {
           if (Array.isArray(jsonURL)) {
             return _await(Promise.all(jsonURL.map(function (url) {
@@ -141,7 +141,7 @@ function buildGetJSONWithFetch() {
         throw e; // https://github.com/bcoe/c8/issues/135
 
         /* c8 ignore next */
-      });
+      }));
       /* c8 ignore next */
     } catch (e) {
       return Promise.reject(e);

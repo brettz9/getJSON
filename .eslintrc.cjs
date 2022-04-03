@@ -4,7 +4,8 @@ module.exports = {
   extends: ['ash-nazg/sauron-node-overrides'],
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: '2017'
+    ecmaVersion: '2017',
+    requireConfigFile: false
   },
   parser: '@babel/eslint-parser',
   settings: {

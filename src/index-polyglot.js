@@ -43,6 +43,7 @@ function buildGetJSON ({
         const r = new XMLHttpRequest();
         r.open('GET', jsonURL, true);
         // r.responseType = 'json';
+        // eslint-disable-next-line unicorn/prefer-add-event-listener -- May not be available
         r.onreadystatechange = function () {
           // Not sure how to simulate `if`
           /* c8 ignore next */

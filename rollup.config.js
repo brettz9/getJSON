@@ -1,5 +1,5 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
-import babel from '@rollup/plugin-babel';
+import {babel} from '@rollup/plugin-babel';
 
 import fileSize from 'rollup-plugin-filesize';
 import {rollupPluginFilesizeBadger} from 'filesize-badger';
@@ -71,6 +71,11 @@ function getNodeDist ({format}) {
       }),
       babel({
         babelHelpers: 'bundled',
+        plugins: [
+          ...(format === 'umd' ? [['babel-plugin-dynamic-import-node']] : []),
+          ['babel-plugin-transform-import-meta'],
+          ['babel-plugin-transform-async-to-promises']
+        ],
         presets: [
           ['@babel/env', {
             targets: {

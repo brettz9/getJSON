@@ -1,8 +1,10 @@
 # CHANGES for simple-get-json
 
-## ?
+## 8.2.0
 
-- Dev security: Switch to server (`http-server`) without reported vulnerabilities
+- Dev security: Switch to server (`http-server`) without reported
+  vulnerabilities
+- Fix: For .mjs file, avoid `require`
 - Linting: Per latest ash-nazg
 - npm: Update devDeps. including switching to latest ash-nazg peerDeps
 - npm: Switch to pnpm

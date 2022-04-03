@@ -4,7 +4,6 @@
     ["@babel/env"]
   ],
   "plugins": [
-    ["babel-plugin-dynamic-import-node"],
     ["babel-plugin-transform-import-meta"],
     ["babel-plugin-transform-async-to-promises"]
   ]
