@@ -1,5 +1,10 @@
 # CHANGES for simple-get-json
 
+## 9.0.0
+
+- BREAKING feat: Avoid utilizing built-in fetch as uses URL-based loading only
+  now in later Node versions
+
 ## 8.2.0
 
 - Dev security: Switch to server (`http-server`) without reported

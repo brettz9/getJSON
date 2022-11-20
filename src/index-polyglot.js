@@ -13,8 +13,8 @@ function buildGetJSON ({
   baseURL,
   cwd: basePath
 } = {}) {
-  const _fetch = typeof fetch !== 'undefined'
-    ? fetch
+  const _fetch = typeof window !== 'undefined'
+    ? window.fetch
     : async (jsonURL) => {
       if ((/^https?:/u).test(jsonURL)) {
         if (!nodeFetch) {
@@ -27,7 +27,7 @@ function buildGetJSON ({
         await setDirname();
         basePath = baseURL
           ? getDirectoryForURL(baseURL)
-          : typeof fetch === 'undefined' && process.cwd();
+          : typeof window === 'undefined' && process.cwd();
       }
 
       // Filed https://github.com/bergos/file-fetch/issues/12 to see

@@ -46,7 +46,21 @@ if (typeof process !== 'undefined') {
       assert.isFunction(getJSN._fetch);
     });
 
+    // Now that there is a global fetch, we don't want this behavior
+    // it('_fetch property (global)', function () {
+    //   global.fetch = () => {
+    //     //
+    //   };
+    //   const getJSN = buildGetJSON({
+    //     cwd: '/explicit/cwd'
+    //   });
+    //   assert.isFunction(getJSN._fetch);
+    //   assert.equal(getJSN._fetch, global.fetch);
+    //   delete global.fetch;
+    // });
+
     it('_fetch property (global)', function () {
+      global.window = global; // This is key here
       global.fetch = () => {
         //
       };

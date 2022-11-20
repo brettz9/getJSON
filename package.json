@@ -1,6 +1,6 @@
 {
   "name": "simple-get-json",
-  "version": "8.2.0",
+  "version": "9.0.0",
   "main": "dist/index-polyglot.cjs",
   "module": "dist/index-es.js",
   "browser": "dist/index.js",
@@ -21,7 +21,7 @@
     "license-badge": "license-badger --corrections --uncategorizedLicenseTemplate \"\\${license} (\\${name} (\\${version}))\" --filteredTypes=nonempty --textTemplate \"License types\n(project, deps, and bundled devDeps)\" --packageJson --production badges/licenses-badge.svg",
     "license-badge-dev": "license-badger --corrections --filteredTypes=nonempty --textTemplate \"License types\n(all devDeps)\" --allDevelopment badges/licenses-badge-dev.svg",
     "license-badges": "npm run license-badge && npm run license-badge-dev",
-    "prepublishOnly": "npm run license-badges",
+    "prepublishOnly": "echo 'disabling npm run license-badges for now'",
     "eslint-badge": "eslint-formatter-badger --outputPath badges/eslint-badge.svg --file .",
     "eslint-third-party-badge": "eslint-formatter-badger --mainTemplate=\"ESLint 3rd party light audit (\\${ruleMapCount} rules in \\${numFiles} files)\" --filteredTypes intrusive,vulnerability --ruleMap .eslintRuleTypeMap.json --outputPath badges/eslint-third-party.svg --noEslintInlineConfig --noUseEslintIgnore --noUseEslintrc --eslintConfigPath .eslintrc-3rdparty.cjs `es-file-traverse --file ./src/index.js --file ./src/index-polyglot.js --node`",
     "eslint-badges": "npm run eslint-badge && npm run eslint-third-party-badge",
