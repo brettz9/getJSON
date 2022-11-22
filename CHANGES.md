@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 9.0.1
+
+- fix: service workers import issue
+
 ## 9.0.0
 
 - BREAKING feat: Avoid utilizing built-in fetch as uses URL-based loading only

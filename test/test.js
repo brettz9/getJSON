@@ -59,7 +59,7 @@ if (typeof process !== 'undefined') {
     //   delete global.fetch;
     // });
 
-    it('_fetch property (global)', function () {
+    it('_fetch property (global window)', function () {
       global.window = global; // This is key here
       global.fetch = () => {
         //
@@ -70,6 +70,21 @@ if (typeof process !== 'undefined') {
       assert.isFunction(getJSN._fetch);
       assert.equal(getJSN._fetch, global.fetch);
       delete global.fetch;
+      delete global.window;
+    });
+
+    it('_fetch property (global self)', function () {
+      global.self = global; // This is key here
+      global.fetch = () => {
+        //
+      };
+      const getJSN = buildGetJSON({
+        cwd: '/explicit/cwd'
+      });
+      assert.isFunction(getJSN._fetch);
+      assert.equal(getJSN._fetch, global.fetch);
+      delete global.fetch;
+      delete global.self;
     });
   });
   describe('buildGetJSONWithFetch', function () {

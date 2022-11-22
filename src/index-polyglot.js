@@ -13,8 +13,8 @@ function buildGetJSON ({
   baseURL,
   cwd: basePath
 } = {}) {
-  const _fetch = typeof window !== 'undefined'
-    ? window.fetch
+  const _fetch = typeof window !== 'undefined' || typeof self !== 'undefined'
+    ? typeof window !== 'undefined' ? window.fetch : self.fetch
     : async (jsonURL) => {
       if ((/^https?:/u).test(jsonURL)) {
         if (!nodeFetch) {
