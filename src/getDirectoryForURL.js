@@ -1,5 +1,4 @@
-/* eslint-disable node/no-unsupported-features/node-builtins,
-  node/no-unsupported-features/es-syntax, compat/compat */
+/* eslint-disable compat/compat */
 
 // Needed for polyglot support (no `path` in browser); even if
 //  polyglot using dynamic `import` not supported by Rollup (complaining

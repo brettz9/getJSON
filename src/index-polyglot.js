@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unsupported-features/es-syntax */
 import {buildGetJSONWithFetch} from './buildGetJSONWithFetch.js';
 import {getDirectoryForURL, setDirname} from './getDirectoryForURL.js';
 
@@ -46,8 +45,10 @@ function buildGetJSON ({
         // eslint-disable-next-line unicorn/prefer-add-event-listener -- May not be available
         r.onreadystatechange = function () {
           // Not sure how to simulate `if`
-          /* c8 ignore next */
-          if (r.readyState !== 4) { return; }
+          /* c8 ignore next 3 */
+          if (r.readyState !== 4) {
+            return;
+          }
           if (r.status === 200) {
             // var json = r.json;
             const response = r.responseText;

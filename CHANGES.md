@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 10.0.0 (Unreleased)
+
+- chore: update node-fetch, devDeps. and lint; require Node 18+
+
 ## 9.0.1
 
 - fix: service workers import issue

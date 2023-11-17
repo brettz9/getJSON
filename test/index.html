@@ -14,7 +14,6 @@
         <div id="mocha"></div>
 
         <script type="module">
-        /* globals mocha, chai */
         import {buildGetJSON} from '../src/index-es.js';
 
         mocha.setup('bdd');
@@ -23,10 +22,9 @@
         mocha.globals(['buildGetJSON']);
         </script>
 
-        <script type="module" src="test.js"></script>
-
         <script type="module">
-        /* globals mocha */
+        import './test.js';
+
         mocha.run();
         </script>
     </body>

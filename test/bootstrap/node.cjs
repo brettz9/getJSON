@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unsupported-features/es-syntax */
 /*
 // Should be able to use this import block instead if this issue is fixed
 // https://github.com/mochajs/mocha/issues/4281

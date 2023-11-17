@@ -33,24 +33,18 @@ You may use the file `index-es.js` to use the ES2017 `await` keyword for
 Promise results, as well as take advantage of ES6 Module import:
 
 ```js
-(async () => {
-
 try {
   const [urlObj1, urlObj2] = await getJSON([url1, url2]);
 } catch (err) {
   // Handle errors here
 }
-
-})();
 ```
 
 `simple-get-json` also accepts an array of URLs (waiting for all to load):
 
 ```js
-(async () => {
 const [obj1, obj2] = await getJSON([url1, url2]);
 // Do something with "obj1" and "obj2"
-})();
 ```
 
 Alternatively, you can use regular `then` Promises:

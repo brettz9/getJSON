@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unsupported-features/es-syntax */
 import {babel} from '@rollup/plugin-babel';
 
 import fileSize from 'rollup-plugin-filesize';
@@ -11,7 +10,7 @@ import {rollupPluginFilesizeBadger} from 'filesize-badger';
 /**
  * @param {PlainObject} cfg
  * @param {"es"|"umd"} cfg.format
- * @returns {external:RollupConfig[]}
+ * @returns {RollupConfig[]}
  */
 function getBrowserDist ({format}) {
   return [{
@@ -39,7 +38,7 @@ function getBrowserDist ({format}) {
 /**
  * @param {PlainObject} cfg
  * @param {"es"|"umd"} cfg.format
- * @returns {external:RollupConfig[]}
+ * @returns {RollupConfig[]}
  */
 function getNodeDist ({format}) {
   const output = {

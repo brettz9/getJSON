@@ -1,5 +1,4 @@
-/* globals assert, buildGetJSON */
-/* eslint-disable node/no-unsupported-features/es-syntax */
+/* globals buildGetJSON */
 
 import {buildGetJSON as buildGetJSONNode} from '../src/index-polyglot.js';
 import {buildGetJSONWithFetch} from '../src/buildGetJSONWithFetch.js';
@@ -113,7 +112,7 @@ if (typeof process !== 'undefined') {
   });
 }
 
-describe('getJSON', function (done) {
+describe('getJSON', function () {
   it('Retrieve JSON result value - single string file (normal promise)', function () {
     // eslint-disable-next-line promise/always-return, promise/prefer-await-to-then
     return getJSON('test.json').then((result) => {

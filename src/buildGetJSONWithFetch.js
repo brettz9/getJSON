@@ -1,5 +1,3 @@
-/* eslint-disable node/no-unsupported-features/es-syntax */
-
 /**
  * @callback getJSONCallback
  * @param {string|string[]} jsonURL
@@ -9,7 +7,7 @@
  */
 
 /**
- * @param {PlainObject} cfg
+ * @param {object} cfg
  * @param {fetch} cfg.fetch
  * @returns {getJSONCallback}
  */
@@ -40,7 +38,7 @@ function buildGetJSONWithFetch ({
           return getJSON(url);
         }));
         if (cb) {
-          // eslint-disable-next-line node/callback-return, node/no-callback-literal, promise/prefer-await-to-callbacks
+          // eslint-disable-next-line n/callback-return, n/no-callback-literal, promise/prefer-await-to-callbacks
           cb(...arrResult);
         }
         return arrResult;

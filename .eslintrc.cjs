@@ -66,10 +66,10 @@ module.exports = {
         'no-shadow': ['error', {
           allow: ['getJSON']
         }],
-        'node/no-unsupported-features/es-builtins': 0,
-        'node/no-unsupported-features/es-syntax': 0,
-        'node/no-missing-import': 0,
-        'node/no-missing-require': 0,
+        'n/no-unsupported-features/es-builtins': 0,
+        'n/no-unsupported-features/es-syntax': 0,
+        'n/no-missing-import': 0,
+        'n/no-missing-require': 0,
         'promise/prefer-await-to-callbacks': 0,
         'padded-blocks': 0,
         'import/no-unresolved': 0,
@@ -80,13 +80,14 @@ module.exports = {
           varsIgnorePattern: 'getJSON|obj1|obj2|urlObj\\d',
           argsIgnorePattern: 'data|obj\\d|objsArr|err',
           caughtErrorsIgnorePattern: 'err'
-        }]
+        }],
+        'unicorn/prefer-top-level-await': 0
       }
     }
   ],
   rules: {
     // Disable for now
-    'max-len': 0,
+    '@stylistic/max-len': 0,
     'eslint-comments/require-description': 0
   }
 };
