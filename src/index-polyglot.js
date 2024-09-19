@@ -1,12 +1,17 @@
 import {buildGetJSONWithFetch} from './buildGetJSONWithFetch.js';
 import {getDirectoryForURL, setDirname} from './getDirectoryForURL.js';
 
+/**
+ * @typedef {(url: string) => Promise<Response>} SimpleFetch
+ */
+
+/** @type {{default: SimpleFetch}} */
 let nodeFetch;
 /**
- * @param {PlainObject} cfg
- * @param {string} cfg.baseURL
- * @param {string} cfg.cwd
- * @returns {getJSONCallback}
+ * @param {object} [cfg]
+ * @param {string} [cfg.baseURL]
+ * @param {string|false} [cfg.cwd]
+ * @returns {import('./buildGetJSONWithFetch.js').getJSONCallback}
  */
 function buildGetJSON ({
   baseURL,
@@ -14,12 +19,20 @@ function buildGetJSON ({
 } = {}) {
   const _fetch = typeof window !== 'undefined' || typeof self !== 'undefined'
     ? typeof window !== 'undefined' ? window.fetch : self.fetch
-    : async (jsonURL) => {
+    // eslint-disable-next-line @stylistic/operator-linebreak -- TS
+    : /**
+      * @param {string} jsonURL
+      * @returns {Promise<Response>}
+      */
+    async (jsonURL) => {
       if ((/^https?:/u).test(jsonURL)) {
         if (!nodeFetch) {
-          nodeFetch = await import('node-fetch');
+          nodeFetch = /** @type {{default: SimpleFetch}} */ (
+            /** @type {unknown} */
+            (await import('node-fetch'))
+          );
         }
-        return nodeFetch.default(jsonURL);
+        return /** @type {SimpleFetch} */ (nodeFetch.default)(jsonURL);
       }
 
       if (!basePath) {
@@ -32,11 +45,20 @@ function buildGetJSON ({
       // Filed https://github.com/bergos/file-fetch/issues/12 to see
       //  about getting relative basePaths in `file-fetch` and using
       //  that better-tested package instead
+      // @ts-expect-error Todo
       const localXMLHttpRequest = await import('local-xmlhttprequest');
       // eslint-disable-next-line no-shadow
-      const XMLHttpRequest = localXMLHttpRequest.default({
-        basePath
-      }); // Don't change to an import as won't resolve for browser testing
+      const XMLHttpRequest =
+      /* eslint-disable jsdoc/valid-types -- Bug */
+      /**
+       * @type {{
+       *   prototype: XMLHttpRequest;
+       *   new(): XMLHttpRequest
+       * }}
+       */ (localXMLHttpRequest.default({
+          /* eslint-enable jsdoc/valid-types -- Bug */
+          basePath
+        })); // Don't change to an import as won't resolve for browser testing
       // eslint-disable-next-line promise/avoid-new
       return new Promise((resolve, reject) => {
         const r = new XMLHttpRequest();
@@ -52,9 +74,9 @@ function buildGetJSON ({
           if (r.status === 200) {
             // var json = r.json;
             const response = r.responseText;
-            resolve({
+            resolve(/** @type {Response} */ ({
               json: () => JSON.parse(response)
-            });
+            }));
             return;
           }
           reject(new SyntaxError(

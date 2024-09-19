@@ -25,16 +25,40 @@ function _nonIterableSpread() {
 }
 
 /**
- * @callback getJSONCallback
- * @param {string|string[]} jsonURL
- * @param {SimpleJSONCallback} cb
- * @param {SimpleJSONErrback} errBack
- * @returns {Promise<JSON>}
+ * @typedef {JSONValue[]} JSONArray
+ */
+/**
+ * @typedef {null|boolean|number|string|JSONArray|{[key: string]: JSONValue}} JSONValue
  */
 
 /**
- * @param {object} cfg
- * @param {fetch} cfg.fetch
+* @callback SimpleJSONCallback
+* @param {...JSONValue} json
+* @returns {void}
+*/
+
+/**
+* @callback SimpleJSONErrback
+* @param {Error} err
+* @param {string|string[]} jsonURL
+* @returns {JSONValue}
+*/
+
+/**
+ * @typedef {((
+ *   jsonURL: string|string[],
+ *   cb?: SimpleJSONCallback,
+ *   errBack?: SimpleJSONErrback
+ * ) => Promise<JSONValue>) & {
+ *   _fetch?: import('./index-polyglot.js').SimpleFetch,
+ *   hasURLBasePath?: boolean,
+ *   basePath?: string|false
+ * }} getJSONCallback
+ */
+
+/**
+ * @param {object} [cfg]
+ * @param {import('./index-polyglot.js').SimpleFetch} [cfg.fetch]
  * @returns {getJSONCallback}
  */
 
@@ -70,19 +94,6 @@ function buildGetJSONWithFetch() {
     _ref$fetch = _ref.fetch,
     fetch = _ref$fetch === void 0 ? typeof window !== 'undefined' ? window.fetch : self.fetch : _ref$fetch;
   /**
-  * @callback SimpleJSONCallback
-  * @param {JSON} json
-  * @returns {void}
-  */
-
-  /**
-  * @callback SimpleJSONErrback
-  * @param {Error} err
-  * @param {string|string[]} jsonURL
-  * @returns {void}
-  */
-
-  /**
   * @type {getJSONCallback}
   */
   return function getJSON(jsonURL, cb, errBack) {
@@ -92,7 +103,8 @@ function buildGetJSONWithFetch() {
         return _invoke(function () {
           if (Array.isArray(jsonURL)) {
             return _await(Promise.all(jsonURL.map(function (url) {
-              return getJSON(url);
+              return (/** @type {getJSONCallback} */getJSON(url)
+              );
             })), function (arrResult) {
               if (cb) {
                 // eslint-disable-next-line n/callback-return, n/no-callback-literal, promise/prefer-await-to-callbacks
@@ -113,7 +125,8 @@ function buildGetJSONWithFetch() {
             });
           });
         });
-      }, function (e) {
+      }, function (err) {
+        var e = /** @type {Error} */err;
         e.message += " (File: ".concat(jsonURL, ")");
         if (errBack) {
           return errBack(e, jsonURL);

@@ -1,15 +1,17 @@
 import {babel} from '@rollup/plugin-babel';
 
 import fileSize from 'rollup-plugin-filesize';
+
+// @ts-expect-error Todo
 import {rollupPluginFilesizeBadger} from 'filesize-badger';
 
 /**
- * @external RollupConfig
+ * @typedef {import('rollup').RollupOptions} RollupConfig
  */
 
 /**
- * @param {PlainObject} cfg
- * @param {"es"|"umd"} cfg.format
+ * @param {object} cfg
+ * @param {"esm"|"umd"} cfg.format
  * @returns {RollupConfig[]}
  */
 function getBrowserDist ({format}) {
@@ -22,7 +24,8 @@ function getBrowserDist ({format}) {
       name: 'getJSON'
     },
     plugins: [
-      fileSize({
+      /** @type {import('rollup-plugin-filesize').default} */
+      (fileSize)({
         showBeforeSizes: 'release',
         reporter: ['boxen', rollupPluginFilesizeBadger({
           outputPath: `badges/filesize-browser-${format}.svg`
@@ -36,11 +39,12 @@ function getBrowserDist ({format}) {
 }
 
 /**
- * @param {PlainObject} cfg
- * @param {"es"|"umd"} cfg.format
+ * @param {object} cfg
+ * @param {"esm"|"umd"} cfg.format
  * @returns {RollupConfig[]}
  */
 function getNodeDist ({format}) {
+  /** @type {import('rollup').OutputOptions} */
   const output = {
     format,
     sourcemap: true,
@@ -62,10 +66,11 @@ function getNodeDist ({format}) {
   }
   return [{
     input: 'src/index-polyglot.js',
-    external: ['path', 'node-fetch', 'local-xmlhttprequest'],
+    external: ['node:path', 'node-fetch', 'local-xmlhttprequest'],
     output,
     plugins: [
-      fileSize({
+      /** @type {import('rollup-plugin-filesize').default} */
+      (fileSize)({
         showBeforeSizes: 'release'
       }),
       babel({

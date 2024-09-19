@@ -1,7 +1,8 @@
 # CHANGES for simple-get-json
 
-## 10.0.0 (Unreleased)
+## 10.0.0
 
+- feat: adds TypeScript
 - chore: update node-fetch, devDeps. and lint; require Node 18+
 
 ## 9.0.1

@@ -1,14 +1,38 @@
 /**
- * @callback getJSONCallback
- * @param {string|string[]} jsonURL
- * @param {SimpleJSONCallback} cb
- * @param {SimpleJSONErrback} errBack
- * @returns {Promise<JSON>}
+ * @typedef {JSONValue[]} JSONArray
+ */
+/**
+ * @typedef {null|boolean|number|string|JSONArray|{[key: string]: JSONValue}} JSONValue
  */
 
 /**
- * @param {object} cfg
- * @param {fetch} cfg.fetch
+* @callback SimpleJSONCallback
+* @param {...JSONValue} json
+* @returns {void}
+*/
+
+/**
+* @callback SimpleJSONErrback
+* @param {Error} err
+* @param {string|string[]} jsonURL
+* @returns {JSONValue}
+*/
+
+/**
+ * @typedef {((
+ *   jsonURL: string|string[],
+ *   cb?: SimpleJSONCallback,
+ *   errBack?: SimpleJSONErrback
+ * ) => Promise<JSONValue>) & {
+ *   _fetch?: import('./index-polyglot.js').SimpleFetch,
+ *   hasURLBasePath?: boolean,
+ *   basePath?: string|false
+ * }} getJSONCallback
+ */
+
+/**
+ * @param {object} [cfg]
+ * @param {import('./index-polyglot.js').SimpleFetch} [cfg.fetch]
  * @returns {getJSONCallback}
  */
 function buildGetJSONWithFetch ({
@@ -16,26 +40,13 @@ function buildGetJSONWithFetch ({
   fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**
-  * @callback SimpleJSONCallback
-  * @param {JSON} json
-  * @returns {void}
-  */
-
-  /**
-  * @callback SimpleJSONErrback
-  * @param {Error} err
-  * @param {string|string[]} jsonURL
-  * @returns {void}
-  */
-
-  /**
   * @type {getJSONCallback}
   */
   return async function getJSON (jsonURL, cb, errBack) {
     try {
       if (Array.isArray(jsonURL)) {
         const arrResult = await Promise.all(jsonURL.map((url) => {
-          return getJSON(url);
+          return /** @type {getJSONCallback} */ (getJSON)(url);
         }));
         if (cb) {
           // eslint-disable-next-line n/callback-return, n/no-callback-literal, promise/prefer-await-to-callbacks
@@ -51,7 +62,8 @@ function buildGetJSONWithFetch ({
         : result;
     // https://github.com/bcoe/c8/issues/135
     /* c8 ignore next */
-    } catch (e) {
+    } catch (err) {
+      const e = /** @type {Error} */ (err);
       e.message += ` (File: ${jsonURL})`;
       if (errBack) {
         return errBack(e, jsonURL);

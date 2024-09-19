@@ -5,10 +5,18 @@
 //  of inability to do tree-shaking in UMD builds), still useful to delay
 //  path import for our testing, so that test can import this file in
 //  the browser without compilation without it choking
-let dirname, isWindows;
+
+
+/**
+ * @type {(directory: string) => string}
+ */
+let dirname;
+
+/** @type {boolean} */
+let isWindows;
 export const setDirname = async () => {
   if (!dirname) {
-    ({dirname} = await import('path'));
+    ({dirname} = await import('node:path'));
   }
 };
 

@@ -31,16 +31,40 @@
   }
 
   /**
-   * @callback getJSONCallback
-   * @param {string|string[]} jsonURL
-   * @param {SimpleJSONCallback} cb
-   * @param {SimpleJSONErrback} errBack
-   * @returns {Promise<JSON>}
+   * @typedef {JSONValue[]} JSONArray
+   */
+  /**
+   * @typedef {null|boolean|number|string|JSONArray|{[key: string]: JSONValue}} JSONValue
    */
 
   /**
-   * @param {object} cfg
-   * @param {fetch} cfg.fetch
+  * @callback SimpleJSONCallback
+  * @param {...JSONValue} json
+  * @returns {void}
+  */
+
+  /**
+  * @callback SimpleJSONErrback
+  * @param {Error} err
+  * @param {string|string[]} jsonURL
+  * @returns {JSONValue}
+  */
+
+  /**
+   * @typedef {((
+   *   jsonURL: string|string[],
+   *   cb?: SimpleJSONCallback,
+   *   errBack?: SimpleJSONErrback
+   * ) => Promise<JSONValue>) & {
+   *   _fetch?: import('./index-polyglot.js').SimpleFetch,
+   *   hasURLBasePath?: boolean,
+   *   basePath?: string|false
+   * }} getJSONCallback
+   */
+
+  /**
+   * @param {object} [cfg]
+   * @param {import('./index-polyglot.js').SimpleFetch} [cfg.fetch]
    * @returns {getJSONCallback}
    */
 
@@ -76,19 +100,6 @@
     fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
   } = {}) {
     /**
-    * @callback SimpleJSONCallback
-    * @param {JSON} json
-    * @returns {void}
-    */
-
-    /**
-    * @callback SimpleJSONErrback
-    * @param {Error} err
-    * @param {string|string[]} jsonURL
-    * @returns {void}
-    */
-
-    /**
     * @type {getJSONCallback}
     */
     return function getJSON(jsonURL, cb, errBack) {
@@ -98,7 +109,8 @@
           return _invoke$1(function () {
             if (Array.isArray(jsonURL)) {
               return _await$2(Promise.all(jsonURL.map(url => {
-                return getJSON(url);
+                return (/** @type {getJSONCallback} */getJSON(url)
+                );
               })), function (arrResult) {
                 if (cb) {
                   // eslint-disable-next-line n/callback-return, n/no-callback-literal, promise/prefer-await-to-callbacks
@@ -119,7 +131,8 @@
               });
             });
           });
-        }, function (e) {
+        }, function (err) {
+          const e = /** @type {Error} */err;
           e.message += ` (File: ${jsonURL})`;
           if (errBack) {
             return errBack(e, jsonURL);
@@ -151,18 +164,26 @@
   //  of inability to do tree-shaking in UMD builds), still useful to delay
   //  path import for our testing, so that test can import this file in
   //  the browser without compilation without it choking
-  let dirname, isWindows;
-  function _empty() {} /**
-                        * @param {string} path
-                        * @returns {string}
-                        */
 
+  /**
+   * @type {(directory: string) => string}
+   */
+  let dirname;
+
+  /** @type {boolean} */
+
+  function _empty() {}
+  let isWindows;
   function _invokeIgnored(body) {
     var result = body();
     if (result && result.then) {
       return result.then(_empty);
     }
-  }
+  } /**
+     * @param {string} path
+     * @returns {string}
+     */
+
   function _async$1(f) {
     return function () {
       for (var args = [], i = 0; i < arguments.length; i++) {
@@ -178,7 +199,7 @@
   const setDirname = _async$1(function () {
     return _invokeIgnored(function () {
       if (!dirname) {
-        return _await$1(Promise.resolve().then(() => _interopRequireWildcard(require('path'))), function (_import) {
+        return _await$1(Promise.resolve().then(() => _interopRequireWildcard(require('node:path'))), function (_import) {
           ({
             dirname
           } = _import);
@@ -208,6 +229,12 @@
     return fixWindowsPath(dirname(new URL(url).pathname));
   }
 
+  /**
+   * @typedef {(url: string) => Promise<Response>} SimpleFetch
+   */
+
+  /** @type {{default: SimpleFetch}} */
+
   function _await(value, then, direct) {
     if (direct) {
       return then ? then(value) : value;
@@ -219,10 +246,10 @@
   }
   let nodeFetch;
   /**
-   * @param {PlainObject} cfg
-   * @param {string} cfg.baseURL
-   * @param {string} cfg.cwd
-   * @returns {getJSONCallback}
+   * @param {object} [cfg]
+   * @param {string} [cfg.baseURL]
+   * @param {string|false} [cfg.cwd]
+   * @returns {import('./buildGetJSONWithFetch.js').getJSONCallback}
    */
 
   function _invoke(body, then) {
@@ -259,18 +286,28 @@
     baseURL,
     cwd: basePath
   } = {}) {
-    const _fetch = typeof window !== 'undefined' || typeof self !== 'undefined' ? typeof window !== 'undefined' ? window.fetch : self.fetch : _async(function (jsonURL) {
+    const _fetch = typeof window !== 'undefined' || typeof self !== 'undefined' ? typeof window !== 'undefined' ? window.fetch : self.fetch
+    // eslint-disable-next-line @stylistic/operator-linebreak -- TS
+    :
+    /**
+    * @param {string} jsonURL
+    * @returns {Promise<Response>}
+    */
+    _async(function (jsonURL) {
       let _exit = false;
       return _invoke(function () {
         if (/^https?:/u.test(jsonURL)) {
           return _invoke(function () {
             if (!nodeFetch) {
-              return _await(Promise.resolve().then(() => _interopRequireWildcard(require('node-fetch'))), function (_import) {
+              return _await(Promise.resolve().then(() => _interopRequireWildcard(require('node-fetch'))), function (
+              /** @type {{default: SimpleFetch}} */
+              /** @type {unknown} */
+              _import) {
                 nodeFetch = _import;
               });
             }
           }, function () {
-            const _nodeFetch$default = nodeFetch.default(jsonURL);
+            const _nodeFetch$default = /** @type {SimpleFetch} */nodeFetch.default(jsonURL);
             _exit = true;
             return _nodeFetch$default;
           });
@@ -286,12 +323,20 @@
           // Filed https://github.com/bergos/file-fetch/issues/12 to see
           //  about getting relative basePaths in `file-fetch` and using
           //  that better-tested package instead
+          // @ts-expect-error Todo
           // eslint-disable-next-line no-shadow
           // Don't change to an import as won't resolve for browser testing
           // eslint-disable-next-line promise/avoid-new
           /* c8 ignore next */
           return _await(Promise.resolve().then(() => _interopRequireWildcard(require('local-xmlhttprequest'))), function (localXMLHttpRequest) {
-            const XMLHttpRequest = localXMLHttpRequest.default({
+            const XMLHttpRequest = /* eslint-disable jsdoc/valid-types -- Bug */
+            /**
+             * @type {{
+             *   prototype: XMLHttpRequest;
+             *   new(): XMLHttpRequest
+             * }}
+             */localXMLHttpRequest.default({
+              /* eslint-enable jsdoc/valid-types -- Bug */
               basePath
             });
             return new Promise((resolve, reject) => {
@@ -308,7 +353,7 @@
                 if (r.status === 200) {
                   // var json = r.json;
                   const response = r.responseText;
-                  resolve({
+                  resolve( /** @type {Response} */{
                     json: () => JSON.parse(response)
                   });
                   return;
