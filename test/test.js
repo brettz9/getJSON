@@ -1,4 +1,4 @@
-/* globals buildGetJSON */
+/* globals buildGetJSON -- Polyglot */
 
 import {buildGetJSON as buildGetJSONNode} from '../src/index-polyglot.js';
 import {buildGetJSONWithFetch} from '../src/buildGetJSONWithFetch.js';
@@ -7,7 +7,7 @@ import {buildGetJSONWithFetch} from '../src/buildGetJSONWithFetch.js';
 //  in bootstrap file instead; see
 //  https://github.com/mochajs/mocha/issues/4281
 if (typeof buildGetJSON === 'undefined') {
-  global.buildGetJSON = buildGetJSONNode;
+  globalThis.buildGetJSON = buildGetJSONNode;
 }
 const getJSON = buildGetJSON({
   baseURL: import.meta.url
@@ -31,7 +31,7 @@ if (typeof process !== 'undefined') {
       let getJSN = buildGetJSON();
       assert.notOk(getJSN.hasURLBasePath);
       const result = await getJSN('test/test.json');
-      assert.equal(5, result.key);
+      assert.equal(result.key, 5);
 
       getJSN = buildGetJSON({});
       assert.notOk(getJSN.hasURLBasePath);
@@ -59,36 +59,36 @@ if (typeof process !== 'undefined') {
     // });
 
     it('_fetch property (global window)', function () {
-      global.window = global; // This is key here
-      global.fetch = () => {
+      globalThis.window = globalThis; // This is key here
+      globalThis.fetch = () => {
         //
       };
       const getJSN = buildGetJSON({
         cwd: '/explicit/cwd'
       });
       assert.isFunction(getJSN._fetch);
-      assert.equal(getJSN._fetch, global.fetch);
-      delete global.fetch;
-      delete global.window;
+      assert.equal(getJSN._fetch, globalThis.fetch);
+      delete globalThis.fetch;
+      delete globalThis.window;
     });
 
     it('_fetch property (global self)', function () {
-      global.self = global; // This is key here
-      global.fetch = () => {
+      globalThis.self = globalThis; // This is key here
+      globalThis.fetch = () => {
         //
       };
       const getJSN = buildGetJSON({
         cwd: '/explicit/cwd'
       });
       assert.isFunction(getJSN._fetch);
-      assert.equal(getJSN._fetch, global.fetch);
-      delete global.fetch;
-      delete global.self;
+      assert.equal(getJSN._fetch, globalThis.fetch);
+      delete globalThis.fetch;
+      delete globalThis.self;
     });
   });
   describe('buildGetJSONWithFetch', function () {
     it('_fetch property (window)', function () {
-      global.window = {
+      globalThis.window = {
         fetch () {
           //
         }
@@ -96,7 +96,7 @@ if (typeof process !== 'undefined') {
       assert.doesNotThrow(() => {
         buildGetJSONWithFetch();
       });
-      delete global.window;
+      delete globalThis.window;
     });
     it('throws with no arguments and no `self.fetch`', function () {
       assert.throws(() => {
@@ -114,12 +114,12 @@ if (typeof process !== 'undefined') {
 
 describe('getJSON', function () {
   it('Retrieve JSON result value - single string file (normal promise)', function () {
-    // eslint-disable-next-line promise/always-return, promise/prefer-await-to-then
+    // eslint-disable-next-line promise/always-return, promise/prefer-await-to-then -- Testing API
     return getJSON('test.json').then((result) => {
-      assert.equal(5, result.key);
-      // eslint-disable-next-line promise/prefer-await-to-callbacks, promise/prefer-await-to-then
+      assert.equal(result.key, 5);
+      // eslint-disable-next-line promise/prefer-await-to-callbacks, promise/prefer-await-to-then -- Testing API
     }).catch((err) => {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console -- Testing error
       console.log(err);
       assert.ok(false, `Shouldn't get here`);
       return true;
@@ -128,18 +128,18 @@ describe('getJSON', function () {
 
   it('Retrieve JSON result value - single string file (await)', async function () {
     const result = await getJSON('test.json');
-    assert.equal(5, result.key);
+    assert.equal(result.key, 5);
   });
 
   it('Retrieve JSON result value - single string URL (await)', async function () {
     this.timeout(30000);
     const result = await getJSON('https://raw.githubusercontent.com/brettz9/getJSON/master/test/test.json');
-    assert.equal(5, result.key);
+    assert.equal(result.key, 5);
   });
 
   it('Retrieve JSON result value - single string file (callback)', async function () {
     await getJSON('test.json', (reslt) => {
-      assert.equal(5, reslt.key);
+      assert.equal(reslt.key, 5);
     });
   });
   it('Caught nonexisting file error (errback)', async function () {
@@ -149,24 +149,24 @@ describe('getJSON', function () {
     }, (err) => {
       ranErrback = true;
       assert.include(err.message, ' (File: test-nonexisting.json)');
-      // eslint-disable-next-line no-restricted-syntax
+      // eslint-disable-next-line no-restricted-syntax -- Testing for error type
       assert.ok(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error (errback)');
     });
     assert.ok(ranErrback);
   });
   it('Retrieve JSON result value - single item array file', async function () {
     const resultArrOneFile = await getJSON(['test.json']);
-    assert.equal(5, resultArrOneFile[0].key);
+    assert.equal(resultArrOneFile[0].key, 5);
   });
   it('Retrieve JSON result value - multiple items', async function () {
     const resultArrMultipleFiles = await getJSON(['test.json', 'test2.json']);
-    assert.equal(5, resultArrMultipleFiles[0].key, 'Retrieve JSON result value - multiple item array file 1');
-    assert.equal('aString', resultArrMultipleFiles[1].aKey, 'Retrieve JSON result value - multiple item array file 2');
+    assert.equal(resultArrMultipleFiles[0].key, 5, 'Retrieve JSON result value - multiple item array file 1');
+    assert.equal(resultArrMultipleFiles[1].aKey, 'aString', 'Retrieve JSON result value - multiple item array file 2');
   });
   it('Retrieve JSON result value - multiple items (with callback)', function () {
     return getJSON(['test.json', 'test2.json'], (...resultArrMultipleFiles) => {
-      assert.equal(5, resultArrMultipleFiles[0].key, 'Retrieve JSON result value - multiple item array file 1');
-      assert.equal('aString', resultArrMultipleFiles[1].aKey, 'Retrieve JSON result value - multiple item array file 2');
+      assert.equal(resultArrMultipleFiles[0].key, 5, 'Retrieve JSON result value - multiple item array file 1');
+      assert.equal(resultArrMultipleFiles[1].aKey, 'aString', 'Retrieve JSON result value - multiple item array file 2');
     });
   });
   it('Caught nonexisting file error', async function () {
@@ -175,7 +175,7 @@ describe('getJSON', function () {
       assert.ok(false, `Shouldn't reach here`);
     } catch (err) {
       assert.include(err.message, ' (File: test-nonexisting.json)');
-      // eslint-disable-next-line no-restricted-syntax
+      // eslint-disable-next-line no-restricted-syntax -- Testing for error type
       assert.ok(err instanceof SyntaxError, 'Retrieving nonexisting file gives a syntax error');
     }
   });
@@ -185,7 +185,7 @@ describe('getJSON', function () {
       assert.ok(false, `Shouldn't reach here`);
     } catch (err) {
       assert.include(err.message, ' (File: test-bad.json)');
-      // eslint-disable-next-line no-restricted-syntax
+      // eslint-disable-next-line no-restricted-syntax -- Testing for error type
       assert.ok(err instanceof SyntaxError, 'Badly formed JSON gives a syntax error');
     }
   });
@@ -195,7 +195,7 @@ describe('getJSON', function () {
       assert.ok(false, `Shouldn't reach here`);
     } catch (err) {
       assert.include(err.message, ' (File: test-bad.json)');
-      // eslint-disable-next-line no-restricted-syntax
+      // eslint-disable-next-line no-restricted-syntax -- Testing for error type
       assert.ok(err instanceof SyntaxError, 'Badly formed JSON within array of files gives a syntax error');
     }
   });

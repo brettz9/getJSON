@@ -1,11 +1,10 @@
-/* eslint-disable compat/compat */
+/* globals process -- Node */
 
 // Needed for polyglot support (no `path` in browser); even if
 //  polyglot using dynamic `import` not supported by Rollup (complaining
 //  of inability to do tree-shaking in UMD builds), still useful to delay
 //  path import for our testing, so that test can import this file in
 //  the browser without compilation without it choking
-
 
 /**
  * @type {(directory: string) => string}

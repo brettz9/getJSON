@@ -8,7 +8,7 @@ import {buildGetJSON} from '../../src/index-polyglot.js';
 const {assert} = chai;
 */
 
-'use strict';
-const {assert} = require('chai');
+// eslint-disable-next-line no-shadow -- Mocha global
+import {assert} from 'chai';
 
-global.assert = assert;
+globalThis.assert = assert;

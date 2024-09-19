@@ -1,3 +1,4 @@
+/* globals window, self -- Polyglot */
 import {buildGetJSONWithFetch} from './buildGetJSONWithFetch.js';
 import {getDirectoryForURL, setDirname} from './getDirectoryForURL.js';
 
@@ -47,7 +48,6 @@ function buildGetJSON ({
       //  that better-tested package instead
       // @ts-expect-error Todo
       const localXMLHttpRequest = await import('local-xmlhttprequest');
-      // eslint-disable-next-line no-shadow
       const XMLHttpRequest =
       /* eslint-disable jsdoc/valid-types -- Bug */
       /**
@@ -59,7 +59,7 @@ function buildGetJSON ({
           /* eslint-enable jsdoc/valid-types -- Bug */
           basePath
         })); // Don't change to an import as won't resolve for browser testing
-      // eslint-disable-next-line promise/avoid-new
+      // eslint-disable-next-line promise/avoid-new -- own API
       return new Promise((resolve, reject) => {
         const r = new XMLHttpRequest();
         r.open('GET', jsonURL, true);

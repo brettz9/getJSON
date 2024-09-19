@@ -37,9 +37,6 @@
  */
 
 function _await$2(value, then, direct) {
-  if (direct) {
-    return then ? then(value) : value;
-  }
   if (!value || !value.then) {
     value = Promise.resolve(value);
   }
@@ -64,7 +61,7 @@ function _catch(body, recover) {
   return result;
 }
 function buildGetJSONWithFetch({
-  // eslint-disable-next-line no-shadow
+  // eslint-disable-next-line no-shadow, no-undef -- This is a polyfill
   fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**
@@ -77,11 +74,10 @@ function buildGetJSONWithFetch({
         return _invoke$1(function () {
           if (Array.isArray(jsonURL)) {
             return _await$2(Promise.all(jsonURL.map(url => {
-              return (/** @type {getJSONCallback} */getJSON(url)
-              );
+              return /** @type {getJSONCallback} */getJSON(url);
             })), function (arrResult) {
               if (cb) {
-                // eslint-disable-next-line n/callback-return, n/no-callback-literal, promise/prefer-await-to-callbacks
+                // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
                 cb(...arrResult);
               }
               _exit = true;
@@ -92,7 +88,7 @@ function buildGetJSONWithFetch({
           return _exit ? _result : _await$2(fetch(jsonURL), function (resp) {
             return _await$2(resp.json(), function (result) {
               return typeof cb === 'function'
-              // eslint-disable-next-line promise/prefer-await-to-callbacks
+              // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
               ? cb(result) : result;
               // https://github.com/bcoe/c8/issues/135
               /* c8 ignore next */
@@ -117,15 +113,12 @@ function buildGetJSONWithFetch({
 }
 
 function _await$1(value, then, direct) {
-  if (direct) {
-    return then ? then(value) : value;
-  }
   if (!value || !value.then) {
     value = Promise.resolve(value);
   }
   return then ? value.then(then) : value;
 }
-/* eslint-disable compat/compat */
+/* globals process -- Node */
 
 // Needed for polyglot support (no `path` in browser); even if
 //  polyglot using dynamic `import` not supported by Rollup (complaining
@@ -197,6 +190,8 @@ function getDirectoryForURL(url) {
   return fixWindowsPath(dirname(new URL(url).pathname));
 }
 
+/* globals window, self -- Polyglot */
+
 /**
  * @typedef {(url: string) => Promise<Response>} SimpleFetch
  */
@@ -204,9 +199,6 @@ function getDirectoryForURL(url) {
 /** @type {{default: SimpleFetch}} */
 
 function _await(value, then, direct) {
-  if (direct) {
-    return then ? then(value) : value;
-  }
   if (!value || !value.then) {
     value = Promise.resolve(value);
   }
@@ -228,9 +220,6 @@ function _invoke(body, then) {
   return then(result);
 }
 function _call(body, then, direct) {
-  if (direct) {
-    return then ? then(body()) : body();
-  }
   try {
     var result = Promise.resolve(body());
     return then ? result.then(then) : result;
@@ -292,9 +281,8 @@ function buildGetJSON({
         //  about getting relative basePaths in `file-fetch` and using
         //  that better-tested package instead
         // @ts-expect-error Todo
-        // eslint-disable-next-line no-shadow
         // Don't change to an import as won't resolve for browser testing
-        // eslint-disable-next-line promise/avoid-new
+        // eslint-disable-next-line promise/avoid-new -- own API
         /* c8 ignore next */
         return _await(import('local-xmlhttprequest'), function (localXMLHttpRequest) {
           const XMLHttpRequest = /* eslint-disable jsdoc/valid-types -- Bug */
@@ -321,7 +309,7 @@ function buildGetJSON({
               if (r.status === 200) {
                 // var json = r.json;
                 const response = r.responseText;
-                resolve( /** @type {Response} */{
+                resolve(/** @type {Response} */{
                   json: () => JSON.parse(response)
                 });
                 return;
@@ -336,7 +324,6 @@ function buildGetJSON({
       });
     });
   });
-
   const ret = buildGetJSONWithFetch({
     fetch: _fetch
   });

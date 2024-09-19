@@ -36,7 +36,7 @@
  * @returns {getJSONCallback}
  */
 function buildGetJSONWithFetch ({
-  // eslint-disable-next-line no-shadow
+  // eslint-disable-next-line no-shadow, no-undef -- This is a polyfill
   fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**
@@ -49,7 +49,7 @@ function buildGetJSONWithFetch ({
           return /** @type {getJSONCallback} */ (getJSON)(url);
         }));
         if (cb) {
-          // eslint-disable-next-line n/callback-return, n/no-callback-literal, promise/prefer-await-to-callbacks
+          // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
           cb(...arrResult);
         }
         return arrResult;
@@ -57,7 +57,7 @@ function buildGetJSONWithFetch ({
       const resp = await fetch(jsonURL);
       const result = await resp.json();
       return typeof cb === 'function'
-        // eslint-disable-next-line promise/prefer-await-to-callbacks
+        // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
         ? cb(result)
         : result;
     // https://github.com/bcoe/c8/issues/135

@@ -13,7 +13,7 @@
     })(e);
   }
   function _interopRequireWildcard(e, r) {
-    if (!r && e && e.__esModule) return e;
+    if (e && e.__esModule) return e;
     if (null === e || "object" != typeof e && "function" != typeof e) return {
       default: e
     };
@@ -23,7 +23,7 @@
         __proto__: null
       },
       a = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+    for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) {
       var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
       i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
     }
@@ -69,9 +69,6 @@
    */
 
   function _await$2(value, then, direct) {
-    if (direct) {
-      return then ? then(value) : value;
-    }
     if (!value || !value.then) {
       value = Promise.resolve(value);
     }
@@ -96,7 +93,7 @@
     return result;
   }
   function buildGetJSONWithFetch({
-    // eslint-disable-next-line no-shadow
+    // eslint-disable-next-line no-shadow, no-undef -- This is a polyfill
     fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
   } = {}) {
     /**
@@ -109,11 +106,10 @@
           return _invoke$1(function () {
             if (Array.isArray(jsonURL)) {
               return _await$2(Promise.all(jsonURL.map(url => {
-                return (/** @type {getJSONCallback} */getJSON(url)
-                );
+                return /** @type {getJSONCallback} */getJSON(url);
               })), function (arrResult) {
                 if (cb) {
-                  // eslint-disable-next-line n/callback-return, n/no-callback-literal, promise/prefer-await-to-callbacks
+                  // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
                   cb(...arrResult);
                 }
                 _exit = true;
@@ -124,7 +120,7 @@
             return _exit ? _result : _await$2(fetch(jsonURL), function (resp) {
               return _await$2(resp.json(), function (result) {
                 return typeof cb === 'function'
-                // eslint-disable-next-line promise/prefer-await-to-callbacks
+                // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
                 ? cb(result) : result;
                 // https://github.com/bcoe/c8/issues/135
                 /* c8 ignore next */
@@ -149,15 +145,12 @@
   }
 
   function _await$1(value, then, direct) {
-    if (direct) {
-      return then ? then(value) : value;
-    }
     if (!value || !value.then) {
       value = Promise.resolve(value);
     }
     return then ? value.then(then) : value;
   }
-  /* eslint-disable compat/compat */
+  /* globals process -- Node */
 
   // Needed for polyglot support (no `path` in browser); even if
   //  polyglot using dynamic `import` not supported by Rollup (complaining
@@ -236,9 +229,6 @@
   /** @type {{default: SimpleFetch}} */
 
   function _await(value, then, direct) {
-    if (direct) {
-      return then ? then(value) : value;
-    }
     if (!value || !value.then) {
       value = Promise.resolve(value);
     }
@@ -260,9 +250,6 @@
     return then(result);
   }
   function _call(body, then, direct) {
-    if (direct) {
-      return then ? then(body()) : body();
-    }
     try {
       var result = Promise.resolve(body());
       return then ? result.then(then) : result;
@@ -324,9 +311,8 @@
           //  about getting relative basePaths in `file-fetch` and using
           //  that better-tested package instead
           // @ts-expect-error Todo
-          // eslint-disable-next-line no-shadow
           // Don't change to an import as won't resolve for browser testing
-          // eslint-disable-next-line promise/avoid-new
+          // eslint-disable-next-line promise/avoid-new -- own API
           /* c8 ignore next */
           return _await(Promise.resolve().then(() => _interopRequireWildcard(require('local-xmlhttprequest'))), function (localXMLHttpRequest) {
             const XMLHttpRequest = /* eslint-disable jsdoc/valid-types -- Bug */
@@ -353,7 +339,7 @@
                 if (r.status === 200) {
                   // var json = r.json;
                   const response = r.responseText;
-                  resolve( /** @type {Response} */{
+                  resolve(/** @type {Response} */{
                     json: () => JSON.parse(response)
                   });
                   return;
@@ -368,7 +354,6 @@
         });
       });
     });
-
     const ret = buildGetJSONWithFetch({
       fetch: _fetch
     });

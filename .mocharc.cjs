@@ -7,6 +7,6 @@ module.exports = {
     'configFile=mocha-multi-reporters.json'
   ],
   require: [
-    'test/bootstrap/node.cjs'
+    'test/bootstrap/node.js'
   ]
 };
