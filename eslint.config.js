@@ -1,7 +1,7 @@
 import ashNazg from 'eslint-config-ash-nazg';
 import globals from 'globals';
 
-export default [
+export default /** @type {import('eslint').Linter.Config[]} */ ([
   {
     ignores: [
       'dist',
@@ -12,6 +12,7 @@ export default [
   {
     files: ['src/index-polyglot.js'],
     languageOptions: {
+      ecmaVersion: 2023,
       globals: globals.node
     }
   },
@@ -32,6 +33,7 @@ export default [
   {
     files: ['*.md/*.js'],
     languageOptions: {
+      ecmaVersion: 2023,
       globals: {
         require: true,
         getJSON: true,
@@ -63,7 +65,8 @@ export default [
         argsIgnorePattern: String.raw`data|obj\d|objsArr|err`,
         caughtErrorsIgnorePattern: 'err'
       }],
-      'unicorn/prefer-top-level-await': 0
+      'unicorn/prefer-top-level-await': 0,
+      'sonarjs/no-internal-api-use': 0
     }
   },
   {
@@ -73,4 +76,4 @@ export default [
       'eslint-comments/require-description': 0
     }
   }
-];
+]);

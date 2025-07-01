@@ -61,7 +61,7 @@ function _catch(body, recover) {
   return result;
 }
 function buildGetJSONWithFetch({
-  // eslint-disable-next-line no-shadow, no-undef -- This is a polyfill
+  // eslint-disable-next-line no-shadow, no-undef, unicorn/prefer-global-this -- This is a polyfill
   fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**
@@ -191,6 +191,7 @@ function getDirectoryForURL(url) {
 }
 
 /* globals window, self -- Polyglot */
+/* eslint-disable unicorn/prefer-global-this -- Easier */
 
 /**
  * @typedef {(url: string) => Promise<Response>} SimpleFetch

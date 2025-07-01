@@ -9,5 +9,5 @@ export const getJSON: import("./buildGetJSONWithFetch.js").getJSONCallback;
 export function buildGetJSON({ baseURL, cwd: basePath }?: {
     baseURL?: string | undefined;
     cwd?: string | false | undefined;
-} | undefined): import("./buildGetJSONWithFetch.js").getJSONCallback;
+}): import("./buildGetJSONWithFetch.js").getJSONCallback;
 //# sourceMappingURL=index-polyglot.d.ts.map

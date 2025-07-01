@@ -1,4 +1,5 @@
 /* globals window, self -- Polyglot */
+/* eslint-disable unicorn/prefer-global-this -- Easier */
 import {buildGetJSONWithFetch} from './buildGetJSONWithFetch.js';
 import {getDirectoryForURL, setDirname} from './getDirectoryForURL.js';
 

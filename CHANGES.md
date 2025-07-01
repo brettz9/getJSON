@@ -1,5 +1,10 @@
 # CHANGES for simple-get-json
 
+## 11.0.0 (unreleased)
+
+- BREAKING chore: require Node >= 20
+- chore: update devDeps.
+
 ## 10.0.0
 
 - feat: adds TypeScript

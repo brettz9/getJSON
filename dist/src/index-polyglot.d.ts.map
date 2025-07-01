@@ -1,1 +1,1 @@
-{"version":3,"file":"index-polyglot.d.ts","sourceRoot":"","sources":["../../src/index-polyglot.js"],"names":[],"mappings":"0BAIa,CAAC,GAAG,EAAE,MAAM,KAAK,OAAO,CAAC,QAAQ,CAAC;AAoG/C,2EAA+B;AA/F/B;;;;;GAKG;AACH;;;gBAFa,OAAO,4BAA4B,EAAE,eAAe,CAyFhE"}
+{"version":3,"file":"index-polyglot.d.ts","sourceRoot":"","sources":["../../src/index-polyglot.js"],"names":[],"mappings":"0BAMa,CAAC,GAAG,EAAE,MAAM,KAAK,OAAO,CAAC,QAAQ,CAAC;AAmG/C,2EAA+B;AA9F/B;;;;;GAKG;AACH,0DAJG;IAAqB,OAAO;IACD,GAAG;CAC9B,GAAU,OAAO,4BAA4B,EAAE,eAAe,CAwFhE"}

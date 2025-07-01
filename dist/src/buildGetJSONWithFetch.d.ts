@@ -44,5 +44,5 @@ export type getJSONCallback = ((jsonURL: string | string[], cb?: SimpleJSONCallb
  */
 export function buildGetJSONWithFetch({ fetch }?: {
     fetch?: import("./index-polyglot.js").SimpleFetch | undefined;
-} | undefined): getJSONCallback;
+}): getJSONCallback;
 //# sourceMappingURL=buildGetJSONWithFetch.d.ts.map

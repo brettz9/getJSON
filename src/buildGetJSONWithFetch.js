@@ -36,7 +36,7 @@
  * @returns {getJSONCallback}
  */
 function buildGetJSONWithFetch ({
-  // eslint-disable-next-line no-shadow, no-undef -- This is a polyfill
+  // eslint-disable-next-line no-shadow, no-undef, unicorn/prefer-global-this -- This is a polyfill
   fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**

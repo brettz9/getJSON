@@ -1,3 +1,3 @@
-declare const _default: any[];
+declare const _default: import("eslint").Linter.Config[];
 export default _default;
 //# sourceMappingURL=eslint.config.d.ts.map
