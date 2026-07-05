@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 11.0.1
+
+- fix: ensure `browser` build has `getJSON` as named export
+
 ## 11.0.0
 
 - BREAKING chore: require Node >= 20

@@ -1,3 +1,6 @@
+allowBuilds:
+  es5-ext: true
+  unrs-resolver: true
 ignoredBuiltDependencies:
   - es5-ext
   - unrs-resolver
