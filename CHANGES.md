@@ -1,9 +1,10 @@
 # CHANGES for simple-get-json
 
-## 11.0.0 (unreleased)
+## 11.0.0
 
 - BREAKING chore: require Node >= 20
 - chore: update devDeps.
+- fix: put `browser` `exports` ahead of `import` and `require`
 
 ## 10.0.0
 
