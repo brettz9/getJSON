@@ -1,7 +1,8 @@
-export const getJSON: import("./buildGetJSONWithFetch.js").getJSONCallback;
+declare const getJSON: import("./buildGetJSONWithFetch.js").getJSONCallback;
 /**
  * For polymorphism with Node.
- * @returns {getJSON}
+ * @returns {typeof getJSON}
  */
-export function buildGetJSON(): import("./buildGetJSONWithFetch.js").getJSONCallback;
+declare const buildGetJSON: () => typeof getJSON;
+export { getJSON, buildGetJSON };
 //# sourceMappingURL=index-es.d.ts.map

@@ -7,7 +7,7 @@
 
 /**
  * @callback SimpleJSONCallback
- * @param {...JSONValue} json
+ * @param {...JSONValue[]} json
  * @returns {void}
  */
 

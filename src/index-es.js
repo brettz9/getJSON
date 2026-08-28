@@ -4,7 +4,7 @@ const getJSON = buildGetJSONWithFetch();
 
 /**
  * For polymorphism with Node.
- * @returns {getJSON}
+ * @returns {typeof getJSON}
  */
 const buildGetJSON = () => {
   return getJSON;

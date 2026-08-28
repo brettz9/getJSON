@@ -24,6 +24,7 @@ function getBrowserDist ({format}) {
       name: 'getJSON'
     },
     plugins: [
+      // @ts-expect-error -- Ok?
       /** @type {import('rollup-plugin-filesize').default} */
       (fileSize)({
         showBeforeSizes: 'release',
@@ -69,6 +70,7 @@ function getNodeDist ({format}) {
     external: ['node:path', 'node-fetch', 'local-xmlhttprequest'],
     output,
     plugins: [
+      // @ts-expect-error -- Ok?
       /** @type {import('rollup-plugin-filesize').default} */
       (fileSize)({
         showBeforeSizes: 'release'
