@@ -33,9 +33,6 @@ importers:
       babel-plugin-dynamic-import-node:
         specifier: ^2.3.3
         version: 2.3.3
-      babel-plugin-transform-async-to-promises:
-        specifier: ^0.8.18
-        version: 0.8.18
       babel-plugin-transform-import-meta:
         specifier: ^3.0.0
         version: 3.0.0(@babel/core@8.0.1)
@@ -1715,9 +1712,6 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0
-
-  babel-plugin-transform-async-to-promises@0.8.18:
-    resolution: {integrity: sha512-WpOrF76nUHijnNn10eBGOHZmXQC8JYRME9rOLxStOga7Av2VO53ehVFvVNImMksVtQuL2/7ZNxEgxnx7oo/3Hw==}
 
   babel-plugin-transform-import-meta@3.0.0:
     resolution: {integrity: sha512-zFtfF6Fx8QMDlPrmuIvgxXGSPG5h+M/T6NUUy4lbnrKptoK+PH0zTEa2PgaGseLTJpBmZ+iLOys7c7NidYmvPQ==}
@@ -7217,8 +7211,6 @@ snapshots:
       '@babel/core': 8.0.1
       '@babel/helper-define-polyfill-provider': 1.0.0(@babel/core@8.0.1)
       core-js-compat: 3.50.0
-
-  babel-plugin-transform-async-to-promises@0.8.18: {}
 
   babel-plugin-transform-import-meta@3.0.0(@babel/core@8.0.1):
     dependencies:
