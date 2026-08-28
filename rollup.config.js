@@ -77,8 +77,7 @@ function getNodeDist ({format}) {
         babelHelpers: 'bundled',
         plugins: [
           ...(format === 'umd' ? [['babel-plugin-dynamic-import-node']] : []),
-          ['babel-plugin-transform-import-meta'],
-          ['babel-plugin-transform-async-to-promises']
+          ['babel-plugin-transform-import-meta']
         ],
         presets: [
           ['@babel/env', {

@@ -23,11 +23,11 @@ function buildGetJSON ({
     ? typeof window !== 'undefined' ? window.fetch : self.fetch
     // eslint-disable-next-line @stylistic/operator-linebreak -- TS
     : /**
-      * @param {string} jsonURL
-      * @returns {Promise<Response>}
-      */
+       * @param {string} jsonURL
+       * @returns {Promise<Response>}
+       */
     async (jsonURL) => {
-      if ((/^https?:/u).test(jsonURL)) {
+      if ((/^https?:/v).test(jsonURL)) {
         if (!nodeFetch) {
           nodeFetch = /** @type {{default: SimpleFetch}} */ (
             /** @type {unknown} */
@@ -50,14 +50,14 @@ function buildGetJSON ({
       // @ts-expect-error Todo
       const localXMLHttpRequest = await import('local-xmlhttprequest');
       const XMLHttpRequest =
-      /* eslint-disable jsdoc/valid-types -- Bug */
+
       /**
        * @type {{
        *   prototype: XMLHttpRequest;
        *   new(): XMLHttpRequest
        * }}
        */ (localXMLHttpRequest.default({
-          /* eslint-enable jsdoc/valid-types -- Bug */
+
           basePath
         })); // Don't change to an import as won't resolve for browser testing
       // eslint-disable-next-line promise/avoid-new -- own API

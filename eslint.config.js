@@ -12,7 +12,7 @@ export default /** @type {import('eslint').Linter.Config[]} */ ([
   {
     files: ['src/index-polyglot.js'],
     languageOptions: {
-      ecmaVersion: 2023,
+      ecmaVersion: 'latest',
       globals: globals.node
     }
   },
@@ -25,6 +25,7 @@ export default /** @type {import('eslint').Linter.Config[]} */ ([
   {
     files: ['test/**/*.js'],
     languageOptions: {
+      ecmaVersion: 'latest',
       globals: {
         assert: 'readonly'
       }
@@ -33,7 +34,7 @@ export default /** @type {import('eslint').Linter.Config[]} */ ([
   {
     files: ['*.md/*.js'],
     languageOptions: {
-      ecmaVersion: 2023,
+      ecmaVersion: 'latest',
       globals: {
         require: true,
         getJSON: true,
@@ -73,7 +74,9 @@ export default /** @type {import('eslint').Linter.Config[]} */ ([
     rules: {
       // Disable for now
       '@stylistic/max-len': 0,
-      'eslint-comments/require-description': 0
+      'eslint-comments/require-description': 0,
+      'unicorn/no-global-object-property-assignment': 0,
+      'unicorn/no-top-level-assignment-in-function': 0
     }
   }
 ]);

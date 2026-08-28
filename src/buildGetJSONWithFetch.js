@@ -6,17 +6,17 @@
  */
 
 /**
-* @callback SimpleJSONCallback
-* @param {...JSONValue} json
-* @returns {void}
-*/
+ * @callback SimpleJSONCallback
+ * @param {...JSONValue} json
+ * @returns {void}
+ */
 
 /**
-* @callback SimpleJSONErrback
-* @param {Error} err
-* @param {string|string[]} jsonURL
-* @returns {JSONValue}
-*/
+ * @callback SimpleJSONErrback
+ * @param {Error} err
+ * @param {string|string[]} jsonURL
+ * @returns {JSONValue}
+ */
 
 /**
  * @typedef {((
@@ -40,8 +40,8 @@ function buildGetJSONWithFetch ({
   fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**
-  * @type {getJSONCallback}
-  */
+   * @type {getJSONCallback}
+   */
   return async function getJSON (jsonURL, cb, errBack) {
     try {
       if (Array.isArray(jsonURL)) {

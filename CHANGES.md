@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## ?
+
+- chore: update `local-xmlhttprequest`, devDeps
+
 ## 11.0.1
 
 - fix: ensure `browser` build has `getJSON` as named export

@@ -14,10 +14,11 @@ const getJSON = buildGetJSON({
 });
 
 if (typeof process !== 'undefined') {
+  // eslint-disable-next-line mocha/no-conditional-tests -- Node version
   describe('buildGetJSON', function () {
     it('hasURLBasePath property (true)', function () {
       const getJSN = buildGetJSON({
-        baseURL: 'http://example.com'
+        baseURL: 'https://example.com'
       });
       assert.ok(getJSN.hasURLBasePath);
     });
@@ -37,6 +38,8 @@ if (typeof process !== 'undefined') {
       assert.notOk(getJSN.hasURLBasePath);
     });
   });
+
+  // eslint-disable-next-line mocha/no-conditional-tests -- Node version
   describe('_fetch', function () {
     it('_fetch property', function () {
       const getJSN = buildGetJSON({
@@ -67,7 +70,7 @@ if (typeof process !== 'undefined') {
         cwd: '/explicit/cwd'
       });
       assert.isFunction(getJSN._fetch);
-      assert.equal(getJSN._fetch, globalThis.fetch);
+      assert.equal(getJSN._fetch, fetch);
       delete globalThis.fetch;
       delete globalThis.window;
     });
@@ -81,11 +84,13 @@ if (typeof process !== 'undefined') {
         cwd: '/explicit/cwd'
       });
       assert.isFunction(getJSN._fetch);
-      assert.equal(getJSN._fetch, globalThis.fetch);
+      assert.equal(getJSN._fetch, fetch);
       delete globalThis.fetch;
       delete globalThis.self;
     });
   });
+
+  // eslint-disable-next-line mocha/no-conditional-tests -- Node version
   describe('buildGetJSONWithFetch', function () {
     it('_fetch property (window)', function () {
       globalThis.window = {

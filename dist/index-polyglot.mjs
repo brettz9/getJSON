@@ -6,17 +6,17 @@
  */
 
 /**
-* @callback SimpleJSONCallback
-* @param {...JSONValue} json
-* @returns {void}
-*/
+ * @callback SimpleJSONCallback
+ * @param {...JSONValue} json
+ * @returns {void}
+ */
 
 /**
-* @callback SimpleJSONErrback
-* @param {Error} err
-* @param {string|string[]} jsonURL
-* @returns {JSONValue}
-*/
+ * @callback SimpleJSONErrback
+ * @param {Error} err
+ * @param {string|string[]} jsonURL
+ * @returns {JSONValue}
+ */
 
 /**
  * @typedef {((
@@ -35,89 +35,46 @@
  * @param {import('./index-polyglot.js').SimpleFetch} [cfg.fetch]
  * @returns {getJSONCallback}
  */
-
-function _await$2(value, then, direct) {
-  if (!value || !value.then) {
-    value = Promise.resolve(value);
-  }
-  return then ? value.then(then) : value;
-}
-function _invoke$1(body, then) {
-  var result = body();
-  if (result && result.then) {
-    return result.then(then);
-  }
-  return then(result);
-}
-function _catch(body, recover) {
-  try {
-    var result = body();
-  } catch (e) {
-    return recover(e);
-  }
-  if (result && result.then) {
-    return result.then(void 0, recover);
-  }
-  return result;
-}
 function buildGetJSONWithFetch({
   // eslint-disable-next-line no-shadow, no-undef, unicorn/prefer-global-this -- This is a polyfill
   fetch = typeof window !== 'undefined' ? window.fetch : self.fetch
 } = {}) {
   /**
-  * @type {getJSONCallback}
-  */
-  return function getJSON(jsonURL, cb, errBack) {
+   * @type {getJSONCallback}
+   */
+  return async function getJSON(jsonURL, cb, errBack) {
     try {
-      let _exit = false;
-      return _await$2(_catch(function () {
-        return _invoke$1(function () {
-          if (Array.isArray(jsonURL)) {
-            return _await$2(Promise.all(jsonURL.map(url => {
-              return /** @type {getJSONCallback} */getJSON(url);
-            })), function (arrResult) {
-              if (cb) {
-                // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
-                cb(...arrResult);
-              }
-              _exit = true;
-              return arrResult;
-            });
-          }
-        }, function (_result) {
-          return _exit ? _result : _await$2(fetch(jsonURL), function (resp) {
-            return _await$2(resp.json(), function (result) {
-              return typeof cb === 'function'
-              // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
-              ? cb(result) : result;
-              // https://github.com/bcoe/c8/issues/135
-              /* c8 ignore next */
-            });
-          });
-        });
-      }, function (err) {
-        const e = /** @type {Error} */err;
-        e.message += ` (File: ${jsonURL})`;
-        if (errBack) {
-          return errBack(e, jsonURL);
+      if (Array.isArray(jsonURL)) {
+        const arrResult = await Promise.all(jsonURL.map(url => {
+          return /** @type {getJSONCallback} */getJSON(url);
+        }));
+        if (cb) {
+          // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
+          cb(...arrResult);
         }
-        throw e;
-        // https://github.com/bcoe/c8/issues/135
-        /* c8 ignore next */
-      }));
+        return arrResult;
+      }
+      const resp = await fetch(jsonURL);
+      const result = await resp.json();
+      return typeof cb === 'function'
+      // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
+      ? cb(result) : result;
+      // https://github.com/bcoe/c8/issues/135
       /* c8 ignore next */
-    } catch (e) {
-      return Promise.reject(e);
+    } catch (err) {
+      const e = /** @type {Error} */err;
+      e.message += ` (File: ${jsonURL})`;
+      if (errBack) {
+        return errBack(e, jsonURL);
+      }
+      throw e;
+      // https://github.com/bcoe/c8/issues/135
+      /* c8 ignore next */
     }
+    /* c8 ignore next */
   };
 }
 
-function _await$1(value, then, direct) {
-  if (!value || !value.then) {
-    value = Promise.resolve(value);
-  }
-  return then ? value.then(then) : value;
-}
 /* globals process -- Node */
 
 // Needed for polyglot support (no `path` in browser); even if
@@ -132,42 +89,19 @@ function _await$1(value, then, direct) {
 let dirname;
 
 /** @type {boolean} */
-
-function _empty() {}
 let isWindows;
-function _invokeIgnored(body) {
-  var result = body();
-  if (result && result.then) {
-    return result.then(_empty);
+const setDirname = async () => {
+  if (!dirname) {
+    ({
+      dirname
+    } = await import('node:path'));
   }
-} /**
-   * @param {string} path
-   * @returns {string}
-   */
+};
 
-function _async$1(f) {
-  return function () {
-    for (var args = [], i = 0; i < arguments.length; i++) {
-      args[i] = arguments[i];
-    }
-    try {
-      return Promise.resolve(f.apply(this, args));
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
-}
-const setDirname = _async$1(function () {
-  return _invokeIgnored(function () {
-    if (!dirname) {
-      return _await$1(import('node:path'), function (_import) {
-        ({
-          dirname
-        } = _import);
-      });
-    }
-  });
-});
+/**
+ * @param {string} path
+ * @returns {string}
+ */
 function fixWindowsPath(path) {
   if (!isWindows) {
     isWindows = process.platform === 'win32';
@@ -198,13 +132,6 @@ function getDirectoryForURL(url) {
  */
 
 /** @type {{default: SimpleFetch}} */
-
-function _await(value, then, direct) {
-  if (!value || !value.then) {
-    value = Promise.resolve(value);
-  }
-  return then ? value.then(then) : value;
-}
 let nodeFetch;
 /**
  * @param {object} [cfg]
@@ -212,34 +139,6 @@ let nodeFetch;
  * @param {string|false} [cfg.cwd]
  * @returns {import('./buildGetJSONWithFetch.js').getJSONCallback}
  */
-
-function _invoke(body, then) {
-  var result = body();
-  if (result && result.then) {
-    return result.then(then);
-  }
-  return then(result);
-}
-function _call(body, then, direct) {
-  try {
-    var result = Promise.resolve(body());
-    return then ? result.then(then) : result;
-  } catch (e) {
-    return Promise.reject(e);
-  }
-}
-function _async(f) {
-  return function () {
-    for (var args = [], i = 0; i < arguments.length; i++) {
-      args[i] = arguments[i];
-    }
-    try {
-      return Promise.resolve(f.apply(this, args));
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
-}
 function buildGetJSON({
   baseURL,
   cwd: basePath
@@ -248,83 +147,66 @@ function buildGetJSON({
   // eslint-disable-next-line @stylistic/operator-linebreak -- TS
   :
   /**
-  * @param {string} jsonURL
-  * @returns {Promise<Response>}
-  */
-  _async(function (jsonURL) {
-    let _exit = false;
-    return _invoke(function () {
-      if (/^https?:/u.test(jsonURL)) {
-        return _invoke(function () {
-          if (!nodeFetch) {
-            return _await(import('node-fetch'), function (
-            /** @type {{default: SimpleFetch}} */
-            /** @type {unknown} */
-            _import) {
-              nodeFetch = _import;
-            });
-          }
-        }, function () {
-          const _nodeFetch$default = /** @type {SimpleFetch} */nodeFetch.default(jsonURL);
-          _exit = true;
-          return _nodeFetch$default;
-        });
+   * @param {string} jsonURL
+   * @returns {Promise<Response>}
+   */
+  async jsonURL => {
+    if (/^https?:/v.test(jsonURL)) {
+      if (!nodeFetch) {
+        nodeFetch = /** @type {{default: SimpleFetch}} */
+        /** @type {unknown} */
+        await import('node-fetch');
       }
-    }, function (_result) {
-      return _exit ? _result : _invoke(function () {
-        if (!basePath) {
-          return _call(setDirname, function () {
-            basePath = baseURL ? getDirectoryForURL(baseURL) : typeof window === 'undefined' && process.cwd();
-          });
+      return /** @type {SimpleFetch} */nodeFetch.default(jsonURL);
+    }
+    if (!basePath) {
+      await setDirname();
+      basePath = baseURL ? getDirectoryForURL(baseURL) : typeof window === 'undefined' && process.cwd();
+    }
+
+    // Filed https://github.com/bergos/file-fetch/issues/12 to see
+    //  about getting relative basePaths in `file-fetch` and using
+    //  that better-tested package instead
+    // @ts-expect-error Todo
+    const localXMLHttpRequest = await import('local-xmlhttprequest');
+    const XMLHttpRequest =
+    /**
+     * @type {{
+     *   prototype: XMLHttpRequest;
+     *   new(): XMLHttpRequest
+     * }}
+     */
+    localXMLHttpRequest.default({
+      basePath
+    }); // Don't change to an import as won't resolve for browser testing
+    // eslint-disable-next-line promise/avoid-new -- own API
+    return new Promise((resolve, reject) => {
+      const r = new XMLHttpRequest();
+      r.open('GET', jsonURL, true);
+      // r.responseType = 'json';
+      // eslint-disable-next-line unicorn/prefer-add-event-listener -- May not be available
+      r.onreadystatechange = function () {
+        // Not sure how to simulate `if`
+        /* c8 ignore next 3 */
+        if (r.readyState !== 4) {
+          return;
         }
-      }, function () {
-        // Filed https://github.com/bergos/file-fetch/issues/12 to see
-        //  about getting relative basePaths in `file-fetch` and using
-        //  that better-tested package instead
-        // @ts-expect-error Todo
-        // Don't change to an import as won't resolve for browser testing
-        // eslint-disable-next-line promise/avoid-new -- own API
-        /* c8 ignore next */
-        return _await(import('local-xmlhttprequest'), function (localXMLHttpRequest) {
-          const XMLHttpRequest = /* eslint-disable jsdoc/valid-types -- Bug */
-          /**
-           * @type {{
-           *   prototype: XMLHttpRequest;
-           *   new(): XMLHttpRequest
-           * }}
-           */localXMLHttpRequest.default({
-            /* eslint-enable jsdoc/valid-types -- Bug */
-            basePath
+        if (r.status === 200) {
+          // var json = r.json;
+          const response = r.responseText;
+          resolve(/** @type {Response} */{
+            json: () => JSON.parse(response)
           });
-          return new Promise((resolve, reject) => {
-            const r = new XMLHttpRequest();
-            r.open('GET', jsonURL, true);
-            // r.responseType = 'json';
-            // eslint-disable-next-line unicorn/prefer-add-event-listener -- May not be available
-            r.onreadystatechange = function () {
-              // Not sure how to simulate `if`
-              /* c8 ignore next 3 */
-              if (r.readyState !== 4) {
-                return;
-              }
-              if (r.status === 200) {
-                // var json = r.json;
-                const response = r.responseText;
-                resolve(/** @type {Response} */{
-                  json: () => JSON.parse(response)
-                });
-                return;
-              }
-              reject(new SyntaxError('Failed to fetch URL: ' + jsonURL + 'state: ' + r.readyState + '; status: ' + r.status));
-            };
-            r.send();
-            // https://github.com/bcoe/c8/issues/135
-            /* c8 ignore next */
-          });
-        });
-      });
+          return;
+        }
+        reject(new SyntaxError('Failed to fetch URL: ' + jsonURL + 'state: ' + r.readyState + '; status: ' + r.status));
+      };
+      r.send();
+      // https://github.com/bcoe/c8/issues/135
+      /* c8 ignore next */
     });
-  });
+    /* c8 ignore next */
+  };
   const ret = buildGetJSONWithFetch({
     fetch: _fetch
   });
