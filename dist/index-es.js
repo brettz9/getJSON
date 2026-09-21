@@ -165,7 +165,7 @@ function _unsupportedIterableToArray(r, a) {
 
 /**
  * @callback SimpleJSONCallback
- * @param {...JSONValue} json
+ * @param {...JSONValue[]} json
  * @returns {void}
  */
 
@@ -262,7 +262,7 @@ var getJSON = buildGetJSONWithFetch();
 
 /**
  * For polymorphism with Node.
- * @returns {getJSON}
+ * @returns {typeof getJSON}
  */
 var buildGetJSON = function buildGetJSON() {
   return getJSON;

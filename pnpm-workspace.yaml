@@ -4,3 +4,5 @@ allowBuilds:
 ignoredBuiltDependencies:
   - es5-ext
   - unrs-resolver
+minimumReleaseAgeExclude:
+  - local-xmlhttprequest@4.0.1

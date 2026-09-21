@@ -13,7 +13,7 @@
 
   /**
    * @callback SimpleJSONCallback
-   * @param {...JSONValue} json
+   * @param {...JSONValue[]} json
    * @returns {void}
    */
 
@@ -65,8 +65,7 @@
         return typeof cb === 'function'
         // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
         ? cb(result) : result;
-        // https://github.com/bcoe/c8/issues/135
-        /* c8 ignore next */
+        /* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
       } catch (err) {
         const e = /** @type {Error} */err;
         e.message += ` (File: ${jsonURL})`;
@@ -74,10 +73,9 @@
           return errBack(e, jsonURL);
         }
         throw e;
-        // https://github.com/bcoe/c8/issues/135
-        /* c8 ignore next */
+        /* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
       }
-      /* c8 ignore next */
+      /* c8 ignore next -- See above? */
     };
   }
 
@@ -112,9 +110,7 @@
     if (!isWindows) {
       isWindows = process.platform === 'win32';
     }
-    return path.slice(
-    // https://github.com/bcoe/c8/issues/135
-    /* c8 ignore next */
+    return path.slice(/* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
     isWindows ? 1 : 0);
   }
 
@@ -192,8 +188,7 @@
         // r.responseType = 'json';
         // eslint-disable-next-line unicorn/prefer-add-event-listener -- May not be available
         r.onreadystatechange = function () {
-          // Not sure how to simulate `if`
-          /* c8 ignore next 3 */
+          /* c8 ignore next 3 -- Not sure how to simulate `if` */
           if (r.readyState !== 4) {
             return;
           }
@@ -208,10 +203,9 @@
           reject(new SyntaxError('Failed to fetch URL: ' + jsonURL + 'state: ' + r.readyState + '; status: ' + r.status));
         };
         r.send();
-        // https://github.com/bcoe/c8/issues/135
-        /* c8 ignore next */
+        /* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
       });
-      /* c8 ignore next */
+      /* c8 ignore next -- See above? */
     };
     const ret = buildGetJSONWithFetch({
       fetch: _fetch

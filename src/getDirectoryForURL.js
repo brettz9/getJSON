@@ -28,8 +28,7 @@ function fixWindowsPath (path) {
     isWindows = process.platform === 'win32';
   }
   return path.slice(
-    // https://github.com/bcoe/c8/issues/135
-    /* c8 ignore next */
+    /* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
     isWindows ? 1 : 0
   );
 }

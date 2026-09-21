@@ -47,7 +47,6 @@ function buildGetJSON ({
       // Filed https://github.com/bergos/file-fetch/issues/12 to see
       //  about getting relative basePaths in `file-fetch` and using
       //  that better-tested package instead
-      // @ts-expect-error Todo
       const localXMLHttpRequest = await import('local-xmlhttprequest');
       const XMLHttpRequest =
 
@@ -56,10 +55,12 @@ function buildGetJSON ({
        *   prototype: XMLHttpRequest;
        *   new(): XMLHttpRequest
        * }}
-       */ (localXMLHttpRequest.default({
-
-          basePath
-        })); // Don't change to an import as won't resolve for browser testing
+       */ (
+        /** @type {unknown} */
+          (localXMLHttpRequest.default({
+            basePath
+          }))
+        ); // Don't change to an import as won't resolve for browser testing
       // eslint-disable-next-line promise/avoid-new -- own API
       return new Promise((resolve, reject) => {
         const r = new XMLHttpRequest();
@@ -67,8 +68,7 @@ function buildGetJSON ({
         // r.responseType = 'json';
         // eslint-disable-next-line unicorn/prefer-add-event-listener -- May not be available
         r.onreadystatechange = function () {
-          // Not sure how to simulate `if`
-          /* c8 ignore next 3 */
+          /* c8 ignore next 3 -- Not sure how to simulate `if` */
           if (r.readyState !== 4) {
             return;
           }
@@ -86,10 +86,9 @@ function buildGetJSON ({
           ));
         };
         r.send();
-      // https://github.com/bcoe/c8/issues/135
-      /* c8 ignore next */
+      /* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
       });
-    /* c8 ignore next */
+    /* c8 ignore next -- See above? */
     };
 
   const ret = buildGetJSONWithFetch({

@@ -60,8 +60,7 @@ function buildGetJSONWithFetch ({
         // eslint-disable-next-line promise/prefer-await-to-callbacks -- Old-style API
         ? cb(result)
         : result;
-    // https://github.com/bcoe/c8/issues/135
-    /* c8 ignore next */
+    /* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
     } catch (err) {
       const e = /** @type {Error} */ (err);
       e.message += ` (File: ${jsonURL})`;
@@ -69,10 +68,9 @@ function buildGetJSONWithFetch ({
         return errBack(e, jsonURL);
       }
       throw e;
-    // https://github.com/bcoe/c8/issues/135
-    /* c8 ignore next */
+    /* c8 ignore next -- https://github.com/bcoe/c8/issues/135 */
     }
-  /* c8 ignore next */
+  /* c8 ignore next -- See above? */
   };
 }
 
