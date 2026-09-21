@@ -1,6 +1,6 @@
 # CHANGES for simple-get-json
 
-## ?
+## 11.0.2
 
 - chore: update `local-xmlhttprequest`, devDeps
 

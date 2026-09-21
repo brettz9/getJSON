@@ -163,7 +163,6 @@ function buildGetJSON({
     // Filed https://github.com/bergos/file-fetch/issues/12 to see
     //  about getting relative basePaths in `file-fetch` and using
     //  that better-tested package instead
-    // @ts-expect-error Todo
     const localXMLHttpRequest = await import('local-xmlhttprequest');
     const XMLHttpRequest =
     /**
@@ -172,6 +171,7 @@ function buildGetJSON({
      *   new(): XMLHttpRequest
      * }}
      */
+    /** @type {unknown} */
     localXMLHttpRequest.default({
       basePath
     }); // Don't change to an import as won't resolve for browser testing
