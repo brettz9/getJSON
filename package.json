@@ -1,13 +1,13 @@
 {
   "name": "simple-get-json",
-  "version": "11.0.2",
+  "version": "12.0.0",
   "main": "dist/index-polyglot.cjs",
   "module": "dist/index-es.js",
-  "browser": "dist/index.js",
+  "browser": "dist/umd/index.js",
   "type": "module",
   "exports": {
     "types": "./dist/src/index-polyglot.d.ts",
-    "browser": "./dist/index.js",
+    "browser": "./dist/umd/index.js",
     "import": "./dist/index-polyglot.mjs",
     "require": "./dist/index-polyglot.cjs"
   },

@@ -84,7 +84,7 @@ npm install simple-get-json
 For older browser support
 <script src="node_modules/core-js-bundle/minified.js"></script>
 -->
-<script src="node_modules/simple-get-json/dist/index.js"></script>
+<script src="node_modules/simple-get-json/dist/umd/index.js"></script>
 ```
 
 ```js

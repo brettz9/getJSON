@@ -1,5 +1,9 @@
 # CHANGES for simple-get-json
 
+## 12.0.0
+
+- fix: change UMD path (addresses webpack issue)
+
 ## 11.0.2
 
 - chore: update `local-xmlhttprequest`, devDeps
